@@ -1,4 +1,7 @@
 # Explicit import roots (repo-relative directories) per PyPI package, used by the diff
-# baseline (T4) only when automatic detection (triager.baselines.diff.import_roots) is
-# wrong or fails. Names are PEP 503-normalised. Empty until a measured need appears.
-overrides: {}
+# baseline (T4) and symbol tables (T5) only when automatic detection
+# (triager.baselines.diff.import_roots) is wrong or fails. Names are PEP 503-normalised.
+# Each entry was checked against the repo tree at the vulnerable ref.
+overrides:
+  gitpython: [git]          # distribution GitPython imports as `git`
+  pgadmin4: [web/pgadmin]   # application package lives under web/
