@@ -5,6 +5,7 @@ description = "Conservative triage of Dependabot alerts for Python: vulnerable-f
 requires-python = ">=3.12"
 dependencies = [
     "pyyaml>=6.0.3",
+    "unidiff>=1.0.1",
 ]
 
 [build-system]

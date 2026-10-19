@@ -1,0 +1,4 @@
+# Explicit import roots (repo-relative directories) per PyPI package, used by the diff
+# baseline (T4) only when automatic detection (triager.baselines.diff.import_roots) is
+# wrong or fails. Names are PEP 503-normalised. Empty until a measured need appears.
+overrides: {}
