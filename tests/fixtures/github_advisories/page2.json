@@ -1,0 +1,38 @@
+[
+  {
+    "ghsa_id": "GHSA-cccc-cccc-cccc",
+    "cve_id": "CVE-2025-0003",
+    "type": "reviewed",
+    "published_at": "2025-05-01T12:00:00Z",
+    "withdrawn_at": "2025-06-01T12:00:00Z",
+    "vulnerabilities": [
+      {
+        "package": {"ecosystem": "pip", "name": "otherlib"},
+        "vulnerable_version_range": "< 2.0",
+        "first_patched_version": "2.0",
+        "vulnerable_functions": ["otherlib.parse"]
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-dddd-dddd-dddd",
+    "cve_id": "CVE-2025-0004",
+    "type": "reviewed",
+    "published_at": "2024-12-31T23:00:00Z",
+    "withdrawn_at": null,
+    "vulnerabilities": [
+      {
+        "package": {"ecosystem": "npm", "name": "jslib"},
+        "vulnerable_version_range": "< 3.0",
+        "first_patched_version": "3.0",
+        "vulnerable_functions": ["jslib.run"]
+      },
+      {
+        "package": {"ecosystem": "pip", "name": "pylib"},
+        "vulnerable_version_range": "< 3.0",
+        "first_patched_version": "3.0",
+        "vulnerable_functions": null
+      }
+    ]
+  }
+]

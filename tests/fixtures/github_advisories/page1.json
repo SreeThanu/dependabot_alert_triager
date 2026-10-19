@@ -1,0 +1,32 @@
+[
+  {
+    "ghsa_id": "GHSA-aaaa-aaaa-aaaa",
+    "cve_id": "CVE-2025-0001",
+    "type": "reviewed",
+    "published_at": "2025-03-01T12:00:00Z",
+    "withdrawn_at": null,
+    "vulnerabilities": [
+      {
+        "package": {"ecosystem": "pip", "name": "pypdf"},
+        "vulnerable_version_range": "< 5.0.0",
+        "first_patched_version": "5.0.0",
+        "vulnerable_functions": ["pypdf.filters.FlateDecode.decode"]
+      }
+    ]
+  },
+  {
+    "ghsa_id": "GHSA-bbbb-bbbb-bbbb",
+    "cve_id": null,
+    "type": "reviewed",
+    "published_at": "2025-04-01T12:00:00Z",
+    "withdrawn_at": null,
+    "vulnerabilities": [
+      {
+        "package": {"ecosystem": "pip", "name": "somelib"},
+        "vulnerable_version_range": "< 1.2",
+        "first_patched_version": "1.2",
+        "vulnerable_functions": []
+      }
+    ]
+  }
+]
