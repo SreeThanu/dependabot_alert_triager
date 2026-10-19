@@ -13,7 +13,9 @@ Status: early setup (task T0). No results yet. Plan: `docs/VALIDATION_AND_PLAN.m
 
 ## Local setup
 
-Requires [uv](https://docs.astral.sh/uv/) and Python 3.12.
+Requires [uv](https://docs.astral.sh/uv/). The project uses a uv-managed CPython 3.12
+(`python-preference = "only-managed"` in `pyproject.toml`); install it once with
+`uv python install 3.12`.
 
 ```bash
 uv sync
@@ -40,6 +42,8 @@ internal disk and the repo is on another volume. It is harmless; silence it with
 `export UV_LINK_MODE=copy`.
 
 ## Data and attribution
+
+scripts/survey_ghsa.py produced the FACT numbers in docs/VALIDATION_AND_PLAN.md Phase 1.1 against the github/advisory-database snapshot in config/snapshots.yaml; it is kept unchanged for provenance.
 
 Pinned snapshots are listed in `config/snapshots.yaml`.
 
