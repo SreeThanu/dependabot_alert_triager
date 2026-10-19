@@ -1,0 +1,1129 @@
+note: 'Candidate package families for human review. Nothing here is applied. Set decision to merge or
+  reject; merged groups are then copied into config/package_families.yaml. proposed: shared source repo
+  -> merge, name pattern only -> pending.'
+snapshot: b16e369438ef2ab329b4c224cae8224f144bf5d5
+families_config_sha256: 9d08d01810abc8574c0b46c9f63d6d979363e8b166e4cb03c2ecdb42b71f9e52
+sample_unchanged_if_all_proposed_merges_applied: true
+groups:
+- id: repo:ajenti/ajenti
+  members:
+  - ajenti-panel
+  - ajenti-plugin-core
+  evidence:
+  - 'shared_source_repo: ajenti/ajenti'
+  proposed: merge
+  decision: pending
+  overlaps: []
+  repos:
+    ajenti-panel:
+    - ajenti/ajenti
+    ajenti-plugin-core:
+    - ajenti/ajenti
+  changes_sample_if_merged: false
+- id: repo:ansible/ansible
+  members:
+  - ansible
+  - ansible-core
+  evidence:
+  - 'shared_source_repo: ansible/ansible'
+  proposed: merge
+  decision: pending
+  overlaps:
+  - name:ansible
+  repos:
+    ansible:
+    - ansible-collections/community.general
+    - ansible/ansible
+    ansible-core:
+    - ansible/ansible
+  changes_sample_if_merged: false
+- id: repo:apache/airflow
+  members:
+  - apache-airflow
+  - apache-airflow-core
+  - apache-airflow-providers-amazon
+  - apache-airflow-providers-cncf-kubernetes
+  - apache-airflow-providers-common-sql
+  - apache-airflow-providers-elasticsearch
+  - apache-airflow-providers-fab
+  - apache-airflow-providers-ftp
+  - apache-airflow-providers-google
+  - apache-airflow-providers-http
+  - apache-airflow-providers-keycloak
+  - apache-airflow-providers-mysql
+  - apache-airflow-providers-samba
+  - apache-airflow-providers-sftp
+  - apache-airflow-providers-smtp
+  - apache-airflow-providers-yandex
+  evidence:
+  - 'shared_source_repo: apache/airflow'
+  proposed: merge
+  decision: pending
+  overlaps:
+  - name:apache-airflow
+  repos:
+    apache-airflow:
+    - apache/airflow
+    apache-airflow-core:
+    - apache/airflow
+    apache-airflow-providers-amazon:
+    - apache/airflow
+    apache-airflow-providers-cncf-kubernetes:
+    - apache/airflow
+    apache-airflow-providers-common-sql:
+    - apache/airflow
+    apache-airflow-providers-elasticsearch:
+    - apache/airflow
+    apache-airflow-providers-fab:
+    - apache/airflow
+    apache-airflow-providers-ftp:
+    - apache/airflow
+    apache-airflow-providers-google:
+    - apache/airflow
+    apache-airflow-providers-http:
+    - apache/airflow
+    apache-airflow-providers-keycloak:
+    - apache/airflow
+    apache-airflow-providers-mysql:
+    - apache/airflow
+    apache-airflow-providers-samba:
+    - apache/airflow
+    apache-airflow-providers-sftp:
+    - apache/airflow
+    apache-airflow-providers-smtp:
+    - apache/airflow
+    apache-airflow-providers-yandex:
+    - apache/airflow
+  changes_sample_if_merged: false
+- id: repo:azure/azure-sdk-for-python
+  members:
+  - azure-ai-language-conversations-authoring
+  - azure-core
+  evidence:
+  - 'shared_source_repo: azure/azure-sdk-for-python'
+  proposed: merge
+  decision: pending
+  overlaps: []
+  repos:
+    azure-ai-language-conversations-authoring:
+    - azure/azure-sdk-for-python
+    azure-core:
+    - azure/azure-sdk-for-python
+  changes_sample_if_merged: false
+- id: repo:comfy-org/comfyui-manager
+  members:
+  - comfy-cli
+  - comfyui-manager
+  evidence:
+  - 'shared_source_repo: comfy-org/comfyui-manager'
+  proposed: merge
+  decision: pending
+  overlaps: []
+  repos:
+    comfy-cli:
+    - comfy-org/comfyui-manager
+    comfyui-manager:
+    - comfy-org/comfyui-manager
+  changes_sample_if_merged: false
+- id: repo:composiohq/composio
+  members:
+  - composio
+  - composio-core
+  evidence:
+  - 'shared_source_repo: composiohq/composio'
+  proposed: merge
+  decision: pending
+  overlaps:
+  - name:composio
+  repos:
+    composio:
+    - composiohq/composio
+    composio-core:
+    - composiohq/composio
+    - composiohq/composio-js
+  changes_sample_if_merged: false
+- id: repo:giskard-ai/giskard-oss
+  members:
+  - giskard-agents
+  - giskard-checks
+  evidence:
+  - 'shared_source_repo: giskard-ai/giskard-oss'
+  proposed: merge
+  decision: pending
+  overlaps: []
+  repos:
+    giskard-agents:
+    - giskard-ai/giskard-oss
+    giskard-checks:
+    - giskard-ai/giskard-oss
+  changes_sample_if_merged: false
+- id: repo:hydra-ecosystem/hydra
+  members:
+  - hydra-core
+  - hydra-optuna-sweeper
+  evidence:
+  - 'shared_source_repo: hydra-ecosystem/hydra'
+  proposed: merge
+  decision: pending
+  overlaps: []
+  repos:
+    hydra-core:
+    - hydra-ecosystem/hydra
+    hydra-optuna-sweeper:
+    - hydra-ecosystem/hydra
+  changes_sample_if_merged: false
+- id: repo:langchain-ai/langchain
+  members:
+  - langchain-core
+  - langchain-openai
+  - langchain-text-splitters
+  evidence:
+  - 'shared_source_repo: langchain-ai/langchain'
+  proposed: merge
+  decision: pending
+  overlaps:
+  - name:langchain
+  repos:
+    langchain-core:
+    - langchain-ai/langchain
+    langchain-openai:
+    - langchain-ai/langchain
+    langchain-text-splitters:
+    - langchain-ai/langchain
+  changes_sample_if_merged: false
+- id: repo:langchain-ai/langgraph
+  members:
+  - langgraph
+  - langgraph-checkpoint
+  - langgraph-checkpoint-sqlite
+  - langgraph-sdk
+  evidence:
+  - 'shared_source_repo: langchain-ai/langgraph'
+  proposed: merge
+  decision: pending
+  overlaps:
+  - name:langgraph
+  repos:
+    langgraph:
+    - langchain-ai/langgraph
+    langgraph-checkpoint:
+    - langchain-ai/langgraph
+    langgraph-checkpoint-sqlite:
+    - langchain-ai/langgraph
+    langgraph-sdk:
+    - langchain-ai/langgraph
+  changes_sample_if_merged: false
+- id: repo:langflow-ai/langflow
+  members:
+  - langflow
+  - langflow-base
+  evidence:
+  - 'shared_source_repo: langflow-ai/langflow'
+  - 'name_pattern: langflow'
+  proposed: merge
+  decision: pending
+  overlaps: []
+  repos:
+    langflow:
+    - langflow-ai/langflow
+    langflow-base:
+    - langflow-ai/langflow
+  changes_sample_if_merged: false
+- id: repo:lightning-ai/pytorch-lightning
+  members:
+  - lightning
+  - pytorch-lightning
+  evidence:
+  - 'shared_source_repo: lightning-ai/pytorch-lightning'
+  proposed: merge
+  decision: pending
+  overlaps:
+  - repo:pytorch/pytorch
+  repos:
+    lightning:
+    - lightning-ai/pytorch-lightning
+    pytorch-lightning:
+    - lightning-ai/pytorch-lightning
+    - pytorch/pytorch
+  changes_sample_if_merged: false
+- id: repo:microsoft/apm
+  members:
+  - apm
+  - apm-cli
+  evidence:
+  - 'shared_source_repo: microsoft/apm'
+  proposed: merge
+  decision: pending
+  overlaps: []
+  repos:
+    apm:
+    - microsoft/apm
+    apm-cli:
+    - microsoft/apm
+  changes_sample_if_merged: false
+- id: repo:open-webui/open-webui
+  members:
+  - open-webu
+  - open-webui
+  evidence:
+  - 'shared_source_repo: open-webui/open-webui'
+  proposed: merge
+  decision: pending
+  overlaps: []
+  repos:
+    open-webu:
+    - open-webui/open-webui
+    open-webui:
+    - open-webui/open-webui
+  changes_sample_if_merged: false
+- id: repo:pallets-eco/flask-security
+  members:
+  - flask-security
+  - flask-security-too
+  evidence:
+  - 'shared_source_repo: pallets-eco/flask-security'
+  proposed: merge
+  decision: pending
+  overlaps:
+  - name:flask
+  repos:
+    flask-security:
+    - pallets-eco/flask-security
+    flask-security-too:
+    - pallets-eco/flask-security
+  changes_sample_if_merged: false
+- id: repo:pytorch/pytorch
+  members:
+  - pytorch
+  - pytorch-lightning
+  - torch
+  evidence:
+  - 'shared_source_repo: pytorch/pytorch'
+  - 'name_pattern: pytorch'
+  proposed: merge
+  decision: pending
+  overlaps:
+  - repo:lightning-ai/pytorch-lightning
+  repos:
+    pytorch:
+    - pytorch/pytorch
+    pytorch-lightning:
+    - lightning-ai/pytorch-lightning
+    - pytorch/pytorch
+    torch:
+    - pytorch/pytorch
+  changes_sample_if_merged: false
+- id: repo:rucio/rucio
+  members:
+  - rucio
+  - rucio-webui
+  evidence:
+  - 'shared_source_repo: rucio/rucio'
+  - 'name_pattern: rucio'
+  proposed: merge
+  decision: pending
+  overlaps: []
+  repos:
+    rucio:
+    - rucio/rucio
+    rucio-webui:
+    - rucio/rucio
+  changes_sample_if_merged: false
+- id: repo:run-llama/llama_index
+  members:
+  - llama-index
+  - llama-index-cli
+  - llama-index-core
+  - llama-index-packs-finchat
+  - llama-index-readers-obsidian
+  - llama-index-readers-papers
+  - llama-index-retrievers-duckdb-retriever
+  - llama-index-vector-stores-duckdb
+  evidence:
+  - 'shared_source_repo: run-llama/llama_index'
+  proposed: merge
+  decision: pending
+  overlaps:
+  - name:llama-index
+  repos:
+    llama-index:
+    - run-llama/llama_index
+    llama-index-cli:
+    - run-llama/llama_index
+    llama-index-core:
+    - run-llama/llama_index
+    llama-index-packs-finchat:
+    - run-llama/llama_index
+    llama-index-readers-obsidian:
+    - run-llama/llama_index
+    llama-index-readers-papers:
+    - run-llama/llama_index
+    llama-index-retrievers-duckdb-retriever:
+    - run-llama/llama_index
+    llama-index-vector-stores-duckdb:
+    - run-llama/llama_index
+  changes_sample_if_merged: false
+- id: repo:universal-tool-calling-protocol/python-utcp
+  members:
+  - utcp-cli
+  - utcp-http
+  evidence:
+  - 'shared_source_repo: universal-tool-calling-protocol/python-utcp'
+  proposed: merge
+  decision: pending
+  overlaps:
+  - name:utcp
+  repos:
+    utcp-cli:
+    - universal-tool-calling-protocol/python-utcp
+    utcp-http:
+    - universal-tool-calling-protocol/python-utcp
+  changes_sample_if_merged: false
+- id: repo:vantage6/vantage6
+  members:
+  - vantage6
+  - vantage6-server
+  evidence:
+  - 'shared_source_repo: vantage6/vantage6'
+  - 'name_pattern: vantage6'
+  proposed: merge
+  decision: pending
+  overlaps: []
+  repos:
+    vantage6:
+    - vantage6/vantage6
+    vantage6-server:
+    - vantage6/vantage6
+  changes_sample_if_merged: false
+- id: name:ansible
+  members:
+  - ansible
+  - ansible-core
+  - ansible-jailexec
+  evidence:
+  - 'name_pattern: ansible'
+  proposed: pending
+  decision: pending
+  overlaps:
+  - repo:ansible/ansible
+  repos:
+    ansible:
+    - ansible-collections/community.general
+    - ansible/ansible
+    ansible-core:
+    - ansible/ansible
+    ansible-jailexec:
+    - chofstede/ansible_jailexec
+  changes_sample_if_merged: false
+- id: name:apache-airflow
+  members:
+  - apache-airflow
+  - apache-airflow-core
+  - apache-airflow-providers-amazon
+  - apache-airflow-providers-cncf-kubernetes
+  - apache-airflow-providers-common-sql
+  - apache-airflow-providers-edge3
+  - apache-airflow-providers-elasticsearch
+  - apache-airflow-providers-fab
+  - apache-airflow-providers-ftp
+  - apache-airflow-providers-google
+  - apache-airflow-providers-http
+  - apache-airflow-providers-keycloak
+  - apache-airflow-providers-mysql
+  - apache-airflow-providers-opensearch
+  - apache-airflow-providers-samba
+  - apache-airflow-providers-sftp
+  - apache-airflow-providers-smtp
+  - apache-airflow-providers-snowflake
+  - apache-airflow-providers-yandex
+  evidence:
+  - 'name_pattern: apache-airflow'
+  proposed: pending
+  decision: pending
+  overlaps:
+  - repo:apache/airflow
+  repos:
+    apache-airflow:
+    - apache/airflow
+    apache-airflow-core:
+    - apache/airflow
+    apache-airflow-providers-amazon:
+    - apache/airflow
+    apache-airflow-providers-cncf-kubernetes:
+    - apache/airflow
+    apache-airflow-providers-common-sql:
+    - apache/airflow
+    apache-airflow-providers-edge3: []
+    apache-airflow-providers-elasticsearch:
+    - apache/airflow
+    apache-airflow-providers-fab:
+    - apache/airflow
+    apache-airflow-providers-ftp:
+    - apache/airflow
+    apache-airflow-providers-google:
+    - apache/airflow
+    apache-airflow-providers-http:
+    - apache/airflow
+    apache-airflow-providers-keycloak:
+    - apache/airflow
+    apache-airflow-providers-mysql:
+    - apache/airflow
+    apache-airflow-providers-opensearch: []
+    apache-airflow-providers-samba:
+    - apache/airflow
+    apache-airflow-providers-sftp:
+    - apache/airflow
+    apache-airflow-providers-smtp:
+    - apache/airflow
+    apache-airflow-providers-snowflake: []
+    apache-airflow-providers-yandex:
+    - apache/airflow
+  changes_sample_if_merged: false
+- id: name:bedrock-agentcore
+  members:
+  - bedrock-agentcore
+  - bedrock-agentcore-starter-toolkit
+  evidence:
+  - 'name_pattern: bedrock-agentcore'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    bedrock-agentcore:
+    - aws/bedrock-agentcore-sdk-python
+    bedrock-agentcore-starter-toolkit:
+    - aws/bedrock-agentcore-starter-toolkit
+  changes_sample_if_merged: false
+- id: name:composio
+  members:
+  - composio
+  - composio-claude
+  - composio-core
+  - composio-julep
+  - composio-openai
+  evidence:
+  - 'name_pattern: composio'
+  proposed: pending
+  decision: pending
+  overlaps:
+  - repo:composiohq/composio
+  repos:
+    composio:
+    - composiohq/composio
+    composio-claude: []
+    composio-core:
+    - composiohq/composio
+    - composiohq/composio-js
+    composio-julep: []
+    composio-openai: []
+  changes_sample_if_merged: false
+- id: name:dagster
+  members:
+  - dagster
+  - dagster-deltalake
+  - dagster-duckdb
+  - dagster-gcp
+  - dagster-snowflake
+  - dagster-snowflake-polars
+  evidence:
+  - 'name_pattern: dagster'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    dagster:
+    - dagster-io/dagster
+    dagster-deltalake: []
+    dagster-duckdb: []
+    dagster-gcp: []
+    dagster-snowflake: []
+    dagster-snowflake-polars: []
+  changes_sample_if_merged: false
+- id: name:decepticon
+  members:
+  - decepticon
+  - decepticon-core
+  - decepticon-sdk
+  evidence:
+  - 'name_pattern: decepticon'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    decepticon: []
+    decepticon-core: []
+    decepticon-sdk: []
+  changes_sample_if_merged: false
+- id: name:django
+  members:
+  - django
+  - django-allauth
+  - django-cms
+  - django-haystack
+  - django-helpdesk
+  - django-mdeditor
+  - django-s3file
+  - django-select2
+  - django-tomselect
+  - django-unicorn
+  evidence:
+  - 'name_pattern: django'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    django:
+    - django/django
+    django-allauth:
+    - pennersr/django-allauth
+    django-cms:
+    - django-cms/django-cms
+    django-haystack:
+    - django-haystack/django-haystack
+    django-helpdesk:
+    - django-helpdesk/django-helpdesk
+    django-mdeditor:
+    - pylixm/django-mdeditor
+    django-s3file:
+    - codingjoe/django-s3file
+    django-select2:
+    - codingjoe/django-select2
+    django-tomselect:
+    - omenapps/django-tomselect
+    django-unicorn:
+    - adamghill/django-unicorn
+    - django-commons/django-unicorn
+  changes_sample_if_merged: false
+- id: name:docling
+  members:
+  - docling
+  - docling-core
+  - docling-graph
+  - docling-slim
+  evidence:
+  - 'name_pattern: docling'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    docling:
+    - docling-project/docling
+    docling-core:
+    - docling-project/docling-core
+    docling-graph:
+    - docling-project/docling-graph
+    docling-slim: []
+  changes_sample_if_merged: false
+- id: name:emmett
+  members:
+  - emmett
+  - emmett-core
+  evidence:
+  - 'name_pattern: emmett'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    emmett:
+    - emmett-framework/emmett
+    emmett-core:
+    - emmett-framework/core
+  changes_sample_if_merged: false
+- id: name:esphome
+  members:
+  - esphome
+  - esphome-device-builder
+  evidence:
+  - 'name_pattern: esphome'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    esphome:
+    - esphome/esphome
+    esphome-device-builder:
+    - esphome/device-builder
+  changes_sample_if_merged: false
+- id: name:flask
+  members:
+  - flask
+  - flask-appbuilder
+  - flask-cors
+  - flask-httpauth
+  - flask-reuploaded
+  - flask-security
+  - flask-security-too
+  evidence:
+  - 'name_pattern: flask'
+  proposed: pending
+  decision: pending
+  overlaps:
+  - repo:pallets-eco/flask-security
+  repos:
+    flask:
+    - pallets/flask
+    flask-appbuilder:
+    - dpgaspar/flask-appbuilder
+    flask-cors:
+    - corydolphin/flask-cors
+    flask-httpauth:
+    - miguelgrinberg/flask-httpauth
+    flask-reuploaded:
+    - jugmac00/flask-reuploaded
+    flask-security:
+    - pallets-eco/flask-security
+    flask-security-too:
+    - pallets-eco/flask-security
+  changes_sample_if_merged: false
+- id: name:geolens
+  members:
+  - geolens
+  - geolens-cli
+  evidence:
+  - 'name_pattern: geolens'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    geolens:
+    - geolens-io/geolens
+    geolens-cli: []
+  changes_sample_if_merged: false
+- id: name:hermes
+  members:
+  - hermes
+  - hermes-agent
+  evidence:
+  - 'name_pattern: hermes'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    hermes:
+    - softwarepub/hermes
+    hermes-agent:
+    - nousresearch/hermes-agent
+  changes_sample_if_merged: false
+- id: name:homeassistant
+  members:
+  - homeassistant
+  - homeassistant-cli
+  evidence:
+  - 'name_pattern: homeassistant'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    homeassistant:
+    - home-assistant/core
+    homeassistant-cli:
+    - home-assistant-ecosystem/home-assistant-cli
+  changes_sample_if_merged: false
+- id: name:ironic
+  members:
+  - ironic
+  - ironic-python-agent
+  evidence:
+  - 'name_pattern: ironic'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    ironic:
+    - openstack/ironic
+    ironic-python-agent:
+    - openstack/ironic-python-agent
+  changes_sample_if_merged: false
+- id: name:jupyter
+  members:
+  - jupyter-core
+  - jupyter-server
+  - jupyterlite
+  evidence:
+  - 'name_pattern: jupyter'
+  proposed: pending
+  decision: pending
+  overlaps:
+  - name:jupyterlite
+  repos:
+    jupyter-core:
+    - jupyter/jupyter_core
+    jupyter-server:
+    - jupyter-server/jupyter_server
+    jupyterlite: []
+  changes_sample_if_merged: false
+- id: name:jupyterhub
+  members:
+  - jupyterhub
+  - jupyterhub-ltiauthenticator
+  evidence:
+  - 'name_pattern: jupyterhub'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    jupyterhub:
+    - jupyterhub/jupyterhub
+    jupyterhub-ltiauthenticator:
+    - jupyterhub/ltiauthenticator
+  changes_sample_if_merged: false
+- id: name:jupyterlab
+  members:
+  - jupyterlab
+  - jupyterlab-git
+  - jupyterlab-git-core
+  evidence:
+  - 'name_pattern: jupyterlab'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    jupyterlab:
+    - jupyterlab/jupyterlab
+    jupyterlab-git:
+    - jupyterlab/jupyterlab-git
+    jupyterlab-git-core: []
+  changes_sample_if_merged: false
+- id: name:jupyterlite
+  members:
+  - jupyterlite
+  - jupyterlite-core
+  evidence:
+  - 'name_pattern: jupyterlite'
+  proposed: pending
+  decision: pending
+  overlaps:
+  - name:jupyter
+  repos:
+    jupyterlite: []
+    jupyterlite-core: []
+  changes_sample_if_merged: false
+- id: name:kedro
+  members:
+  - kedro
+  - kedro-datasets
+  evidence:
+  - 'name_pattern: kedro'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    kedro:
+    - kedro-org/kedro
+    kedro-datasets:
+    - kedro-org/kedro-plugins
+  changes_sample_if_merged: false
+- id: name:label-studio
+  members:
+  - label-studio
+  - label-studio-ml
+  - label-studio-sdk
+  evidence:
+  - 'name_pattern: label-studio'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    label-studio:
+    - humansignal/label-studio
+    label-studio-ml:
+    - humansignal/label-studio-ml-backend
+    label-studio-sdk:
+    - humansignal/label-studio-sdk
+  changes_sample_if_merged: false
+- id: name:langchain
+  members:
+  - langchain
+  - langchain-anthropic
+  - langchain-chatchat
+  - langchain-classic
+  - langchain-community
+  - langchain-core
+  - langchain-nvidia-ai-endpoints
+  - langchain-openai
+  - langchain-text-splitters
+  evidence:
+  - 'name_pattern: langchain'
+  proposed: pending
+  decision: pending
+  overlaps:
+  - repo:langchain-ai/langchain
+  repos:
+    langchain: []
+    langchain-anthropic: []
+    langchain-chatchat:
+    - chatchat-space/langchain-chatchat
+    langchain-classic: []
+    langchain-community:
+    - langchain-ai/langchain-community
+    langchain-core:
+    - langchain-ai/langchain
+    langchain-nvidia-ai-endpoints:
+    - langchain-ai/langchain-nvidia
+    langchain-openai:
+    - langchain-ai/langchain
+    langchain-text-splitters:
+    - langchain-ai/langchain
+  changes_sample_if_merged: false
+- id: name:langgraph
+  members:
+  - langgraph
+  - langgraph-api
+  - langgraph-checkpoint
+  - langgraph-checkpoint-mongodb
+  - langgraph-checkpoint-postgres
+  - langgraph-checkpoint-sqlite
+  - langgraph-sdk
+  - langgraph-store-mongodb
+  evidence:
+  - 'name_pattern: langgraph'
+  proposed: pending
+  decision: pending
+  overlaps:
+  - repo:langchain-ai/langgraph
+  repos:
+    langgraph:
+    - langchain-ai/langgraph
+    langgraph-api:
+    - langchain-ai/helm
+    langgraph-checkpoint:
+    - langchain-ai/langgraph
+    langgraph-checkpoint-mongodb: []
+    langgraph-checkpoint-postgres: []
+    langgraph-checkpoint-sqlite:
+    - langchain-ai/langgraph
+    langgraph-sdk:
+    - langchain-ai/langgraph
+    langgraph-store-mongodb: []
+  changes_sample_if_merged: false
+- id: name:llama-index
+  members:
+  - llama-index
+  - llama-index-cli
+  - llama-index-core
+  - llama-index-packs-finchat
+  - llama-index-readers-docugami
+  - llama-index-readers-obsidian
+  - llama-index-readers-papers
+  - llama-index-retrievers-duckdb-retriever
+  - llama-index-vector-stores-duckdb
+  evidence:
+  - 'name_pattern: llama-index'
+  proposed: pending
+  decision: pending
+  overlaps:
+  - repo:run-llama/llama_index
+  repos:
+    llama-index:
+    - run-llama/llama_index
+    llama-index-cli:
+    - run-llama/llama_index
+    llama-index-core:
+    - run-llama/llama_index
+    llama-index-packs-finchat:
+    - run-llama/llama_index
+    llama-index-readers-docugami: []
+    llama-index-readers-obsidian:
+    - run-llama/llama_index
+    llama-index-readers-papers:
+    - run-llama/llama_index
+    llama-index-retrievers-duckdb-retriever:
+    - run-llama/llama_index
+    llama-index-vector-stores-duckdb:
+    - run-llama/llama_index
+  changes_sample_if_merged: false
+- id: name:lxml
+  members:
+  - lxml
+  - lxml-html-clean
+  evidence:
+  - 'name_pattern: lxml'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    lxml:
+    - lxml/lxml
+    lxml-html-clean:
+    - fedora-python/lxml_html_clean
+  changes_sample_if_merged: false
+- id: name:nautobot
+  members:
+  - nautobot
+  - nautobot-ssot
+  evidence:
+  - 'name_pattern: nautobot'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    nautobot:
+    - nautobot/nautobot
+    nautobot-ssot:
+    - nautobot/nautobot-app-ssot
+  changes_sample_if_merged: false
+- id: name:pillow
+  members:
+  - pillow
+  - pillow-heif
+  evidence:
+  - 'name_pattern: pillow'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    pillow:
+    - python-pillow/pillow
+    pillow-heif: []
+  changes_sample_if_merged: false
+- id: name:poetry
+  members:
+  - poetry
+  - poetry-plugin-tweak-dependencies-version
+  evidence:
+  - 'name_pattern: poetry'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    poetry:
+    - python-poetry/poetry
+    poetry-plugin-tweak-dependencies-version:
+    - sbrunner/poetry-plugin-tweak-dependencies-version
+  changes_sample_if_merged: false
+- id: name:prowler
+  members:
+  - prowler
+  - prowler-cloud
+  evidence:
+  - 'name_pattern: prowler'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    prowler: []
+    prowler-cloud:
+    - prowler-cloud/prowler
+  changes_sample_if_merged: false
+- id: name:pydantic-ai
+  members:
+  - pydantic-ai
+  - pydantic-ai-slim
+  evidence:
+  - 'name_pattern: pydantic-ai'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    pydantic-ai: []
+    pydantic-ai-slim: []
+  changes_sample_if_merged: false
+- id: name:qiskit
+  members:
+  - qiskit
+  - qiskit-terra
+  evidence:
+  - 'name_pattern: qiskit'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    qiskit: []
+    qiskit-terra: []
+  changes_sample_if_merged: false
+- id: name:qwed
+  members:
+  - qwed
+  - qwed-mcp
+  evidence:
+  - 'name_pattern: qwed'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    qwed:
+    - qwed-ai/qwed-verification
+    qwed-mcp:
+    - qwed-ai/qwed-mcp
+  changes_sample_if_merged: false
+- id: name:rasa
+  members:
+  - rasa
+  - rasa-pro
+  evidence:
+  - 'name_pattern: rasa'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    rasa: []
+    rasa-pro: []
+  changes_sample_if_merged: false
+- id: name:requests
+  members:
+  - requests
+  - requests-hardened
+  evidence:
+  - 'name_pattern: requests'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    requests:
+    - psf/requests
+    requests-hardened:
+    - saleor/requests-hardened
+  changes_sample_if_merged: false
+- id: name:sanic
+  members:
+  - sanic
+  - sanic-cors
+  evidence:
+  - 'name_pattern: sanic'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    sanic:
+    - sanic-org/sanic
+    sanic-cors:
+    - ashleysommer/sanic-cors
+  changes_sample_if_merged: false
+- id: name:starlette
+  members:
+  - starlette
+  - starlette-admin
+  evidence:
+  - 'name_pattern: starlette'
+  proposed: pending
+  decision: pending
+  overlaps: []
+  repos:
+    starlette:
+    - encode/starlette
+    - kludex/starlette
+    starlette-admin:
+    - jowilf/starlette-admin
+  changes_sample_if_merged: false
+- id: name:utcp
+  members:
+  - utcp
+  - utcp-cli
+  - utcp-gql
+  - utcp-http
+  - utcp-websocket
+  evidence:
+  - 'name_pattern: utcp'
+  proposed: pending
+  decision: pending
+  overlaps:
+  - repo:universal-tool-calling-protocol/python-utcp
+  repos:
+    utcp: []
+    utcp-cli:
+    - universal-tool-calling-protocol/python-utcp
+    utcp-gql: []
+    utcp-http:
+    - universal-tool-calling-protocol/python-utcp
+    utcp-websocket: []
+  changes_sample_if_merged: false

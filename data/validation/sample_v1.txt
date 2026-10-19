@@ -1,0 +1,59 @@
+# sample_v1: capped random sample of the validation pool (docs/VALIDATION_AND_PLAN.md §2.1)
+# snapshot: https://github.com/github/advisory-database @ b16e369438ef2ab329b4c224cae8224f144bf5d5 (2026-10-19)
+# pool: github-reviewed, affects PyPI, published >= 2025-01-01, not withdrawn -> 2953 advisories
+# units after CVE-alias merge: 2953 (0 merged units)
+# families: config/package_families.yaml sha256 9d08d01810abc8574c0b46c9f63d6d979363e8b166e4cb03c2ecdb42b71f9e52
+# seed: 20261019
+# n: 50, cap: 2 per family
+# algorithm: triager.sampling.draw (units sorted by id, random.Random(seed).shuffle, accept while every family of the unit is under the cap)
+# generator: scripts/sample.py
+GHSA-mmwr-2jhp-mc7j
+GHSA-f2h6-7xfr-xm8w
+GHSA-rrgf-hcr9-jq6h
+GHSA-m2jr-x4gq-5rmj
+GHSA-jfj5-wrj9-63x4
+GHSA-xph7-9rjv-w5fr
+GHSA-x249-cx55-2h87
+GHSA-ghq2-5c67-fprm
+GHSA-227r-w5j2-6243
+GHSA-954p-556p-r752
+GHSA-vrq3-r879-7m65
+GHSA-x783-xp3g-mqhp
+GHSA-5247-m8w9-2v4m
+GHSA-9cfw-f3f9-7mm7
+GHSA-3hh9-752g-5g22
+GHSA-2rrx-pphc-qfv9
+GHSA-wrpj-755p-x363
+GHSA-5cgr-j3jf-jw3v
+GHSA-45m8-cpm2-3v65
+GHSA-5rvq-cxj2-64vf
+GHSA-fqq6-7vqf-w3fg
+GHSA-ffq5-qpvf-xq7x
+GHSA-6rfw-mq36-jm8h
+GHSA-gh4c-6fx4-qh6g
+GHSA-4qqf-9m5c-w2c5
+GHSA-95pq-hr8p-f5g7
+GHSA-f833-7jw8-xwrv
+GHSA-xw8c-rrvx-f7xq
+GHSA-4qcx-jx49-6qrh
+GHSA-5gjj-6r7v-ph3x
+GHSA-2cm6-r77w-6g96
+GHSA-4f84-67cv-qrv3
+GHSA-wvwj-cvrp-7pv5
+GHSA-xpjq-3w4w-w5wr
+GHSA-r54c-2xmf-2cf3
+GHSA-jqfc-9q34-prhg
+GHSA-x2rj-828p-hx9m
+GHSA-59qh-fmm7-3g9q
+GHSA-j5qj-rg5j-j7c2
+GHSA-mwh4-6h8g-pg8w
+GHSA-xch3-2f9x-wh9f
+GHSA-5pwr-322w-8jr4
+GHSA-2wxc-x7rj-hg8f
+GHSA-rpqr-j937-6qr9
+GHSA-7545-fcxq-7j24
+GHSA-v4gp-hf5j-4566
+GHSA-f54q-57x4-jg88
+GHSA-vv9c-xxg7-wmv7
+GHSA-99f9-j8r3-p853
+GHSA-5rff-8f7c-8jmw
