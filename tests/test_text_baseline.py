@@ -10,6 +10,8 @@ TABLE = [
     {"symbol": "pypdf._reader.PdfReader.get_object", "kind": "function"},
     {"symbol": "pypdf._utils.outer", "kind": "function"},
     {"symbol": "pypdf._utils.outer.<locals>.inner", "kind": "function"},
+    {"symbol": "pypdf._utils.rmtree", "kind": "function"},
+    {"symbol": "pypdf.repo.<module>", "kind": "module"},
 ]
 IDX = tb.SymbolIndex.build(TABLE)
 
@@ -52,3 +54,15 @@ def test_resolve_public_reexport_and_locals():
 def test_predict_keeps_only_exact_and_unique():
     _, predicted = tb.predict("Bug in `FlateDecode.decode` and in `decode`.", IDX)
     assert predicted == {"pypdf.filters.FlateDecode.decode"}
+
+
+def test_foreign_prefixes_receivers_and_bare_module_words():
+    # Stdlib-qualified names must not fall back to a same-named package function.
+    assert tb.resolve("shutil.rmtree", IDX).match_type == "unresolved"
+    assert tb.resolve("os.path.join", IDX).match_type == "unresolved"
+    # Receivers are dropped.
+    m = tb.resolve("self.get_object", IDX)
+    assert m.symbols == ("pypdf._reader.PdfReader.get_object",)
+    # A bare word does not name a module; a dotted module path does.
+    assert tb.resolve("repo", IDX).match_type == "unresolved"
+    assert tb.resolve("pypdf.repo", IDX).symbols == ("pypdf.repo.<module>",)

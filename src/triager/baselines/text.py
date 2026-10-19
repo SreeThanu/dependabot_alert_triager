@@ -10,8 +10,10 @@ Vulnerable-function *identification* only; nothing here concerns reachability.
    (``triager.symbols``):
    - ``exact``: the string is a full qualname (or a full module name);
    - ``unique_suffix``: exactly one symbol ends with ``.<string>`` (``<locals>`` segments
-     ignored), possibly after dropping leading components the text added (e.g. a
-     public re-export ``pkg.Class`` defined at ``pkg.sub.Class``);
+     ignored), possibly after dropping leading components that are a receiver
+     (``self.``/``cls.``) or the package's own top-level name (a public re-export
+     ``pkg.Class`` defined at ``pkg.sub.Class``). Other prefixes are never dropped, so
+     ``os.path.join`` does not match ``pkg.Tree.join``; bare words never match modules;
    - ``ambiguous``: several symbols match; all are listed and none is predicted.
 """
 
@@ -96,6 +98,7 @@ class SymbolIndex:
     kinds: dict[str, str]
     by_last: dict[str, list[str]] = field(default_factory=dict)
     modules: dict[str, str] = field(default_factory=dict)  # "pkg.mod" -> "pkg.mod.<module>"
+    top_packages: set[str] = field(default_factory=set)  # first components, e.g. "pypdf"
 
     @classmethod
     def build(cls, table_symbols: Iterable[dict]) -> SymbolIndex:
@@ -103,6 +106,7 @@ class SymbolIndex:
         idx = cls(set(kinds), kinds)
         by_last: dict[str, list[str]] = defaultdict(list)
         for sym, kind in kinds.items():
+            idx.top_packages.add(sym.split(".", 1)[0])
             if kind == "module":
                 mod = sym[: -len(MODULE) - 1]
                 idx.modules[mod] = sym
@@ -119,6 +123,8 @@ class SymbolIndex:
         last = s.rsplit(".", 1)[-1]
         out = []
         for sym in self.by_last.get(last, []):
+            if "." not in s and self.kinds.get(sym) == "module":
+                continue  # a bare word never names a module
             full = _collapse(self._display(sym))
             if full == s or full.endswith("." + s):
                 out.append(sym)
@@ -139,7 +145,15 @@ def resolve(s: str, idx: SymbolIndex) -> Match:
     if s in idx.modules:
         return Match(s, "exact", (idx.modules[s],), s)
     parts = s.split(".")
-    for i in range(len(parts)):
+    # Leading components may only be dropped for a receiver (self./cls.) or the package's
+    # own top-level name (public re-exports); never for other modules (os.path.join).
+    if parts[0] in ("self", "cls"):
+        starts = range(1, len(parts))
+    elif parts[0] in idx.top_packages:
+        starts = range(len(parts))
+    else:
+        starts = range(1)
+    for i in starts:
         part = ".".join(parts[i:])
         cands = idx.suffix_matches(part)
         if len(cands) == 1:
