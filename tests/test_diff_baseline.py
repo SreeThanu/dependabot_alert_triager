@@ -154,3 +154,8 @@ def test_combine_unions_symbols_across_commits_with_provenance():
     out = db.combine([a, b, c])
     assert list(out) == [("pkg.mod.f", "function"), ("pkg.mod.g", "function")]
     assert [h.commit for h in out[("pkg.mod.f", "function")]] == ["c1", "c2"]
+
+
+def test_import_roots_ignore_package_dirs_under_docs():
+    paths = ["docs/api_reference/theme/mlflow/__init__.py", "mlflow/__init__.py"]
+    assert db.import_roots(paths, ["mlflow"]) == (["mlflow"], "auto:mlflow")

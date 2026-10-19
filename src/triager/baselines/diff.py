@@ -32,7 +32,7 @@ from pathlib import Path, PurePosixPath
 from unidiff import PatchSet
 
 from triager.advisories import normalise_name
-from triager.fixcommit import classify
+from triager.fixcommit import DOC_DIRS, TEST_DIRS, classify
 
 EXAMPLE_DIRS = {"example", "examples", "sample", "samples", "demo", "demos"}
 PACKAGING_NAMES = {
@@ -77,17 +77,18 @@ def import_roots(
 
     ``overrides`` maps a normalised package name to explicit root dirs. Otherwise the
     first name variant that matches the last component of a top-level package dir
-    (case-insensitive, outside test/doc/example dirs) wins.
+    (case-insensitive, outside test/doc/example dirs, e.g. not docs/theme/mlflow) wins.
     """
     packages = [normalise_name(p) for p in packages]
     overrides = overrides or {}
     explicit = [r for p in packages for r in overrides.get(p, [])]
     if explicit:
         return sorted(set(explicit)), "override"
+    excluded = EXAMPLE_DIRS | TEST_DIRS | DOC_DIRS
     tops = [
         t
         for t in top_level_packages(paths)
-        if not ({x.lower() for x in PurePosixPath(t).parts} & (EXAMPLE_DIRS | {"tests", "test"}))
+        if not ({x.lower() for x in PurePosixPath(t).parts} & excluded)
     ]
     for pkg in packages:
         for variant in name_variants(pkg):
