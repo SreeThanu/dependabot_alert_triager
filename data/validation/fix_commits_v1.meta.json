@@ -1,0 +1,24 @@
+{
+  "script": "scripts/resolve_fix_commits.py",
+  "repo_commit": "524c674dbe75588470c901303ecefcf2cb14abd4",
+  "run_started_utc": "2026-10-19T14:32:40+00:00",
+  "snapshot": {
+    "repo": "https://github.com/github/advisory-database",
+    "commit": "b16e369438ef2ab329b4c224cae8224f144bf5d5"
+  },
+  "sample": "data/validation/sample_v1.txt",
+  "advisories": 50,
+  "verified": 22,
+  "verified_by_source": {
+    "pr_merge": 1,
+    "reference": 20,
+    "tag_diff_inferred": 1
+  },
+  "not_verified": 28,
+  "github_api_authenticated": false,
+  "pr_lookups": 7,
+  "pr_lookup_api_errors": 0,
+  "repo_rename_lookups": 4,
+  "repo_rename_lookup_api_errors": 0,
+  "candidates_checked": 33
+}

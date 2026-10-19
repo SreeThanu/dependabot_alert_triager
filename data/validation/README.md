@@ -10,6 +10,9 @@ Phase 2 validation data (`docs/VALIDATION_AND_PLAN.md` §2). Advisory content is
 | `sample_v1.txt` | `scripts/sample.py` (T2) | 50 advisory IDs. Header records snapshot SHA, seed, pool definition and size, cap, and the sha256 of `config/package_families.yaml` used. Never resampled silently: the script refuses to run if a fresh draw differs. |
 | `family_review.yaml` | `scripts/sample.py` (T2) | Candidate package families for human review; nothing in it is applied. |
 | `labels_v1.csv` | `scripts/sample.py` (T2), then hand-labelled | One row per sampled advisory. The script never overwrites it once it exists. |
+| `fix_commits_v1.csv` | `scripts/resolve_fix_commits.py` (T3) | One row per sampled advisory: fix-commit resolution and per-check verification. Kept separate from `labels_v1.csv` so hand labelling and scripts never write the same file. |
+| `fix_commit_candidates_v1.csv` | `scripts/resolve_fix_commits.py` (T3) | One row per candidate commit checked (several per advisory possible). |
+| `fix_commits_v1.meta.json` | `scripts/resolve_fix_commits.py` (T3) | Provenance (snapshot, repo commit, run time, API auth) and counts. |
 
 Snapshot: github/advisory-database `b16e369438ef2ab329b4c224cae8224f144bf5d5` (2026-10-19), as
 pinned in `config/snapshots.yaml`. Pool: github-reviewed, affects PyPI, published >= 2025-01-01,
@@ -37,7 +40,8 @@ Multi-valued cells are separated by `; `.
 
 | Column | Filled by |
 |---|---|
-| `fix_commit_source`, `fix_verified`, `diff_files_total`, `diff_files_src`, `diff_funcs_changed_src` | T3 / T4 (fix-commit resolver and diff baseline), per plan §2.3 |
+| `fix_commit_source`, `fix_verified`, `diff_files_total`, `diff_files_src` | T3 writes these to `fix_commits_v1.csv` (same column names, keyed by `ghsa_id`), not into this file. |
+| `diff_funcs_changed_src` | T4 (diff baseline). |
 
 ### Filled by hand (left empty by the script)
 
@@ -45,3 +49,31 @@ Multi-valued cells are separated by `; `.
 `gold_vulnerable_symbols`, `gold_entry_points`, `label_confidence`, `label_basis`,
 `minutes_spent`, `labeler`, `notes`. Allowed values are in plan §2.2. `package_type` is the
 human label; `package_type_proposed` is only a hint and must not be copied without checking.
+
+## `fix_commits_v1.csv` columns (T3, plan §2.3)
+
+Resolution runs in order and falls through only if the earlier stage yields no verified commit:
+`reference` (commit URLs in references) → `pr_merge` (PR URL → merge commit via the GitHub
+REST API, responses cached) → `tag_diff_inferred` (commits between the last affected and first
+fixed tags whose message contains the GHSA or a CVE id; lower trust).
+
+| Column | Meaning |
+|---|---|
+| `repo` | GitHub `owner/repo` of the selected candidate. |
+| `fix_links_commit`, `fix_links_pr`, `fix_commits_linked` | Number of commit / PR links in the advisory references, and their sum. |
+| `stages_tried` | Resolution stages attempted. |
+| `fix_commit_source` | Stage that produced the verified commit(s): `reference` / `pr_merge` / `tag_diff_inferred`, or `none`. |
+| `fix_verified` | `yes` if at least one candidate passed all four checks. |
+| `fix_commits` | Verified SHAs; if none verified, the best candidate (most checks passed). |
+| `check_repo_matches_pypi` | Candidate repo is among GitHub repos in the PyPI project URLs / home page (cached PyPI JSON). |
+| `check_in_fixed_tag` | Commit is an ancestor of the first fixed release tag of some affected range (`git merge-base --is-ancestor`). |
+| `check_not_in_affected_tag` | Commit is not an ancestor of the last affected release tag of that range (OSV `last_affected` / GHSA `<=` bound if given, else the highest stable tag below the fixed version and at or above `introduced`). |
+| `check_changes_src` | Commit changes at least one non-test, non-doc source file (`triager.fixcommit.classify`). |
+| `fixed_version`, `fixed_tag`, `last_affected_tag` | Versions and tags used by the containment checks. |
+| `diff_files_total`, `diff_files_src`, `diff_files_test` | Files changed (against first parent), union over the verified commits (or the best candidate). |
+| `failure_reason` | For unverified advisories: failing checks of the best candidate, their details, and resolution errors. |
+
+Check values: `pass` / `fail` / `unknown`. `unknown` (e.g. no tag found for a version, PyPI
+lists no GitHub repo) does not count as a pass. Known limits: a "source file" is any code file
+outside test/doc paths anywhere in the repo, not only inside the affected package's directory;
+tag/version matching handles a PEP 440 subset and common tag prefixes only.
