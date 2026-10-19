@@ -274,3 +274,34 @@ def test_renamed_repo_passes_only_when_both_names_resolve_to_same_repo(repo):
     assert (
         fc.verify(cand2, work, a, PYPI, canonical=forked.get).checks["repo_matches_pypi"] == fc.FAIL
     )
+
+
+# --- manual candidates ---------------------------------------------------------------
+
+
+def test_manual_candidate_verifies_when_automated_stages_find_nothing(clones, repo):
+    _, shas = repo
+    a = adv("GHSA-zzzz-zzzz-zzzz", ["pkg"], ranges=(RANGE,))  # no links, no id in messages
+    url = f"https://github.com/owner/pkg/commit/{shas['fix']}"
+    res = fc.resolve(a, PYPI, clones, _no_pr, manual=[(url, "read the changelog")])
+    assert res.source == "manual"
+    assert res.stages_tried == ["tag_diff_inferred", "manual"]
+    [m] = [c for c in res.candidates if c.source == "manual"]
+    assert m.verified and "how_found: read the changelog" in m.details
+
+
+def test_manual_candidate_is_checked_but_automated_source_wins(clones, repo):
+    _, shas = repo
+    a = adv(GHSA, ["pkg"], references=[f"https://github.com/owner/pkg/commit/{shas['fix']}"],
+            ranges=(RANGE,))  # fmt: skip
+    manual = [
+        (f"https://github.com/owner/pkg/commit/{shas['after']}", "guess"),
+        (f"https://github.com/owner/pkg/commit/{shas['fix'][:12]}", "same as reference"),
+        ("https://example.com/not-a-commit", "typo"),
+    ]
+    res = fc.resolve(a, PYPI, clones, _no_pr, manual=manual)
+    assert res.source == "reference"
+    [m] = [c for c in res.candidates if c.source == "manual"]
+    assert m.checks["in_fixed_tag"] == fc.FAIL  # 'after' is past the fixed tag
+    assert any("already checked as reference" in e for e in res.errors)
+    assert any("not a GitHub commit URL" in e for e in res.errors)

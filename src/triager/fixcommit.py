@@ -6,7 +6,10 @@ no verified commit:
   (a) ``reference``          commit URLs in the advisory references;
   (b) ``pr_merge``           PR URLs in references -> merge commit (GitHub API);
   (c) ``tag_diff_inferred``  commits between the last affected and first fixed tags
-                             whose message names the GHSA or a CVE id (lower trust).
+                             whose message names the GHSA or a CVE id (lower trust);
+  (d) ``manual``             commit URLs supplied by a human in
+                             data/validation/manual_fix_candidates.csv. Always checked;
+                             they set the source only if (a)-(c) verified nothing.
 
 Each candidate gets four checks, each ``pass`` / ``fail`` / ``unknown``:
 
@@ -462,7 +465,9 @@ def resolve(
     repos_root: Path,
     pr_lookup: PrLookup,
     canonical: Canonical | None = None,
+    manual: Iterable[tuple[str, str]] = (),
 ) -> Resolution:
+    """Resolve and verify fix commits; ``manual`` is [(commit_url, how_found), ...]."""
     commit_links = [u for u in adv.fix_links if parse_commit_url(u)]
     pr_links = [u for u in adv.fix_links if not parse_commit_url(u) and parse_pr_url(u)]
     res = Resolution(adv, commit_links, pr_links, [], [], [])
@@ -484,45 +489,68 @@ def resolve(
             res.candidates.append(verify(cand, repo_dir(repo_slug), adv, pypi_infos, canonical))
         return bool(res.verified)
 
-    # (a) commit URLs
-    if commit_links:
-        res.stages_tried.append("reference")
-        items = [(*parse_commit_url(u), u) for u in commit_links]
-        if run("reference", items):
-            return res
-    # (b) PR URLs -> merge commit
-    if pr_links:
-        res.stages_tried.append("pr_merge")
+    def automated() -> None:
+        # (a) commit URLs
+        if commit_links:
+            res.stages_tried.append("reference")
+            items = [(*parse_commit_url(u), u) for u in commit_links]
+            if run("reference", items):
+                return
+        # (b) PR URLs -> merge commit
+        if pr_links:
+            res.stages_tried.append("pr_merge")
+            items = []
+            for u in pr_links:
+                repo_slug, number = parse_pr_url(u)
+                sha, note = pr_lookup(repo_slug, number)
+                if sha:
+                    items.append((repo_slug, sha, u))
+                else:
+                    res.errors.append(f"{u}: {note}")
+            if run("pr_merge", items):
+                return
+        # (c) tag-diff inference
+        res.stages_tried.append("tag_diff_inferred")
+        repo_slug = package_repo(adv, pypi_infos)
+        if repo_slug is None:
+            res.errors.append("tag_diff: no source repo known")
+            return
+        rd = repo_dir(repo_slug)
+        if rd is None:
+            return
+        tags = index_tags(list_tags(rd), adv.packages)
+        ids = [adv.ghsa_id, *adv.cve_aliases]
         items = []
-        for u in pr_links:
-            repo_slug, number = parse_pr_url(u)
-            sha, note = pr_lookup(repo_slug, number)
-            if sha:
-                items.append((repo_slug, sha, u))
-            else:
-                res.errors.append(f"{u}: {note}")
-        if run("pr_merge", items):
-            return res
-    # (c) tag-diff inference
-    res.stages_tried.append("tag_diff_inferred")
-    repo_slug = package_repo(adv, pypi_infos)
-    if repo_slug is None:
-        res.errors.append("tag_diff: no source repo known")
-        return res
-    rd = repo_dir(repo_slug)
-    if rd is None:
-        return res
-    tags = index_tags(list_tags(rd), adv.packages)
-    ids = [adv.ghsa_id, *adv.cve_aliases]
-    items = []
-    for rng in adv.ranges:
-        fixed_tag, last_tag, note = fixed_and_last_affected_tags(rng, tags)
-        if not (fixed_tag and last_tag):
-            res.errors.append(f"tag_diff {rng.package} {rng.introduced}..{rng.fixed}: {note}")
+        for rng in adv.ranges:
+            fixed_tag, last_tag, note = fixed_and_last_affected_tags(rng, tags)
+            if not (fixed_tag and last_tag):
+                res.errors.append(f"tag_diff {rng.package} {rng.introduced}..{rng.fixed}: {note}")
+                continue
+            found = commits_mentioning(rd, last_tag, fixed_tag, ids)
+            if not found:
+                res.errors.append(
+                    f"tag_diff {last_tag}..{fixed_tag}: no commit message names {ids}"
+                )
+            items += [(repo_slug, sha, f"{last_tag}..{fixed_tag}") for sha in found]
+        run("tag_diff_inferred", items)
+
+    automated()
+
+    # (d) manual candidates: always checked and recorded, own trust level. They only
+    # determine the advisory's source when no automated candidate verified.
+    for url, how_found in manual:
+        parsed = parse_commit_url(url)
+        if parsed is None:
+            res.errors.append(f"manual: not a GitHub commit URL: {url}")
             continue
-        found = commits_mentioning(rd, last_tag, fixed_tag, ids)
-        if not found:
-            res.errors.append(f"tag_diff {last_tag}..{fixed_tag}: no commit message names {ids}")
-        items += [(repo_slug, sha, f"{last_tag}..{fixed_tag}") for sha in found]
-    run("tag_diff_inferred", items)
+        repo_slug, sha = parsed
+        dup = next((c for c in res.candidates if c.repo == repo_slug and sha in c.sha), None)
+        if dup is not None:
+            res.errors.append(f"manual: {url} already checked as {dup.source}")
+            continue
+        if "manual" not in res.stages_tried:
+            res.stages_tried.append("manual")
+        cand = Candidate(adv.ghsa_id, "manual", repo_slug, sha, url)
+        cand.details.append(f"how_found: {how_found}")
+        res.candidates.append(verify(cand, repo_dir(repo_slug), adv, pypi_infos, canonical))
     return res

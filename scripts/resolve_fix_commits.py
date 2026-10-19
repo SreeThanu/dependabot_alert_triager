@@ -13,11 +13,15 @@ Outputs (crash-safe writes):
 
 Repos are cloned blobless into data/raw/repos/. PR lookups use GITHUB_TOKEN if set
 (never written anywhere) and are cached in data/cache/github_pulls/.
+
+Optional human input: data/validation/manual_fix_candidates.csv with columns
+ghsa_id, commit_url, how_found. Each row gets the same four checks with source = manual.
 """
 
 from __future__ import annotations
 
 import csv
+import hashlib
 import io
 import json
 import os
@@ -41,6 +45,8 @@ SAMPLE = VAL / "sample_v1.txt"
 OUT = VAL / "fix_commits_v1.csv"
 OUT_CANDS = VAL / "fix_commit_candidates_v1.csv"
 OUT_META = VAL / "fix_commits_v1.meta.json"
+MANUAL = VAL / "manual_fix_candidates.csv"  # human-maintained; optional
+MANUAL_COLUMNS = ["ghsa_id", "commit_url", "how_found"]
 
 ADV_COLUMNS = [
     "ghsa_id", "packages", "repo", "fix_links_commit", "fix_links_pr", "fix_commits_linked",
@@ -67,6 +73,26 @@ def load_advisories(ids: list[str]) -> dict[str, advisories.Advisory]:
     missing = wanted - set(out)
     if missing:
         sys.exit(f"sample IDs missing from snapshot: {sorted(missing)}")
+    return out
+
+
+def load_manual(ids: list[str]) -> dict[str, list[tuple[str, str]]]:
+    """Rows of manual_fix_candidates.csv grouped by ghsa_id (empty if the file is absent)."""
+    if not MANUAL.exists():
+        return {}
+    with MANUAL.open(newline="") as fh:
+        reader = csv.DictReader(fh)
+        if reader.fieldnames != MANUAL_COLUMNS:
+            sys.exit(f"{MANUAL.name}: columns must be {MANUAL_COLUMNS}, got {reader.fieldnames}")
+        rows = [r for r in reader if any((v or "").strip() for v in r.values())]
+    unknown = sorted({r["ghsa_id"] for r in rows} - set(ids))
+    if unknown:
+        sys.exit(f"{MANUAL.name}: ghsa_id not in sample_v1: {unknown}")
+    out: dict[str, list[tuple[str, str]]] = {}
+    for r in rows:
+        out.setdefault(r["ghsa_id"].strip(), []).append(
+            (r["commit_url"].strip(), (r["how_found"] or "").strip())
+        )
     return out
 
 
@@ -180,6 +206,7 @@ def main() -> None:
     snapshots.verify_head(SNAPSHOT_DIR, snap)
     ids = sample_ids()
     advs = load_advisories(ids)
+    manual = load_manual(ids)
     token = os.environ.get("GITHUB_TOKEN") or None
     stats: Counter = Counter()
     lookup = make_pr_lookup(token, stats)
@@ -190,7 +217,7 @@ def main() -> None:
     for i, gid in enumerate(ids, 1):
         adv = advs[gid]
         infos = {p: pypi.fetch(p, PYPI_CACHE).get("info") for p in adv.packages}
-        res = fixcommit.resolve(adv, infos, REPOS, lookup, canonical)
+        res = fixcommit.resolve(adv, infos, REPOS, lookup, canonical, manual=manual.get(gid, []))
         results.append(res)
         status = "VERIFIED" if res.verified else "not verified"
         print(f"[{i:2}/{len(ids)}] {gid} {', '.join(adv.packages)}: {res.source} {status}",
@@ -221,6 +248,10 @@ def main() -> None:
         "repo_rename_lookups": stats["repo_lookups"],
         "repo_rename_lookup_api_errors": stats["repo_api_error"],
         "candidates_checked": len(cand_rows),
+        "manual_candidates": sum(len(v) for v in manual.values()),
+        "manual_file_sha256": (
+            hashlib.sha256(MANUAL.read_bytes()).hexdigest() if MANUAL.exists() else None
+        ),
     }
     atomic_write_text(OUT_META, json.dumps(meta, indent=2) + "\n")
     print(json.dumps(meta, indent=2))
