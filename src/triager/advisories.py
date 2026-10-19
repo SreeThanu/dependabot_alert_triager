@@ -20,6 +20,36 @@ def normalise_name(name: str) -> str:
 
 
 @dataclass(frozen=True)
+class VersionRange:
+    """One affected interval for one PyPI package (OSV ECOSYSTEM range)."""
+
+    package: str  # normalised
+    introduced: str  # "0" means from the beginning
+    fixed: str | None
+    last_affected: str | None  # OSV last_affected event or GHSA "<= X" range
+
+
+def _ranges(affected: dict) -> list[VersionRange]:
+    pkg = normalise_name(affected["package"]["name"])
+    lkav = (affected.get("database_specific") or {}).get("last_known_affected_version_range", "")
+    lkav_ver = lkav[2:].strip() if lkav.startswith("<=") else None
+    out = []
+    for r in affected.get("ranges", []):
+        if r.get("type") != "ECOSYSTEM":
+            continue
+        introduced = None
+        for ev in r.get("events", []):
+            if "introduced" in ev:
+                introduced = ev["introduced"]
+            elif introduced is not None and ("fixed" in ev or "last_affected" in ev):
+                out.append(VersionRange(pkg, introduced, ev.get("fixed"), ev.get("last_affected")))
+                introduced = None
+        if introduced is not None:
+            out.append(VersionRange(pkg, introduced, None, lkav_ver))
+    return out
+
+
+@dataclass(frozen=True)
 class Advisory:
     ghsa_id: str
     aliases: tuple[str, ...]
@@ -30,6 +60,7 @@ class Advisory:
     packages: tuple[str, ...]  # PyPI only, normalised, sorted, unique
     references: tuple[str, ...]
     package_refs: tuple[str, ...] = ()  # references of OSV type PACKAGE (source repo)
+    ranges: tuple[VersionRange, ...] = ()
 
     @property
     def cve_aliases(self) -> tuple[str, ...]:
@@ -65,6 +96,12 @@ def parse(record: dict) -> Advisory | None:
         references=tuple(r.get("url", "") for r in record.get("references", [])),
         package_refs=tuple(
             r.get("url", "") for r in record.get("references", []) if r.get("type") == "PACKAGE"
+        ),
+        ranges=tuple(
+            vr
+            for a in record.get("affected", [])
+            if a.get("package", {}).get("ecosystem") == "PyPI"
+            for vr in _ranges(a)
         ),
     )
 

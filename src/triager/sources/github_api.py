@@ -213,3 +213,31 @@ def summarise(
         "with_vulnerable_functions_not_withdrawn": sum(not v["withdrawn"] for v in with_vf),
         "advisories_with_vulnerable_functions": sorted(with_vf, key=lambda v: v["ghsa_id"]),
     }
+
+
+def get_cached_json(
+    url: str,
+    path: Path,
+    *,
+    transport: Transport = urllib_transport,
+    token: str | None = None,
+    cache_statuses: tuple[int, ...] = (200, 404),
+) -> dict[str, Any]:
+    """GET one API URL, caching {"url", "fetched_at", "status", "body"} at ``path``.
+
+    Only ``cache_statuses`` are cached (a 404 is a stable answer; a rate-limit 403 is
+    not). Other statuses raise GitHubAPIError via the same path as paged fetches.
+    """
+    if path.exists():
+        return json.loads(path.read_text())
+    resp = transport(url, _request_headers(token))
+    if resp.status not in cache_statuses:
+        resp = _get(url, transport, token, retries=3, backoff=2.0)
+    record = {
+        "url": url,
+        "fetched_at": datetime.now(UTC).isoformat(timespec="seconds"),
+        "status": resp.status,
+        "body": json.loads(resp.body) if resp.body else None,
+    }
+    atomic_write_text(path, json.dumps(record))
+    return record
