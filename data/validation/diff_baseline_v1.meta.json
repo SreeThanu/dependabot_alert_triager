@@ -1,0 +1,35 @@
+{
+  "script": "scripts/diff_baseline.py",
+  "repo_commit": "3632feb4a154168c5700431ba1bac697ac22019b",
+  "run_started_utc": "2026-10-19T17:48:26+00:00",
+  "input": "data/validation/fix_commits_v1.csv (fix_verified = yes)",
+  "advisories": 22,
+  "n_functions_distribution": {
+    "0": 6,
+    "1": 3,
+    "2-3": 12,
+    "4+": 1
+  },
+  "import_root_methods": {
+    "auto:django": 1,
+    "auto:invokeai": 1,
+    "auto:datamodel_code_generator": 1,
+    "auto:vllm": 1,
+    "auto:praisonai": 1,
+    "auto:airflow": 1,
+    "auto:mcp_server_git": 1,
+    "auto:picklescan": 2,
+    "auto:urllib3": 1,
+    "auto:weblate": 1,
+    "auto:nltk": 1,
+    "auto:pillow_heif": 1,
+    "auto:mlflow": 2,
+    "auto:authlib": 1,
+    "auto:lightrag": 1,
+    "auto:xinference": 1,
+    "auto:aiohttp": 1,
+    "auto:openssl": 1,
+    "auto:asyncssh": 1,
+    "unresolved": 1
+  }
+}

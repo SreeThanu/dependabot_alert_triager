@@ -1,0 +1,65 @@
+ghsa_id,symbol,kind,commit,file,lines
+GHSA-mmwr-2jhp-mc7j,django.contrib.admin.options.<module>,module,428c48f358c5a0ed5ca2834fb721d615eb2b0e11,django/contrib/admin/options.py,34
+GHSA-mmwr-2jhp-mc7j,django.contrib.admin.options.<module>,module,397c22048244db2cd4bb78f570e6c72a3967bf36,django/contrib/admin/options.py,35
+GHSA-mmwr-2jhp-mc7j,django.contrib.admin.options.<module>,module,abfe1a1c57a57cfaf6dd4a0571c029401a0fe743,django/contrib/admin/options.py,32
+GHSA-mmwr-2jhp-mc7j,django.contrib.admin.options.ModelAdmin.changelist_view,function,428c48f358c5a0ed5ca2834fb721d615eb2b0e11,django/contrib/admin/options.py,2074
+GHSA-mmwr-2jhp-mc7j,django.contrib.admin.options.ModelAdmin.changelist_view,function,397c22048244db2cd4bb78f570e6c72a3967bf36,django/contrib/admin/options.py,2116
+GHSA-mmwr-2jhp-mc7j,django.contrib.admin.options.ModelAdmin.changelist_view,function,abfe1a1c57a57cfaf6dd4a0571c029401a0fe743,django/contrib/admin/options.py,2018
+GHSA-227r-w5j2-6243,invokeai.app.services.image_files.image_files_disk.DiskImageFileStorage,class,5440c037674882b2ab7acd59087e9bb04b49657a,invokeai/app/services/image_files/image_files_disk.py,113
+GHSA-227r-w5j2-6243,invokeai.app.services.image_files.image_files_disk.DiskImageFileStorage.get_path,function,5440c037674882b2ab7acd59087e9bb04b49657a,invokeai/app/services/image_files/image_files_disk.py,115 117 118 119 121
+GHSA-954p-556p-r752,datamodel_code_generator.__main__.Config,class,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/__main__.py,505
+GHSA-954p-556p-r752,datamodel_code_generator.__main__.main,function,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/__main__.py,1127 1128
+GHSA-954p-556p-r752,datamodel_code_generator.__main__.run_generate_from_config,function,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/__main__.py,967
+GHSA-954p-556p-r752,datamodel_code_generator._types.generate_config_dict.GenerateConfigDict,class,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/_types/generate_config_dict.py,124
+GHSA-954p-556p-r752,datamodel_code_generator._types.parser_config_dicts.ParserConfigDict,class,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/_types/parser_config_dicts.py,120
+GHSA-954p-556p-r752,datamodel_code_generator.arguments.<module>,module,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/arguments.py,172
+GHSA-954p-556p-r752,datamodel_code_generator.cli_options.<module>,module,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/cli_options.py,285
+GHSA-954p-556p-r752,datamodel_code_generator.config.GenerateConfig,class,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/config.py,152
+GHSA-954p-556p-r752,datamodel_code_generator.config.ParserConfig,class,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/config.py,291
+GHSA-954p-556p-r752,datamodel_code_generator.deprecations.<module>,module,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/deprecations.py,94 96
+GHSA-954p-556p-r752,datamodel_code_generator.generate,function,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/__init__.py,629
+GHSA-954p-556p-r752,datamodel_code_generator.http.<module>,module,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/http.py,9 10 28
+GHSA-954p-556p-r752,datamodel_code_generator.http.get_body,function,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/http.py,31 36 40 41 42 43 44 45 46 47 48 49 50 51 53 58
+GHSA-954p-556p-r752,datamodel_code_generator.parser.base.Parser.__init__,function,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/parser/base.py,1187
+GHSA-954p-556p-r752,datamodel_code_generator.parser.base.Parser._get_text_from_url,function,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/parser/base.py,1369
+GHSA-954p-556p-r752,datamodel_code_generator.parser.jsonschema.JsonSchemaParser._get_ref_body,function,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/parser/jsonschema.py,4805 4811
+GHSA-954p-556p-r752,datamodel_code_generator.prompt_data.<module>,module,5fdba4a09f2d7a9996a504975b7ef7d63e3715bb,src/datamodel_code_generator/prompt_data.py,18 84
+GHSA-vrq3-r879-7m65,vllm.v1.engine.processor.Processor._validate_structured_output,function,08bf7840780980c7568c573c70a6a8db94fd45ff,vllm/v1/engine/processor.py,191 192
+GHSA-vrq3-r879-7m65,vllm.v1.structured_output.backend_xgrammar.validate_xgrammar_grammar,function,08bf7840780980c7568c573c70a6a8db94fd45ff,vllm/v1/structured_output/backend_xgrammar.py,284
+GHSA-x783-xp3g-mqhp,praisonai.gateway.server.WebSocketGateway.__init__,function,0accebb2e3c3ec2fca66bbea0444fb7a35f0b4ef,src/praisonai/praisonai/gateway/server.py,205
+GHSA-x783-xp3g-mqhp,praisonai.persistence.conversation.sqlite.SQLiteConversationStore.__init__,function,0accebb2e3c3ec2fca66bbea0444fb7a35f0b4ef,src/praisonai/praisonai/persistence/conversation/sqlite.py,48
+GHSA-5247-m8w9-2v4m,airflow.api_fastapi.core_api.routes.public.assets.<module>,module,0940c4b66c270d929e9f59914c65e15bd4734680,airflow-core/src/airflow/api_fastapi/core_api/routes/public/assets.py,84
+GHSA-5247-m8w9-2v4m,airflow.api_fastapi.core_api.routes.public.assets.materialize_asset,function,0940c4b66c270d929e9f59914c65e15bd4734680,airflow-core/src/airflow/api_fastapi/core_api/routes/public/assets.py,438
+GHSA-5247-m8w9-2v4m,airflow.api_fastapi.core_api.routes.public.dag_run.wait_dag_run_until_finished,function,0940c4b66c270d929e9f59914c65e15bd4734680,airflow-core/src/airflow/api_fastapi/core_api/routes/public/dag_run.py,837
+GHSA-5cgr-j3jf-jw3v,mcp_server_git.server.GitInit,class,eac56e7bcde48fb64d5a973924d05d69a7d876e6,src/git/src/mcp_server_git/server.py,73 74
+GHSA-5cgr-j3jf-jw3v,mcp_server_git.server.GitTools,class,eac56e7bcde48fb64d5a973924d05d69a7d876e6,src/git/src/mcp_server_git/server.py,107
+GHSA-5cgr-j3jf-jw3v,mcp_server_git.server.git_init,function,eac56e7bcde48fb64d5a973924d05d69a7d876e6,src/git/src/mcp_server_git/server.py,186 187 188 189 190 191
+GHSA-5cgr-j3jf-jw3v,mcp_server_git.server.serve.<locals>.call_tool,function,eac56e7bcde48fb64d5a973924d05d69a7d876e6,src/git/src/mcp_server_git/server.py,357 358 359 360 361 362 363 364 365
+GHSA-5cgr-j3jf-jw3v,mcp_server_git.server.serve.<locals>.list_tools,function,eac56e7bcde48fb64d5a973924d05d69a7d876e6,src/git/src/mcp_server_git/server.py,311 312 313 314 315
+GHSA-fqq6-7vqf-w3fg,picklescan.scanner.<module>,module,1931c2d04eaca8d20597705ff39cab78ba364e4b,src/picklescan/scanner.py,136 137 140 141 157
+GHSA-gh4c-6fx4-qh6g,urllib3.response.DeflateDecoder.decompress,function,ea2ad7b21a80da3632f80016526a18864586077f,src/urllib3/response.py,78
+GHSA-gh4c-6fx4-qh6g,urllib3.response.DeflateDecoder.has_unconsumed_tail,function,ea2ad7b21a80da3632f80016526a18864586077f,src/urllib3/response.py,121
+GHSA-4qqf-9m5c-w2c5,weblate.accounts.models.<module>,module,020b2905e4d001cff2452574d10e6cf3621b5f62,weblate/accounts/models.py,10 520
+GHSA-f833-7jw8-xwrv,nltk.corpus.reader.framenet.<module>,module,736d3212a47de2005b85b785dde6720556d3925d,nltk/corpus/reader/framenet.py,781
+GHSA-f833-7jw8-xwrv,nltk.corpus.reader.framenet.FramenetCorpusReader._lu_file,function,736d3212a47de2005b85b785dde6720556d3925d,nltk/corpus/reader/framenet.py,1838 1839 1840 1841 1842 1850
+GHSA-f833-7jw8-xwrv,nltk.corpus.reader.framenet.FramenetCorpusReader.doc,function,736d3212a47de2005b85b785dde6720556d3925d,nltk/corpus/reader/framenet.py,1388 1389 1390 1391 1392 1396
+GHSA-f833-7jw8-xwrv,nltk.corpus.reader.framenet.FramenetCorpusReader.frame_by_name,function,736d3212a47de2005b85b785dde6720556d3925d,nltk/corpus/reader/framenet.py,1485 1486 1487 1488 1494
+GHSA-2cm6-r77w-6g96,mlflow.server.auth.<module>,module,f9b1eb510478570609ef451984a255775aa4b937,mlflow/server/auth/__init__.py,86 87 97 111 113 114 124 125 136 142 146 1776 1974 2127
+GHSA-2cm6-r77w-6g96,mlflow.server.auth._find_validator,function,f9b1eb510478570609ef451984a255775aa4b937,mlflow/server/auth/__init__.py,2282
+GHSA-2cm6-r77w-6g96,mlflow.server.auth._get_permission_from_trace_request_id,function,f9b1eb510478570609ef451984a255775aa4b937,mlflow/server/auth/__init__.py,1746 1747 1748 1749 1756 1758 1759 1760 1761 1762 1763 1764 1765 1766 1767 1768 1769
+GHSA-wvwj-cvrp-7pv5,authlib.jose.rfc7515.jws.JsonWebSignature._prepare_algorithm_key,function,a5d4b2d4c9e46bfa11c82f85fdc2bcc0b50ae681,authlib/jose/rfc7515/jws.py,272 273
+GHSA-wvwj-cvrp-7pv5,authlib.jose.rfc7516.jwe.prepare_key,function,a5d4b2d4c9e46bfa11c82f85fdc2bcc0b50ae681,authlib/jose/rfc7516/jwe.py,757 758
+GHSA-x2rj-828p-hx9m,xinference.model.llm.tool_parsers.llama3_tool_parser.<module>,module,1b3d220f342ce68d34cec4586d9409d457dadc42,xinference/model/llm/tool_parsers/llama3_tool_parser.py,0
+GHSA-x2rj-828p-hx9m,xinference.model.llm.tool_parsers.llama3_tool_parser.Llama3ToolParser.extract_tool_calls,function,1b3d220f342ce68d34cec4586d9409d457dadc42,xinference/model/llm/tool_parsers/llama3_tool_parser.py,32 33 46 48
+GHSA-x2rj-828p-hx9m,xinference.model.llm.utils.<module>,module,1b3d220f342ce68d34cec4586d9409d457dadc42,xinference/model/llm/utils.py,14
+GHSA-x2rj-828p-hx9m,xinference.model.llm.utils.ChatModelMixin._eval_llama3_chat_arguments,function,1b3d220f342ce68d34cec4586d9409d457dadc42,xinference/model/llm/utils.py,753 755
+GHSA-mwh4-6h8g-pg8w,aiohttp.http_writer._py_serialize_headers,function,53b35a2f8869c37a133e60bf1a82a1c01642ba2b,aiohttp/http_writer.py,363
+GHSA-mwh4-6h8g-pg8w,aiohttp.web_exceptions.HTTPException.__init__,function,53b35a2f8869c37a133e60bf1a82a1c01642ba2b,aiohttp/web_exceptions.py,103
+GHSA-mwh4-6h8g-pg8w,aiohttp.web_response.StreamResponse._set_status,function,53b35a2f8869c37a133e60bf1a82a1c01642ba2b,aiohttp/web_response.py,161 162
+GHSA-xch3-2f9x-wh9f,mlflow.sagemaker.<module>,module,8b8792a7034fb33a14b0b31cabcaa9b912d3485f,mlflow/sagemaker/__init__.py,8 9 15
+GHSA-xch3-2f9x-wh9f,mlflow.sagemaker.push_image_to_ecr,function,8b8792a7034fb33a14b0b31cabcaa9b912d3485f,mlflow/sagemaker/__init__.py,145 146 147 148 149 150 151 152 153 154 155 156 157 158 159 161 162 164 166 167
+GHSA-xch3-2f9x-wh9f,mlflow.sagemaker.run_local,function,8b8792a7034fb33a14b0b31cabcaa9b912d3485f,mlflow/sagemaker/__init__.py,1162
+GHSA-5pwr-322w-8jr4,OpenSSL.SSL._CookieGenerateCallbackHelper.__init__,function,57f09bb4bb051d3bc2a1abd36e9525313d5cd408,src/OpenSSL/SSL.py,719
+GHSA-5pwr-322w-8jr4,OpenSSL.SSL._CookieGenerateCallbackHelper.__init__.<locals>.wrapper,function,57f09bb4bb051d3bc2a1abd36e9525313d5cd408,src/OpenSSL/SSL.py,724
+GHSA-2wxc-x7rj-hg8f,asyncssh.scp._parse_cd_args,function,d730803b8e4e94c20c7580d90f94d1e05f9f58de,asyncssh/scp.py,138
+GHSA-f54q-57x4-jg88,picklescan.scanner.<module>,module,aecd11be98702caa9ba9b12189d91ad596a36114,src/picklescan/scanner.py,136 140 155

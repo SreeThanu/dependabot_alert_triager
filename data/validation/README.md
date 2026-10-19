@@ -13,6 +13,9 @@ Phase 2 validation data (`docs/VALIDATION_AND_PLAN.md` §2). Advisory content is
 | `fix_commits_v1.csv` | `scripts/resolve_fix_commits.py` (T3) | One row per sampled advisory: fix-commit resolution and per-check verification. Kept separate from `labels_v1.csv` so hand labelling and scripts never write the same file. |
 | `fix_commit_candidates_v1.csv` | `scripts/resolve_fix_commits.py` (T3) | One row per candidate commit checked (several per advisory possible). |
 | `manual_fix_candidates.csv` | Hand-maintained (optional) | Columns `ghsa_id, commit_url, how_found`. Read by `scripts/resolve_fix_commits.py`; each row gets the same four checks with source `manual`. |
+| `diff_baseline_v1.csv` | `scripts/diff_baseline.py` (T4) | Diff-baseline candidate symbols, one row per advisory with a verified fix (22). Not scored. |
+| `diff_baseline_symbols_v1.csv` | `scripts/diff_baseline.py` (T4) | One row per (advisory, symbol, commit, file) with the pre-fix line numbers that mapped to it. |
+| `diff_baseline_v1.meta.json` | `scripts/diff_baseline.py` (T4) | Provenance and the distribution of function counts. |
 | `fix_commits_v1.meta.json` | `scripts/resolve_fix_commits.py` (T3) | Provenance (snapshot, repo commit, run time, API auth) and counts. |
 
 Snapshot: github/advisory-database `b16e369438ef2ab329b4c224cae8224f144bf5d5` (2026-10-19), as
@@ -80,3 +83,21 @@ Check values: `pass` / `fail` / `unknown`. `unknown` (e.g. no tag found for a ve
 lists no GitHub repo) does not count as a pass. Known limits: a "source file" is any code file
 outside test/doc paths anywhere in the repo, not only inside the affected package's directory;
 tag/version matching handles a PEP 440 subset and common tag prefixes only.
+
+## `diff_baseline_v1.csv` columns (T4)
+
+Method: `triager.baselines.diff` (module docstring). Vulnerable-function *identification* only;
+nothing here concerns reachability. Symbols are fully qualified (`pkg.mod.Class.method`; nested
+functions as `pkg.mod.outer.<locals>.inner`; module-level code as `pkg.mod.<module>`).
+
+| Column | Meaning |
+|---|---|
+| `import_roots`, `import_root_method` | Repo directories treated as the affected package's import path; `auto:<variant>` (matched PyPI-name variant), `override` (`config/import_paths.yaml`) or `unresolved`. |
+| `files_changed` | Files changed by the fix commit(s). |
+| `files_python_in_scope` | Python files inside the import root(s) that were analysed. |
+| `files_non_python_in_scope` | Non-Python source inside the import root(s) (C, Cython, templates...): not mapped to symbols. |
+| `files_out_of_scope` | Counts by reason: `outside_import_root`, `test`, `doc`, `example`, `packaging`, `other`. |
+| `unparsed_files` | In-scope Python files whose pre-fix version failed `ast.parse`. |
+| `new_files` | In-scope Python files added by the fix (no pre-fix version, so no symbols). |
+| `n_functions`, `functions` | Function/method candidates. |
+| `n_classes`, `n_module`, `classes_and_modules` | Class-body and module-level changes, kept separate from function candidates. |
