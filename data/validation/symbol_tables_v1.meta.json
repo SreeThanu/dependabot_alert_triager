@@ -1,0 +1,14 @@
+{
+  "script": "scripts/build_symbol_tables.py",
+  "repo_commit": "2e31d7feeb739d1f352755c63ace2168696268e9",
+  "run_started_utc": "2026-10-19T18:17:04+00:00",
+  "snapshot": "b16e369438ef2ab329b4c224cae8224f144bf5d5",
+  "advisories": 50,
+  "with_symbol_table": 43,
+  "ref_kinds": {
+    "fix_parent": 22,
+    "last_affected_tag": 23,
+    "none": 5
+  },
+  "import_root_unresolved": 2
+}

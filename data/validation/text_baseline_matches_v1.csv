@@ -1,0 +1,465 @@
+ghsa_id,string,patterns,match_type,matched_on,symbols
+GHSA-mmwr-2jhp-mc7j,ModelAdmin.list_editable,backtick; dotted,unresolved,,
+GHSA-mmwr-2jhp-mc7j,POST,backtick,unresolved,,
+GHSA-f2h6-7xfr-xm8w,_safe_extractall,backtick; call; phrase,unique_suffix,_safe_extractall,praisonai.recipe.registry._safe_extractall
+GHSA-f2h6-7xfr-xm8w,tar.extractall,backtick; dotted; call,unresolved,,
+GHSA-f2h6-7xfr-xm8w,LocalRegistry.pull,backtick; dotted; call,unique_suffix,LocalRegistry.pull,praisonai.recipe.registry.LocalRegistry.pull
+GHSA-f2h6-7xfr-xm8w,HttpRegistry.pull,backtick; dotted; call,unique_suffix,HttpRegistry.pull,praisonai.recipe.registry.HttpRegistry.pull
+GHSA-f2h6-7xfr-xm8w,member.size,backtick; dotted,unresolved,,
+GHSA-f2h6-7xfr-xm8w,TarInfo.size,backtick; dotted,unresolved,,
+GHSA-f2h6-7xfr-xm8w,publish,backtick; call; phrase,ambiguous,publish,praisonai.endpoints.a2u_server.A2UEventBus.publish; praisonai.recipe.registry.HttpRegistry.publish; praisonai.recipe.registry.LocalRegistry.publish; praisonai.recipe.registry.RegistryProtocol.publish
+GHSA-f2h6-7xfr-xm8w,shutil.copy2,backtick; dotted; call,unresolved,,
+GHSA-f2h6-7xfr-xm8w,pull,backtick; call,ambiguous,pull,praisonai.recipe.registry.HttpRegistry.pull; praisonai.recipe.registry.LocalRegistry.pull; praisonai.recipe.registry.RegistryProtocol.pull
+GHSA-f2h6-7xfr-xm8w,src.praisonai.praisonai.recipe.registry,path,unresolved,,
+GHSA-f2h6-7xfr-xm8w,tarfile.TarFile,dotted,unresolved,,
+GHSA-f2h6-7xfr-xm8w,dest_dir.resolve,dotted; call,unresolved,,
+GHSA-f2h6-7xfr-xm8w,tar.getmembers,dotted; call,unresolved,,
+GHSA-f2h6-7xfr-xm8w,member.name,dotted,unresolved,,
+GHSA-f2h6-7xfr-xm8w,member_path.is_absolute,dotted; call,unresolved,,
+GHSA-f2h6-7xfr-xm8w,member_path.parts,dotted,unresolved,,
+GHSA-f2h6-7xfr-xm8w,os.sep,dotted,unresolved,,
+GHSA-f2h6-7xfr-xm8w,praisonai.recipe.registry,dotted,exact,praisonai.recipe.registry,praisonai.recipe.registry.<module>
+GHSA-f2h6-7xfr-xm8w,reg.publish,dotted; call,unresolved,,
+GHSA-f2h6-7xfr-xm8w,reg.pull,dotted; call,unresolved,,
+GHSA-f2h6-7xfr-xm8w,Path,call,unresolved,,
+GHSA-f2h6-7xfr-xm8w,RegistryError,call,unique_suffix,RegistryError,praisonai.recipe.registry.RegistryError
+GHSA-f2h6-7xfr-xm8w,str,call,unresolved,,
+GHSA-f2h6-7xfr-xm8w,LocalRegistry,call,unique_suffix,LocalRegistry,praisonai.recipe.registry.LocalRegistry
+GHSA-f2h6-7xfr-xm8w,len,call,unresolved,,
+GHSA-f2h6-7xfr-xm8w,iterates,phrase,unresolved,,
+GHSA-m2jr-x4gq-5rmj,python.sglang.srt.lora.lora_manager,path,unresolved,,
+GHSA-m2jr-x4gq-5rmj,unknown,phrase,unresolved,,
+GHSA-x249-cx55-2h87,gym_trainer,backtick,unresolved,,
+GHSA-x249-cx55-2h87,gym_manager,backtick,unresolved,,
+GHSA-x249-cx55-2h87,general_gym_manager,backtick,unresolved,,
+GHSA-x249-cx55-2h87,UserDeactivateView,backtick,unique_suffix,UserDeactivateView,wger.core.views.user.UserDeactivateView
+GHSA-x249-cx55-2h87,gym.manage_gym,backtick; dotted,unresolved,,
+GHSA-x249-cx55-2h87,gym.manage_gyms,backtick; dotted,unresolved,,
+GHSA-x249-cx55-2h87,gym.gym_trainer,backtick; dotted,unresolved,,
+GHSA-x249-cx55-2h87,WgerMultiplePermissionRequiredMixin,backtick; call; phrase,unique_suffix,WgerMultiplePermissionRequiredMixin,wger.utils.generic_views.WgerMultiplePermissionRequiredMixin
+GHSA-x249-cx55-2h87,wger.core.views.user,backtick; path,exact,wger.core.views.user,wger.core.views.user.<module>
+GHSA-x249-cx55-2h87,wger.utils.generic_views,backtick; path,exact,wger.utils.generic_views,wger.utils.generic_views.<module>
+GHSA-x249-cx55-2h87,dispatch,backtick; call; phrase,ambiguous,dispatch,wger.core.api.views.LanguageViewSet.dispatch; wger.core.views.repetition_units.DeleteView.dispatch; wger.core.views.user.UserActivateView.dispatch; wger.core.views.user.UserDeactivateView.dispatch; wger.core.views.user.UserDetailView.dispatch; wger.core.views.user.UserEditView.dispatch; wger.core.views.weight_units.DeleteView.dispatch; wger.exercises.api.views.EquipmentViewSet.dispatch; wger.exercises.api.views.ExerciseBaseInfoViewset.dispatch; wger.exercises.api.views.ExerciseCategoryViewSet.dispatch; wger.exercises.api.views.ExerciseImageViewSet.dispatch; wger.exercises.api.views.ExerciseInfoViewset.dispatch; wger.exercises.api.views.ExerciseViewSet.dispatch; wger.exercises.api.views.MuscleViewSet.dispatch; wger.gym.views.admin_notes.AddView.dispatch; wger.gym.views.admin_notes.DeleteView.dispatch; wger.gym.views.admin_notes.ListView.dispatch; wger.gym.views.admin_notes.UpdateView.dispatch; wger.gym.views.config.GymConfigUpdateView.dispatch; wger.gym.views.contract.AddView.dispatch; wger.gym.views.contract.DetailView.dispatch; wger.gym.views.contract.ListView.dispatch; wger.gym.views.contract.UpdateView.dispatch; wger.gym.views.contract_option.AddView.dispatch; wger.gym.views.contract_option.DeleteView.dispatch; wger.gym.views.contract_option.ListView.dispatch; wger.gym.views.contract_option.UpdateView.dispatch; wger.gym.views.contract_type.AddView.dispatch; wger.gym.views.contract_type.DeleteView.dispatch; wger.gym.views.contract_type.ListView.dispatch; wger.gym.views.contract_type.UpdateView.dispatch; wger.gym.views.document.AddView.dispatch; wger.gym.views.document.DeleteView.dispatch; wger.gym.views.document.ListView.dispatch; wger.gym.views.document.UpdateView.dispatch; wger.gym.views.gym.GymAddUserView.dispatch; wger.gym.views.gym.GymUpdateView.dispatch; wger.gym.views.gym.GymUserListView.dispatch; wger.gym.views.user_config.ConfigUpdateView.dispatch; wger.mailer.views.gym.EmailLogListView.dispatch; wger.manager.views.log.WorkoutLogDetailView.dispatch; wger.manager.views.workout_session.WorkoutSessionAddView.dispatch; wger.nutrition.views.ingredient.IngredientCreateView.dispatch; wger.nutrition.views.log.LogCreateView.dispatch; wger.nutrition.views.meal_item.MealItemCreateView.dispatch; wger.utils.generic_views.TextTemplateView.dispatch; wger.utils.generic_views.WgerDeleteMixin.dispatch; wger.utils.generic_views.WgerFormMixin.dispatch; wger.utils.generic_views.WgerPermissionMixin.dispatch
+GHSA-x249-cx55-2h87,UserActivateView,backtick,unique_suffix,UserActivateView,wger.core.views.user.UserActivateView
+GHSA-x249-cx55-2h87,get_permission_list,backtick; call,unique_suffix,get_permission_list,wger.gym.helpers.get_permission_list
+GHSA-x249-cx55-2h87,wger.gym.helpers,backtick; path,exact,wger.gym.helpers,wger.gym.helpers.<module>
+GHSA-x249-cx55-2h87,trainer,backtick,unresolved,,
+GHSA-x249-cx55-2h87,UserDeactivateView.dispatch,backtick; dotted; call,unique_suffix,UserDeactivateView.dispatch,wger.core.views.user.UserDeactivateView.dispatch
+GHSA-x249-cx55-2h87,UserActivateView.dispatch,backtick; dotted; call,unique_suffix,UserActivateView.dispatch,wger.core.views.user.UserActivateView.dispatch
+GHSA-x249-cx55-2h87,poc,path; dotted,unresolved,,
+GHSA-x249-cx55-2h87,self.get_permission_required,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,self.request.user.has_perm,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,self.kwargs,dotted,unresolved,,
+GHSA-x249-cx55-2h87,request.user.has_perm,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,edit_user.userprofile.gym_id,dotted,unresolved,,
+GHSA-x249-cx55-2h87,request.user.userprofile.gym_id,dotted,unresolved,,
+GHSA-x249-cx55-2h87,sys.argv,dotted,unresolved,,
+GHSA-x249-cx55-2h87,sys.exit,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,requests.post,dotted,unresolved,,
+GHSA-x249-cx55-2h87,r.status_code,dotted,unresolved,,
+GHSA-x249-cx55-2h87,os.environ,dotted,unresolved,,
+GHSA-x249-cx55-2h87,settings.main,dotted,unresolved,,
+GHSA-x249-cx55-2h87,sys.path.insert,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,django.setup,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,django.contrib.auth.models,dotted,unresolved,,
+GHSA-x249-cx55-2h87,wger.gym.models,dotted,exact,wger.gym.models,wger.gym.models.<module>
+GHSA-x249-cx55-2h87,Group.objects.get_or_create,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,Gym.objects.get_or_create,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,gym.name,dotted,unresolved,,
+GHSA-x249-cx55-2h87,User.objects.get_or_create,dotted,unresolved,,
+GHSA-x249-cx55-2h87,manager.set_password,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,manager.save,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,manager.userprofile.gym,dotted,unresolved,,
+GHSA-x249-cx55-2h87,manager.userprofile.save,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,manager.groups.clear,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,manager.groups.add,dotted,unresolved,,
+GHSA-x249-cx55-2h87,Group.objects.get,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,manager.is_active,dotted,unresolved,,
+GHSA-x249-cx55-2h87,manager.username,dotted,unresolved,,
+GHSA-x249-cx55-2h87,g.name,dotted,unresolved,,
+GHSA-x249-cx55-2h87,manager.groups.all,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,trainer.set_password,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,trainer.save,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,trainer.userprofile.gym,dotted,unresolved,,
+GHSA-x249-cx55-2h87,trainer.userprofile.save,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,trainer.groups.clear,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,trainer.groups.add,dotted,unresolved,,
+GHSA-x249-cx55-2h87,trainer.username,dotted,unresolved,,
+GHSA-x249-cx55-2h87,trainer.groups.all,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,manager.refresh_from_db,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,django.test,dotted,unresolved,,
+GHSA-x249-cx55-2h87,c.force_login,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,c.get,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,resp.status_code,dotted,unresolved,,
+GHSA-x249-cx55-2h87,edit_user.has_perm,dotted; call,unresolved,,
+GHSA-x249-cx55-2h87,has_permission,call,ambiguous,has_permission,wger.core.api.permissions.AllowRegisterUser.has_permission; wger.exercises.api.permissions.CanContributeExercises.has_permission; wger.utils.generic_views.WgerMultiplePermissionRequiredMixin.has_permission; wger.utils.permissions.CreateOnlyPermission.has_permission; wger.utils.permissions.UpdateOnlyPermission.has_permission; wger.utils.permissions.WgerPermission.has_permission
+GHSA-x249-cx55-2h87,get_object_or_404,call,unresolved,,
+GHSA-x249-cx55-2h87,HttpResponseForbidden,call,unresolved,,
+GHSA-x249-cx55-2h87,super,call,unresolved,,
+GHSA-x249-cx55-2h87,len,call,unresolved,,
+GHSA-x249-cx55-2h87,print,call,unresolved,,
+GHSA-x249-cx55-2h87,api_login,call,unresolved,,
+GHSA-x249-cx55-2h87,api_headers,call,unresolved,,
+GHSA-x249-cx55-2h87,Client,call,unresolved,,
+GHSA-x249-cx55-2h87,python,phrase,unresolved,,
+GHSA-x249-cx55-2h87,only,phrase,unresolved,,
+GHSA-ghq2-5c67-fprm,Config.__init__,backtick; dotted; call,unique_suffix,Config.__init__,pdm.project.config.Config.__init__
+GHSA-ghq2-5c67-fprm,_save_config,backtick; call,unique_suffix,_save_config,pdm.project.config.Config._save_config
+GHSA-ghq2-5c67-fprm,lstat,backtick,unresolved,,
+GHSA-ghq2-5c67-fprm,O_NOFOLLOW,backtick,unresolved,,
+GHSA-ghq2-5c67-fprm,pdm,backtick,exact,pdm,pdm.<module>
+GHSA-ghq2-5c67-fprm,Medium,backtick,unresolved,,
+GHSA-ghq2-5c67-fprm,src.pdm.project.config,path,unresolved,,
+GHSA-ghq2-5c67-fprm,src.pdm.project.core,path,unresolved,,
+GHSA-ghq2-5c67-fprm,src.pdm.cli.commands.use,path,unresolved,,
+GHSA-ghq2-5c67-fprm,venv.in_project,dotted,unresolved,,
+GHSA-227r-w5j2-6243,web,phrase,unresolved,,
+GHSA-954p-556p-r752,None,backtick,unresolved,,
+GHSA-954p-556p-r752,src.datamodel_code_generator.parser.jsonschema,backtick; path,unresolved,,
+GHSA-954p-556p-r752,_get_ref_body,backtick; call,unique_suffix,_get_ref_body,datamodel_code_generator.parser.jsonschema.JsonSchemaParser._get_ref_body
+GHSA-954p-556p-r752,a321547e,backtick,unresolved,,
+GHSA-954p-556p-r752,allow_remote_refs,backtick,unresolved,,
+GHSA-954p-556p-r752,_get_text_from_url,backtick,unique_suffix,_get_text_from_url,datamodel_code_generator.parser.base.Parser._get_text_from_url
+GHSA-954p-556p-r752,get_body,backtick,unique_suffix,get_body,datamodel_code_generator.http.get_body
+GHSA-954p-556p-r752,description,backtick,unresolved,,
+GHSA-954p-556p-r752,title,backtick,unresolved,,
+GHSA-954p-556p-r752,properties,backtick,unresolved,,
+GHSA-954p-556p-r752,parser.base,backtick; path,unique_suffix,parser.base,datamodel_code_generator.parser.base.<module>
+GHSA-954p-556p-r752,curl,backtick,unresolved,,
+GHSA-954p-556p-r752,main,backtick,unique_suffix,main,datamodel_code_generator.__main__.main
+GHSA-954p-556p-r752,parser.jsonschema,path,unique_suffix,parser.jsonschema,datamodel_code_generator.parser.jsonschema.<module>
+GHSA-954p-556p-r752,resolved_ref.startswith,dotted; call,unresolved,,
+GHSA-954p-556p-r752,self.http_local_ref_path,dotted,unresolved,,
+GHSA-954p-556p-r752,self.allow_remote_refs,dotted,unresolved,,
+GHSA-954p-556p-r752,self._get_ref_body_from_url,dotted; call,unique_suffix,_get_ref_body_from_url,datamodel_code_generator.parser.jsonschema.JsonSchemaParser._get_ref_body_from_url
+GHSA-954p-556p-r752,self._get_ref_body_from_remote,dotted; call,unique_suffix,_get_ref_body_from_remote,datamodel_code_generator.parser.jsonschema.JsonSchemaParser._get_ref_body_from_remote
+GHSA-954p-556p-r752,is_url,call,unique_suffix,is_url,datamodel_code_generator.reference.is_url
+GHSA-954p-556p-r752,Error,call,ambiguous,Error,datamodel_code_generator.Error; datamodel_code_generator.input_model.Error
+GHSA-954p-556p-r752,REST,phrase,unresolved,,
+GHSA-vrq3-r879-7m65,__import__,call,unresolved,,
+GHSA-vrq3-r879-7m65,OpenAPI,phrase,unresolved,,
+GHSA-x783-xp3g-mqhp,table_prefix,backtick,unresolved,,
+GHSA-x783-xp3g-mqhp,sqlite_master,backtick,unresolved,,
+GHSA-x783-xp3g-mqhp,from_yaml,backtick,ambiguous,from_yaml,praisonai.deploy.main.Deploy.from_yaml; praisonai.persistence.config.PersistenceConfig.from_yaml; praisonai.scheduler.agent_scheduler.AgentScheduler.from_yaml
+GHSA-x783-xp3g-mqhp,from_dict,backtick,ambiguous,from_dict,praisonai.acp.session.ACPSession.from_dict; praisonai.cli.configuration.schema.ConfigSchema.from_dict; praisonai.cli.features.file_history.FileVersion.from_dict; praisonai.cli.features.profiler.optimizations.PerfSnapshot.from_dict; praisonai.cli.features.queue.models.QueueConfig.from_dict; praisonai.cli.features.queue.models.QueuedRun.from_dict; praisonai.cli.session.unified.UnifiedSession.from_dict; praisonai.cli.state.identifiers.RunContext.from_dict; praisonai.cli.state.sessions.SessionMetadata.from_dict; praisonai.context.config.DynamicContextConfig.from_dict; praisonai.mcp_server.auth.oidc.ClientMetadata.from_dict; praisonai.mcp_server.auth.oidc.OIDCConfig.from_dict; praisonai.mcp_server.icons.Icon.from_dict; praisonai.mcp_server.icons.RichMetadata.from_dict; praisonai.mcp_server.sampling.SamplingResponse.from_dict; praisonai.mcp_server.sampling.ToolCall.from_dict; praisonai.persistence.config.PersistenceConfig.from_dict; praisonai.persistence.conversation.base.ConversationMessage.from_dict; praisonai.persistence.conversation.base.ConversationSession.from_dict; praisonai.persistence.knowledge.base.KnowledgeDocument.from_dict; praisonai.recipe.runtime.BackgroundRuntimeConfig.from_dict; praisonai.recipe.runtime.JobRuntimeConfig.from_dict; praisonai.recipe.runtime.RuntimeConfig.from_dict; praisonai.recipe.runtime.ScheduleRuntimeConfig.from_dict; praisonai.replay.judge.JudgeReport.from_dict; praisonai.replay.plan.ActionableFix.from_dict; praisonai.replay.plan.JudgePlan.from_dict; praisonai.standardise.models.FeatureManifest.from_dict; praisonai.templates.cache.CacheMetadata.from_dict; praisonai.train.agents.models.TrainingIteration.from_dict; praisonai.train.agents.models.TrainingProfile.from_dict; praisonai.train.agents.models.TrainingReport.from_dict; praisonai.train.agents.models.TrainingScenario.from_dict
+GHSA-x783-xp3g-mqhp,SQLiteConversationStore,backtick,unique_suffix,SQLiteConversationStore,praisonai.persistence.conversation.sqlite.SQLiteConversationStore
+GHSA-x783-xp3g-mqhp,create_stores_from_config,backtick,unique_suffix,create_stores_from_config,praisonai.persistence.factory.create_stores_from_config
+GHSA-x783-xp3g-mqhp,conversation_options,backtick,unresolved,,
+GHSA-x783-xp3g-mqhp,config,path; dotted,unique_suffix,config,praisonai.cli.features.context_manager.ContextManagerHandler.config
+GHSA-x783-xp3g-mqhp,com.MervinPraison.PraisonAI.blob.fde17acdc89cafd97ff49e9ddc81777b4445850f.src.praisonai.praisonai.persistence.config,path,unresolved,,
+GHSA-x783-xp3g-mqhp,factory,path; dotted,unresolved,,
+GHSA-x783-xp3g-mqhp,com.MervinPraison.PraisonAI.blob.fde17acdc89cafd97ff49e9ddc81777b4445850f.src.praisonai.praisonai.persistence.factory,path,unresolved,,
+GHSA-x783-xp3g-mqhp,sqlite,path; dotted,unresolved,,
+GHSA-x783-xp3g-mqhp,self.sessions_table,dotted,unresolved,,
+GHSA-x783-xp3g-mqhp,SQLiteConversationStore.table_prefix,dotted,unresolved,,
+GHSA-x783-xp3g-mqhp,praisonai.persistence.conversation.sqlite,dotted,exact,praisonai.persistence.conversation.sqlite,praisonai.persistence.conversation.sqlite.<module>
+GHSA-x783-xp3g-mqhp,praisonai.persistence.conversation.base,dotted,exact,praisonai.persistence.conversation.base,praisonai.persistence.conversation.base.<module>
+GHSA-x783-xp3g-mqhp,tempfile.mkstemp,dotted; call,unresolved,,
+GHSA-x783-xp3g-mqhp,os.close,dotted; call,unresolved,,
+GHSA-x783-xp3g-mqhp,normal.create_session,dotted,unresolved,,
+GHSA-x783-xp3g-mqhp,normal.list_sessions,dotted; call,unresolved,,
+GHSA-x783-xp3g-mqhp,injected.list_sessions,dotted; call,unresolved,,
+GHSA-x783-xp3g-mqhp,row.session_id,dotted,unresolved,,
+GHSA-x783-xp3g-mqhp,os.remove,dotted; call,unresolved,,
+GHSA-x783-xp3g-mqhp,run_poc,call,unresolved,,
+GHSA-x783-xp3g-mqhp,print,call,ambiguous,print,praisonai.cli.features.output_modes.OutputHandler.print; praisonai.cli.output.console.OutputController.print
+GHSA-x783-xp3g-mqhp,len,call,unresolved,,
+GHSA-5247-m8w9-2v4m,wait_dag_run_until_finished,backtick,unique_suffix,wait_dag_run_until_finished,airflow.api_fastapi.core_api.routes.public.dag_run.wait_dag_run_until_finished
+GHSA-5247-m8w9-2v4m,DAG,backtick,unique_suffix,DAG,airflow.sdk.definitions.dag.DAG
+GHSA-5247-m8w9-2v4m,dag_run_id,backtick,unresolved,,
+GHSA-5247-m8w9-2v4m,conf,backtick,unresolved,,
+GHSA-5247-m8w9-2v4m,materialization,phrase,unresolved,,
+GHSA-9cfw-f3f9-7mm7,unmarshal_object,phrase,unique_suffix,unmarshal_object,apscheduler._marshalling.unmarshal_object
+GHSA-9cfw-f3f9-7mm7,arbitrary,phrase,unresolved,,
+GHSA-9cfw-f3f9-7mm7,allows,phrase,unresolved,,
+GHSA-9cfw-f3f9-7mm7,instantiation,phrase,unresolved,,
+GHSA-9cfw-f3f9-7mm7,available,phrase,unresolved,,
+GHSA-3hh9-752g-5g22,lmcache.integration.vllm.utils,path,exact,lmcache.integration.vllm.utils,lmcache.integration.vllm.utils.<module>
+GHSA-3hh9-752g-5g22,hex_hash_to_int16,phrase,unique_suffix,hex_hash_to_int16,lmcache.integration.vllm.utils.hex_hash_to_int16
+GHSA-2rrx-pphc-qfv9,Scripting,call,unresolved,,
+GHSA-45m8-cpm2-3v65,backend.open_webui.socket.main,backtick; path,unresolved,,
+GHSA-45m8-cpm2-3v65,connect,backtick; call; phrase,ambiguous,connect,open_webui.socket.main.connect; open_webui.utils.mcp.client.MCPClient.connect
+GHSA-45m8-cpm2-3v65,heartbeat,backtick; call; phrase,unique_suffix,heartbeat,open_webui.socket.main.heartbeat
+GHSA-45m8-cpm2-3v65,document_save_handler,backtick,unique_suffix,document_save_handler,open_webui.socket.main.document_save_handler
+GHSA-45m8-cpm2-3v65,backend.open_webui.routers.users,backtick; path,unresolved,,
+GHSA-45m8-cpm2-3v65,role,backtick,unresolved,,
+GHSA-45m8-cpm2-3v65,SESSION_POOL,backtick,unresolved,,
+GHSA-45m8-cpm2-3v65,last_seen_at,backtick,unresolved,,
+GHSA-45m8-cpm2-3v65,get_current_user,backtick,unique_suffix,get_current_user,open_webui.utils.auth.get_current_user
+GHSA-45m8-cpm2-3v65,user.role,backtick; dotted,unresolved,,
+GHSA-45m8-cpm2-3v65,False,backtick,unresolved,,
+GHSA-45m8-cpm2-3v65,admin,backtick,unresolved,,
+GHSA-45m8-cpm2-3v65,Notes.update_note_by_id,backtick; dotted,unresolved,,
+GHSA-45m8-cpm2-3v65,delete_user_by_id,backtick,ambiguous,delete_user_by_id,open_webui.models.users.UsersTable.delete_user_by_id; open_webui.routers.users.delete_user_by_id
+GHSA-45m8-cpm2-3v65,utils.auth,path,unique_suffix,utils.auth,open_webui.utils.auth.<module>
+GHSA-45m8-cpm2-3v65,backend.open_webui.utils.auth,path,unresolved,,
+GHSA-45m8-cpm2-3v65,socket.main,path,unique_suffix,socket.main,open_webui.socket.main.<module>
+GHSA-45m8-cpm2-3v65,Users.get_user_by_id,dotted; call,unresolved,,
+GHSA-45m8-cpm2-3v65,SESSION_POOL.get,dotted; call,unresolved,,
+GHSA-45m8-cpm2-3v65,time.time,dotted; call,unresolved,,
+GHSA-45m8-cpm2-3v65,user.get,dotted; call,unresolved,,
+GHSA-45m8-cpm2-3v65,decode_token,call,unique_suffix,decode_token,open_webui.utils.auth.decode_token
+GHSA-45m8-cpm2-3v65,has_access,call,ambiguous,has_access,open_webui.models.access_grants.AccessGrantsTable.has_access; open_webui.utils.access_control.has_access
+GHSA-5rvq-cxj2-64vf,QuerystringParser,backtick; phrase,unique_suffix,QuerystringParser,python_multipart.multipart.QuerystringParser
+GHSA-5rvq-cxj2-64vf,python_multipart.multipart,backtick; path,exact,python_multipart.multipart,python_multipart.multipart.<module>
+GHSA-5rvq-cxj2-64vf,FIELD_NAME,backtick,unresolved,,
+GHSA-5rvq-cxj2-64vf,FIELD_DATA,backtick,unresolved,,
+GHSA-5rvq-cxj2-64vf,data.find,backtick; dotted; call,unresolved,,
+GHSA-5rvq-cxj2-64vf,FormParser,backtick,unique_suffix,FormParser,python_multipart.multipart.FormParser
+GHSA-5rvq-cxj2-64vf,create_form_parser,backtick,unique_suffix,create_form_parser,python_multipart.multipart.create_form_parser
+GHSA-5rvq-cxj2-64vf,parse_form,backtick,unique_suffix,parse_form,python_multipart.multipart.parse_form
+GHSA-5rvq-cxj2-64vf,request.form,backtick; dotted; call,unresolved,,
+GHSA-fqq6-7vqf-w3fg,doctest.debug_script,dotted; phrase,unresolved,,
+GHSA-fqq6-7vqf-w3fg,pickle.load,dotted; call,unresolved,,
+GHSA-fqq6-7vqf-w3fg,__reduce__,call,unresolved,,
+GHSA-fqq6-7vqf-w3fg,debug_script,call; phrase,unresolved,,
+GHSA-fqq6-7vqf-w3fg,exec,call,unresolved,,
+GHSA-fqq6-7vqf-w3fg,__import__,call,unresolved,,
+GHSA-fqq6-7vqf-w3fg,library,phrase,unresolved,,
+GHSA-fqq6-7vqf-w3fg,reduce,phrase,unresolved,,
+GHSA-fqq6-7vqf-w3fg,Then,phrase,unresolved,,
+GHSA-fqq6-7vqf-w3fg,EvilDoctestDebugScript,phrase,unresolved,,
+GHSA-ffq5-qpvf-xq7x,eval,backtick; call; phrase,unresolved,,
+GHSA-ffq5-qpvf-xq7x,convertToValue,backtick; phrase,unresolved,,
+GHSA-ffq5-qpvf-xq7x,alert,backtick; call,unresolved,,
+GHSA-ffq5-qpvf-xq7x,CommandSender.vue,dotted,unresolved,,
+GHSA-6rfw-mq36-jm8h,install_packages,call; phrase,unique_suffix,install_packages,bedrock_agentcore.tools.code_interpreter_client.CodeInterpreter.install_packages
+GHSA-6rfw-mq36-jm8h,constructs,phrase,unresolved,,
+GHSA-6rfw-mq36-jm8h,applied,phrase,unresolved,,
+GHSA-gh4c-6fx4-qh6g,HTTPResponse.stream,backtick; dotted; call,unique_suffix,HTTPResponse.stream,urllib3.response.HTTPResponse.stream
+GHSA-gh4c-6fx4-qh6g,HTTPResponse.read_chunked,backtick; dotted; call,unique_suffix,HTTPResponse.read_chunked,urllib3.response.HTTPResponse.read_chunked
+GHSA-gh4c-6fx4-qh6g,streaming,phrase,unresolved,,
+GHSA-f833-7jw8-xwrv,_reject_unsafe_path_component,backtick; call,unique_suffix,_reject_unsafe_path_component,nltk.corpus.reader.framenet._reject_unsafe_path_component
+GHSA-f833-7jw8-xwrv,self.abspath,backtick; dotted; call,unique_suffix,abspath,nltk.corpus.reader.api.CorpusReader.abspath
+GHSA-f833-7jw8-xwrv,nltk.corpus.reader.api,backtick; path,exact,nltk.corpus.reader.api,nltk.corpus.reader.api.<module>
+GHSA-f833-7jw8-xwrv,self._root.join,backtick; dotted; call,ambiguous,join,nltk.data.FileSystemPathPointer.join; nltk.data.PathPointer.join; nltk.data.ZipFilePathPointer.join; nltk.huggingface.dataset.HFDatasetPathPointer.join
+GHSA-f833-7jw8-xwrv,required_root,backtick,unresolved,,
+GHSA-f833-7jw8-xwrv,CorpusReader.open,backtick; dotted; call,unique_suffix,CorpusReader.open,nltk.corpus.reader.api.CorpusReader.open
+GHSA-f833-7jw8-xwrv,NKJPCorpusReader,backtick,unique_suffix,NKJPCorpusReader,nltk.corpus.reader.nkjp.NKJPCorpusReader
+GHSA-f833-7jw8-xwrv,nltk.corpus.reader.framenet,backtick; path; dotted,exact,nltk.corpus.reader.framenet,nltk.corpus.reader.framenet.<module>
+GHSA-f833-7jw8-xwrv,frame_by_name,backtick; call,unique_suffix,frame_by_name,nltk.corpus.reader.framenet.FramenetCorpusReader.frame_by_name
+GHSA-f833-7jw8-xwrv,_lu_file,backtick; call,unique_suffix,_lu_file,nltk.corpus.reader.framenet.FramenetCorpusReader._lu_file
+GHSA-f833-7jw8-xwrv,doc,backtick; call,ambiguous,doc,nltk.corpus.reader.framenet.FramenetCorpusReader.doc; nltk.corpus.reader.wordnet.WordNetCorpusReader.doc
+GHSA-f833-7jw8-xwrv,XMLCorpusView,backtick; call,unique_suffix,XMLCorpusView,nltk.corpus.reader.xmldocs.XMLCorpusView
+GHSA-f833-7jw8-xwrv,PathPointer.open,backtick; dotted; call,unique_suffix,PathPointer.open,nltk.data.PathPointer.open
+GHSA-f833-7jw8-xwrv,main,backtick,unique_suffix,main,nltk.sem.chat80.main
+GHSA-f833-7jw8-xwrv,secret_path,backtick,unresolved,,
+GHSA-f833-7jw8-xwrv,corpus_root,backtick,unresolved,,
+GHSA-f833-7jw8-xwrv,evil_link,backtick,unresolved,,
+GHSA-f833-7jw8-xwrv,nltk.pathsec,backtick; dotted,exact,nltk.pathsec,nltk.pathsec.<module>
+GHSA-f833-7jw8-xwrv,abspath,backtick; call,unique_suffix,abspath,nltk.corpus.reader.api.CorpusReader.abspath
+GHSA-f833-7jw8-xwrv,validate_path,backtick; call,unique_suffix,validate_path,nltk.pathsec.validate_path
+GHSA-f833-7jw8-xwrv,FramenetCorpusReader.frame,dotted; call,unique_suffix,FramenetCorpusReader.frame,nltk.corpus.reader.framenet.FramenetCorpusReader.frame
+GHSA-f833-7jw8-xwrv,os.path.join,dotted; call,unresolved,,
+GHSA-f833-7jw8-xwrv,tempfile.mkdtemp,dotted; call,unresolved,,
+GHSA-f833-7jw8-xwrv,os.makedirs,dotted; call,unresolved,,
+GHSA-f833-7jw8-xwrv,frRelation.xml,dotted,unresolved,,
+GHSA-f833-7jw8-xwrv,f.write,dotted; call,unresolved,,
+GHSA-f833-7jw8-xwrv,stolen.xml,dotted,unresolved,,
+GHSA-f833-7jw8-xwrv,evil_link.xml,dotted,unresolved,,
+GHSA-f833-7jw8-xwrv,os.symlink,dotted; call,unresolved,,
+GHSA-f833-7jw8-xwrv,reader._frame_idx,dotted,unresolved,,
+GHSA-f833-7jw8-xwrv,reader.frame_by_name,dotted; call,unresolved,,
+GHSA-f833-7jw8-xwrv,self._root,dotted,unresolved,,
+GHSA-f833-7jw8-xwrv,open,call,ambiguous,open,nltk.corpus.reader.api.CorpusReader.open; nltk.data.FileSystemPathPointer.open; nltk.data.GzipFileSystemPathPointer.open; nltk.data.PathPointer.open; nltk.data.ZipFilePathPointer.open; nltk.huggingface.dataset.HFDatasetPathPointer.open; nltk.pathsec.open; nltk.toolbox.StandardFormat.open
+GHSA-f833-7jw8-xwrv,FramenetCorpusReader,call,unique_suffix,FramenetCorpusReader,nltk.corpus.reader.framenet.FramenetCorpusReader
+GHSA-f833-7jw8-xwrv,print,call,unresolved,,
+GHSA-f833-7jw8-xwrv,normal,phrase,unresolved,,
+GHSA-xw8c-rrvx-f7xq,src.ciguard.analyzer.sca.osv,backtick; path,unresolved,,
+GHSA-xw8c-rrvx-f7xq,src.ciguard.analyzer.sca.endoflife,backtick; path,unresolved,,
+GHSA-xw8c-rrvx-f7xq,None,backtick,unresolved,,
+GHSA-xw8c-rrvx-f7xq,urllib.request.urlopen,backtick; dotted,unresolved,,
+GHSA-xw8c-rrvx-f7xq,_fetch,backtick,ambiguous,_fetch,ciguard.analyzer.sca.endoflife.EndOfLifeClient._fetch; ciguard.analyzer.sca.osv.OSVClient._fetch
+GHSA-xw8c-rrvx-f7xq,tests.test_sca_rules,path,unresolved,,
+GHSA-xw8c-rrvx-f7xq,json.loads,dotted,unresolved,,
+GHSA-xw8c-rrvx-f7xq,resp.read,dotted; call,unresolved,,
+GHSA-xw8c-rrvx-f7xq,endoflife.date,dotted,unresolved,,
+GHSA-4qcx-jx49-6qrh,LockManager.release_locks,backtick; dotted; phrase,unique_suffix,LockManager.release_locks,aim.sdk.lock_manager.LockManager.release_locks
+GHSA-4qcx-jx49-6qrh,run_hash,backtick,unique_suffix,run_hash,aim.sdk.legacy.session.session.Session.run_hash
+GHSA-4qcx-jx49-6qrh,Repo._close_run,backtick; dotted; call; phrase,unique_suffix,Repo._close_run,aim.sdk.repo.Repo._close_run
+GHSA-4qcx-jx49-6qrh,instruction,phrase,unresolved,,
+GHSA-5gjj-6r7v-ph3x,_CtxWriteImage_add_plane,backtick; call,unresolved,,
+GHSA-5gjj-6r7v-ph3x,_CtxWriteImage_add_plane_la,backtick; call,unresolved,,
+GHSA-5gjj-6r7v-ph3x,_CtxWriteImage_add_plane_l,backtick; call,unresolved,,
+GHSA-5gjj-6r7v-ph3x,int,backtick,unresolved,,
+GHSA-5gjj-6r7v-ph3x,stride_in,backtick,unresolved,,
+GHSA-5gjj-6r7v-ph3x,height,backtick,unresolved,,
+GHSA-5gjj-6r7v-ph3x,INT_MAX,backtick,unresolved,,
+GHSA-5gjj-6r7v-ph3x,buffer.len,backtick; dotted,unresolved,,
+GHSA-5gjj-6r7v-ph3x,Py_ssize_t,backtick,unresolved,,
+GHSA-5gjj-6r7v-ph3x,int32,backtick,unresolved,,
+GHSA-5gjj-6r7v-ph3x,false,backtick,unresolved,,
+GHSA-5gjj-6r7v-ph3x,width,backtick,unresolved,,
+GHSA-5gjj-6r7v-ph3x,DISABLE_SECURITY_LIMITS,backtick,unresolved,,
+GHSA-5gjj-6r7v-ph3x,pillow_heif.encode,backtick; dotted; call,unique_suffix,encode,pillow_heif.heif.encode
+GHSA-5gjj-6r7v-ph3x,memcpy,backtick; call,unresolved,,
+GHSA-5gjj-6r7v-ph3x,vpx_img_alloc,backtick; call,unresolved,,
+GHSA-5gjj-6r7v-ph3x,aom_img_alloc,backtick; call,unresolved,,
+GHSA-5gjj-6r7v-ph3x,libclang_rt.asan_osx_dynamic.dylib,dotted,unresolved,,
+GHSA-5gjj-6r7v-ph3x,PyBuffer_Release,call,unresolved,,
+GHSA-5gjj-6r7v-ph3x,PyErr_SetString,call,unresolved,,
+GHSA-5gjj-6r7v-ph3x,BytesIO,call,unresolved,,
+GHSA-5gjj-6r7v-ph3x,encode,call,unique_suffix,encode,pillow_heif.heif.encode
+GHSA-5gjj-6r7v-ph3x,print,call,unresolved,,
+GHSA-2cm6-r77w-6g96,_before_request,backtick; phrase,unique_suffix,_before_request,mlflow.server.auth._before_request
+GHSA-2cm6-r77w-6g96,trace,phrase,unique_suffix,trace,mlflow.tracing.fluent.trace
+GHSA-wvwj-cvrp-7pv5,authlib,backtick,exact,authlib,authlib.<module>
+GHSA-wvwj-cvrp-7pv5,jwk,backtick,unresolved,,
+GHSA-wvwj-cvrp-7pv5,authlib.jose.rfc7515.jws,backtick; path,exact,authlib.jose.rfc7515.jws,authlib.jose.rfc7515.jws.<module>
+GHSA-wvwj-cvrp-7pv5,JsonWebSignature._prepare_algorithm_key,backtick; dotted; call,unique_suffix,JsonWebSignature._prepare_algorithm_key,authlib.jose.rfc7515.jws.JsonWebSignature._prepare_algorithm_key
+GHSA-wvwj-cvrp-7pv5,jws.deserialize_compact,backtick; dotted; call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,jws.deserialize_json,backtick; dotted; call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,jws.deserialize,backtick; dotted; call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,kid,backtick,unique_suffix,kid,authlib.jose.rfc7517.base_key.Key.kid
+GHSA-wvwj-cvrp-7pv5,None,backtick,unresolved,,
+GHSA-wvwj-cvrp-7pv5,a9e4cfee,backtick,unresolved,,
+GHSA-wvwj-cvrp-7pv5,header.get,dotted; call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,jwks_cache.get,dotted; call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,authlib.jose,dotted,exact,authlib.jose,authlib.jose.<module>
+GHSA-wvwj-cvrp-7pv5,RSAKey.generate_key,dotted; call,unique_suffix,RSAKey.generate_key,authlib.jose.rfc7518.rsa_key.RSAKey.generate_key
+GHSA-wvwj-cvrp-7pv5,attacker_private.as_dict,dotted; call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,json.dumps,dotted; call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,jws.serialize_compact,dotted; call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,json.loads,dotted; call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,lookup_key,call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,JsonWebSignature,call,unique_suffix,JsonWebSignature,authlib.jose.rfc7515.jws.JsonWebSignature
+GHSA-wvwj-cvrp-7pv5,print,call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,MissingKeyError,call,unresolved,,
+GHSA-wvwj-cvrp-7pv5,deserialization,phrase,unresolved,,
+GHSA-xpjq-3w4w-w5wr,urlTransform,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,localStorage,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,MessageMarkdown,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,components,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,code,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,allowedElements,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,disallowedElements,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,bindFunctions,backtick; call,unresolved,,
+GHSA-xpjq-3w4w-w5wr,loose,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,mermaid,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,click,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,assistantMessage.content,backtick; dotted,unresolved,,
+GHSA-xpjq-3w4w-w5wr,href,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,src,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,f3378a3,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,ChatMessage.tsx,backtick; dotted,unresolved,,
+GHSA-xpjq-3w4w-w5wr,poc.mjs,backtick; dotted,unresolved,,
+GHSA-xpjq-3w4w-w5wr,srcdoc,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,fetch,backtick,unresolved,,
+GHSA-xpjq-3w4w-w5wr,lightrag.api.routers.query_routes,path,exact,lightrag.api.routers.query_routes,lightrag.api.routers.query_routes.<module>
+GHSA-xpjq-3w4w-w5wr,container.innerHTML,dotted,unresolved,,
+GHSA-xpjq-3w4w-w5wr,parent.document.createElement,dotted; call,unresolved,,
+GHSA-xpjq-3w4w-w5wr,h.style.color,dotted,unresolved,,
+GHSA-xpjq-3w4w-w5wr,h.textContent,dotted,unresolved,,
+GHSA-xpjq-3w4w-w5wr,parent.document.domain,dotted,unresolved,,
+GHSA-xpjq-3w4w-w5wr,parent.document.body.appendChild,dotted; call,unresolved,,
+GHSA-xpjq-3w4w-w5wr,parent.document.title,dotted,unresolved,,
+GHSA-xpjq-3w4w-w5wr,React.createElement,dotted; call,unresolved,,
+GHSA-xpjq-3w4w-w5wr,console.log,dotted; call,unresolved,,
+GHSA-xpjq-3w4w-w5wr,document.title,dotted,unresolved,,
+GHSA-xpjq-3w4w-w5wr,document.domain,dotted,unresolved,,
+GHSA-xpjq-3w4w-w5wr,localStorage.getItem,dotted; call,unresolved,,
+GHSA-xpjq-3w4w-w5wr,writeFileSync,call,unresolved,,
+GHSA-xpjq-3w4w-w5wr,full,phrase,unresolved,,
+GHSA-r54c-2xmf-2cf3,os.system,dotted,unresolved,,
+GHSA-r54c-2xmf-2cf3,v_head.summary.weight,dotted,unresolved,,
+GHSA-r54c-2xmf-2cf3,v_head.summary.bias,dotted,unresolved,,
+GHSA-r54c-2xmf-2cf3,torch.randn,dotted; call,unresolved,,
+GHSA-r54c-2xmf-2cf3,adapter_model.bin,dotted,unresolved,,
+GHSA-r54c-2xmf-2cf3,pickle.dump,dotted; call,unresolved,,
+GHSA-r54c-2xmf-2cf3,swift.llm.model.utils,dotted,exact,swift.llm.model.utils,swift.llm.model.utils.<module>
+GHSA-r54c-2xmf-2cf3,modelscope.hub.utils.utils,dotted,unresolved,,
+GHSA-r54c-2xmf-2cf3,torch.load,dotted; call,unresolved,,
+GHSA-r54c-2xmf-2cf3,__reduce__,call,unique_suffix,__reduce__,swift.utils.import_utils._LazyModule.__reduce__
+GHSA-r54c-2xmf-2cf3,MaliciousPayload,call; phrase,unresolved,,
+GHSA-r54c-2xmf-2cf3,open,call,unresolved,,
+GHSA-r54c-2xmf-2cf3,safe_snapshot_download,call,unique_suffix,safe_snapshot_download,swift.llm.model.utils.safe_snapshot_download
+GHSA-r54c-2xmf-2cf3,get_cache_dir,call,unique_suffix,get_cache_dir,swift.llm.dataset.utils.IndexedDataset.get_cache_dir
+GHSA-x2rj-828p-hx9m,eval,backtick; call; phrase,unresolved,,
+GHSA-x2rj-828p-hx9m,xinference.api.restful_api,backtick; path,exact,xinference.api.restful_api,xinference.api.restful_api.<module>
+GHSA-x2rj-828p-hx9m,chat,backtick; call; phrase,ambiguous,chat,xinference.client.restful.async_restful_client.AsyncRESTfulChatModelHandle.chat; xinference.client.restful.restful_client.RESTfulChatModelHandle.chat; xinference.core.model.ModelActor.chat; xinference.model.llm.llama_cpp.core.XllamaCppModel.chat; xinference.model.llm.mlx.core.MLXVisionModel.chat; xinference.model.llm.transformers.chatglm.ChatglmPytorchChatModel.chat; xinference.model.llm.transformers.core.PytorchChatModel.chat; xinference.model.llm.transformers.gpt_oss.GPTOSSPytorchChatModel.chat; xinference.model.llm.transformers.multimodal.core.PytorchMultiModalModel.chat
+GHSA-x2rj-828p-hx9m,xinference.model.llm.transformers.core,backtick; path,exact,xinference.model.llm.transformers.core,xinference.model.llm.transformers.core.<module>
+GHSA-x2rj-828p-hx9m,handle_chat_result_non_streaming,backtick; call,ambiguous,handle_chat_result_non_streaming,xinference.model.llm.transformers.chatglm.ChatglmPytorchChatModel.handle_chat_result_non_streaming; xinference.model.llm.transformers.core.PytorchChatModel.handle_chat_result_non_streaming
+GHSA-x2rj-828p-hx9m,tools,backtick,unresolved,,
+GHSA-x2rj-828p-hx9m,_post_process_completion,backtick; call,unique_suffix,_post_process_completion,xinference.model.llm.utils.ChatModelMixin._post_process_completion
+GHSA-x2rj-828p-hx9m,xinference.model.llm.tool_parsers.llama3_tool_parser,backtick; path,exact,xinference.model.llm.tool_parsers.llama3_tool_parser,xinference.model.llm.tool_parsers.llama3_tool_parser.<module>
+GHSA-x2rj-828p-hx9m,extract_tool_calls,backtick; call,ambiguous,extract_tool_calls,xinference.model.llm.tool_parsers.abstract_tool_parser.ToolParser.extract_tool_calls; xinference.model.llm.tool_parsers.deepseek_r1_tool_parser.DeepseekR1ToolParser.extract_tool_calls; xinference.model.llm.tool_parsers.deepseek_v3_1_tool_parser.DeepseekV3_1ToolParser.extract_tool_calls; xinference.model.llm.tool_parsers.deepseek_v3_tool_parser.DeepseekV3ToolParser.extract_tool_calls; xinference.model.llm.tool_parsers.gemma_tool_parser.GemmaToolParser.extract_tool_calls; xinference.model.llm.tool_parsers.glm4_tool_parser.Glm4ToolParser.extract_tool_calls; xinference.model.llm.tool_parsers.llama3_tool_parser.Llama3ToolParser.extract_tool_calls; xinference.model.llm.tool_parsers.minimax_tool_parser.MiniMaxToolParser.extract_tool_calls; xinference.model.llm.tool_parsers.qwen_tool_parser.QwenToolParser.extract_tool_calls
+GHSA-x2rj-828p-hx9m,__import__,call,unresolved,,
+GHSA-x2rj-828p-hx9m,completion,phrase,unresolved,,
+GHSA-x2rj-828p-hx9m,completions,phrase,unresolved,,
+GHSA-x2rj-828p-hx9m,when,phrase,unique_suffix,when,xinference.thirdparty.audiotools.ml.decorators.when
+GHSA-mwh4-6h8g-pg8w,reason,backtick,ambiguous,reason,aiohttp.web_response.StreamResponse.reason; aiohttp.web_urldispatcher.SystemRoute.reason
+GHSA-mwh4-6h8g-pg8w,Response,backtick,unique_suffix,Response,aiohttp.web_response.Response
+GHSA-xch3-2f9x-wh9f,mlflow.sagemaker.__init__,backtick; path,ambiguous,__init__,mlflow.ag2.ag2_logger.MlflowAg2Logger.__init__; mlflow.anthropic.autolog.TracingSession.__init__; mlflow.bedrock.stream.BaseEventStreamWrapper.__init__; mlflow.bedrock.stream.ConverseStreamWrapper.__init__; mlflow.bedrock.stream.InvokeModelStreamWrapper.__init__; mlflow.bedrock.stream._ConverseMessageBuilder.__init__; mlflow.catboost._CatboostModelWrapper.__init__; mlflow.data.artifact_dataset_sources._create_dataset_source_for_artifact_repo.<locals>.ArtifactRepoSource.__init__; mlflow.data.code_dataset_source.CodeDatasetSource.__init__; mlflow.data.dataset.Dataset.__init__; mlflow.data.dataset_registry.DatasetRegistry.__init__; mlflow.data.dataset_source_registry.DatasetSourceRegistry.__init__; mlflow.data.delta_dataset_source.DeltaDatasetSource.__init__; mlflow.data.evaluation_dataset.EvaluationDataset.__init__; mlflow.data.evaluation_dataset_source.EvaluationDatasetSource.__init__; mlflow.data.http_dataset_source.HTTPDatasetSource.__init__; mlflow.data.huggingface_dataset.HuggingFaceDataset.__init__; mlflow.data.huggingface_dataset_source.HuggingFaceDatasetSource.__init__; mlflow.data.meta_dataset.MetaDataset.__init__; mlflow.data.numpy_dataset.NumpyDataset.__init__; mlflow.data.pandas_dataset.PandasDataset.__init__; mlflow.data.polars_dataset.PolarsDataset.__init__; mlflow.data.schema.TensorDatasetSchema.__init__; mlflow.data.spark_dataset.SparkDataset.__init__; mlflow.data.spark_dataset_source.SparkDatasetSource.__init__; mlflow.data.tensorflow_dataset.TensorFlowDataset.__init__; mlflow.data.uc_volume_dataset_source.UCVolumeDatasetSource.__init__; mlflow.deployments.base.BaseDeploymentClient.__init__; mlflow.deployments.plugin_manager.DeploymentPlugins.__init__; mlflow.deployments.plugin_manager.PluginManager.__init__; mlflow.dspy.callback.MlflowCallback.__init__; mlflow.dspy.wrapper.DspyModelWrapper.__init__; mlflow.entities._job.Job.__init__; mlflow.entities._mlflow_object._MlflowObjectPrinter.__init__; mlflow.entities.assessment.Expectation.__init__; mlflow.entities.assessment.Feedback.__init__; mlflow.entities.assessment_source.AssessmentSourceType.__init__; mlflow.entities.dataset.Dataset.__init__; mlflow.entities.dataset_input.DatasetInput.__init__; mlflow.entities.dataset_summary._DatasetSummary.__init__; mlflow.entities.evaluation_dataset.EvaluationDataset.__init__; mlflow.entities.experiment.Experiment.__init__; mlflow.entities.experiment_tag.ExperimentTag.__init__; mlflow.entities.file_info.FileInfo.__init__; mlflow.entities.input_tag.InputTag.__init__; mlflow.entities.logged_model.LoggedModel.__init__; mlflow.entities.logged_model_input.LoggedModelInput.__init__; mlflow.entities.logged_model_output.LoggedModelOutput.__init__; mlflow.entities.logged_model_parameter.LoggedModelParameter.__init__; mlflow.entities.logged_model_tag.LoggedModelTag.__init__; mlflow.entities.metric.Metric.__init__; mlflow.entities.metric.MetricWithRunId.__init__; mlflow.entities.model_registry.model_version.ModelVersion.__init__; mlflow.entities.model_registry.model_version_deployment_job_state.ModelVersionDeploymentJobState.__init__; mlflow.entities.model_registry.model_version_search.ModelVersionSearch.__init__; mlflow.entities.model_registry.model_version_tag.ModelVersionTag.__init__; mlflow.entities.model_registry.prompt.Prompt.__init__; mlflow.entities.model_registry.prompt_version.PromptVersion.__init__; mlflow.entities.model_registry.registered_model.RegisteredModel.__init__; mlflow.entities.model_registry.registered_model_alias.RegisteredModelAlias.__init__; mlflow.entities.model_registry.registered_model_search.RegisteredModelSearch.__init__; mlflow.entities.model_registry.registered_model_tag.RegisteredModelTag.__init__; mlflow.entities.param.Param.__init__; mlflow.entities.run.Run.__init__; mlflow.entities.run_data.RunData.__init__; mlflow.entities.run_info.RunInfo.__init__; mlflow.entities.run_inputs.RunInputs.__init__; mlflow.entities.run_outputs.RunOutputs.__init__; mlflow.entities.run_tag.RunTag.__init__; mlflow.entities.scorer.ScorerVersion.__init__; mlflow.entities.span.LiveSpan.__init__; mlflow.entities.span.NoOpSpan.__init__; mlflow.entities.span.Span.__init__; mlflow.entities.span._SpanAttributesRegistry.__init__; mlflow.entities.trace_data.TraceData.__init__; mlflow.entities.webhook.Webhook.__init__; mlflow.entities.webhook.WebhookEvent.__init__; mlflow.entities.webhook.WebhookTestResult.__init__; mlflow.environment_variables._BooleanEnvironmentVariable.__init__; mlflow.environment_variables._EnvironmentVariable.__init__; mlflow.evaluation.assessment.Assessment.__init__; mlflow.evaluation.assessment.AssessmentEntity.__init__; mlflow.evaluation.evaluation.Evaluation.__init__; mlflow.evaluation.evaluation.EvaluationEntity.__init__; mlflow.evaluation.evaluation_tag.EvaluationTag.__init__; mlflow.exceptions.MlflowException.__init__; mlflow.exceptions.MlflowNotImplementedException.__init__; mlflow.exceptions.MlflowTraceDataCorrupted.__init__; mlflow.exceptions.MlflowTraceDataException.__init__; mlflow.exceptions.MlflowTraceDataNotFound.__init__; mlflow.exceptions.MlflowTracingException.__init__; mlflow.exceptions.RestException.__init__; mlflow.exceptions._UnsupportedMultipartUploadException.__init__; mlflow.gateway.app.GatewayAPI.__init__; mlflow.gateway.exceptions.AIGatewayException.__init__; mlflow.gateway.provider_registry.ProviderRegistry.__init__; mlflow.gateway.providers.ai21labs.AI21LabsProvider.__init__; mlflow.gateway.providers.anthropic.AnthropicProvider.__init__; mlflow.gateway.providers.base.BaseProvider.__init__; mlflow.gateway.providers.base.TrafficRouteProvider.__init__; mlflow.gateway.providers.bedrock.AmazonBedrockProvider.__init__; mlflow.gateway.providers.cohere.CohereProvider.__init__; mlflow.gateway.providers.gemini.GeminiProvider.__init__; mlflow.gateway.providers.huggingface.HFTextGenerationInferenceServerProvider.__init__; mlflow.gateway.providers.mistral.MistralProvider.__init__; mlflow.gateway.providers.mlflow.MlflowModelServingProvider.__init__; mlflow.gateway.providers.mosaicml.MosaicMLProvider.__init__; mlflow.gateway.providers.openai.OpenAIProvider.__init__; mlflow.gateway.providers.palm.PaLMProvider.__init__; mlflow.gateway.providers.togetherai.TogetherAIProvider.__init__; mlflow.gateway.runner.Runner.__init__; mlflow.gateway.utils.SearchRoutesToken.__init__; mlflow.gemini.autolog.TracingSession.__init__; mlflow.genai.agent_server.server.AgentServer.__init__; mlflow.genai.datasets.databricks_evaluation_dataset_source.DatabricksEvaluationDatasetSource.__init__; mlflow.genai.datasets.evaluation_dataset.EvaluationDataset.__init__; mlflow.genai.evaluation.context.RealContext.__init__; mlflow.genai.git_versioning.GitContext.__init__; mlflow.genai.judges.adapters.litellm_adapter._SuppressLiteLLMNonfatalErrors.__init__; mlflow.genai.judges.instructions_judge.InstructionsJudge.__init__; mlflow.genai.judges.optimizers.dspy.DSPyAlignmentOptimizer.__init__; mlflow.genai.judges.optimizers.dspy.DSPyAlignmentOptimizer._get_dspy_program_from_judge.<locals>.CustomPredict.__init__; mlflow.genai.judges.optimizers.dspy_utils.AgentEvalLM.__init__; mlflow.genai.judges.optimizers.simba.SIMBAAlignmentOptimizer.__init__; mlflow.genai.judges.tools.registry.JudgeToolRegistry.__init__; mlflow.genai.labeling.labeling.Agent.__init__; mlflow.genai.labeling.labeling.LabelingSession.__init__; mlflow.genai.labeling.labeling.ReviewApp.__init__; mlflow.genai.labeling.stores.AbstractLabelingStore.__init__; mlflow.genai.labeling.stores.LabelingStoreRegistry.__init__; mlflow.genai.labeling.stores.UnsupportedLabelingStoreURIException.__init__; mlflow.genai.optimize.optimizers.gepa_optimizer.GepaPromptOptimizer.__init__; mlflow.genai.optimize.optimizers.gepa_optimizer.GepaPromptOptimizer.optimize.<locals>.MlflowGEPAAdapter.__init__; mlflow.genai.scorers.base.scorer.<locals>.CustomScorer.__init__; mlflow.genai.scorers.builtin_scorers.MissingColumnsException.__init__; mlflow.genai.scorers.builtin_scorers.RetrievalRelevance.__init__; mlflow.genai.scorers.builtin_scorers.Safety.__init__; mlflow.genai.scorers.deepeval.DeepEvalScorer.__init__; mlflow.genai.scorers.deepeval.models.DatabricksDeepEvalLLM.__init__; mlflow.genai.scorers.deepeval.models.DatabricksServingEndpointDeepEvalLLM.__init__; mlflow.genai.scorers.deepeval.scorers.ExactMatch.__init__; mlflow.genai.scorers.deepeval.scorers.PatternMatch.__init__; mlflow.genai.scorers.registry.DatabricksStore.__init__; mlflow.genai.scorers.registry.MlflowTrackingStore.__init__; mlflow.genai.scorers.registry.ScorerStoreRegistry.__init__; mlflow.genai.scorers.registry.UnsupportedScorerStoreURIException.__init__; mlflow.genai.scorers.scorer_utils.FunctionBodyExtractor.__init__; mlflow.genai.utils.trace_utils.NoOpTracerPatcher.__init__; mlflow.h2o._H2OModelWrapper.__init__; mlflow.haystack.autolog.HaystackSpanProcessor.__init__; mlflow.johnsnowlabs._PyFuncModelWrapper.__init__; mlflow.keras.callback.MlflowCallback.__init__; mlflow.keras.load.KerasModelWrapper.__init__; mlflow.langchain.chat_agent_langgraph.ChatAgentToolNode.__init__; mlflow.langchain.langchain_tracer.MlflowLangchainTracer.__init__; mlflow.langchain.model._LangChainModelWrapper.__init__; mlflow.legacy_databricks_cli.configure.provider.DatabricksConfig.__init__; mlflow.legacy_databricks_cli.configure.provider.DefaultConfigProvider.__init__; mlflow.legacy_databricks_cli.configure.provider.ProfileConfigProvider.__init__; mlflow.lightgbm._LGBModelWrapper.__init__; mlflow.lightgbm.autolog.<locals>.__init__; mlflow.llama_index.pyfunc_wrapper._LlamaIndexModelWrapperBase.__init__; mlflow.llama_index.tracer.MlflowEventHandler.__init__; mlflow.llama_index.tracer.MlflowSpanHandler.__init__; mlflow.llama_index.tracer.StreamResolver.__init__; mlflow.llama_index.tracer._LlamaSpan.__init__; mlflow.metrics.genai.prompt_template.PromptTemplate.__init__; mlflow.mistral.autolog.TracingSession.__init__; mlflow.models.auth_policy.AuthPolicy.__init__; mlflow.models.auth_policy.SystemAuthPolicy.__init__; mlflow.models.auth_policy.UserAuthPolicy.__init__; mlflow.models.dependencies_schemas.RetrieverSchema.__init__; mlflow.models.evaluation.base.EvaluationArtifact.__init__; mlflow.models.evaluation.base.EvaluationMetric.__init__; mlflow.models.evaluation.base.EvaluationResult.__init__; mlflow.models.evaluation.base._ModelType.__init__; mlflow.models.evaluation.default_evaluator.BuiltInEvaluator._MutationGuardedData.__init__; mlflow.models.evaluation.default_evaluator.BuiltInEvaluator.__init__; mlflow.models.evaluation.evaluator_registry.ModelEvaluatorRegistry.__init__; mlflow.models.evaluation.validation.MetricThreshold.__init__; mlflow.models.evaluation.validation.MetricThresholdClassException.__init__; mlflow.models.evaluation.validation.ModelValidationFailedException.__init__; mlflow.models.evaluation.validation._MetricValidationResult.__init__; mlflow.models.flavor_backend.FlavorBackend.__init__; mlflow.models.model.Model.__init__; mlflow.models.model.ModelInfo.__init__; mlflow.models.model_config.ModelConfig.__init__; mlflow.models.resources.DatabricksApp.__init__; mlflow.models.resources.DatabricksFunction.__init__; mlflow.models.resources.DatabricksGenieSpace.__init__; mlflow.models.resources.DatabricksLakebase.__init__; mlflow.models.resources.DatabricksResource.__init__; mlflow.models.resources.DatabricksSQLWarehouse.__init__; mlflow.models.resources.DatabricksServingEndpoint.__init__; mlflow.models.resources.DatabricksTable.__init__; mlflow.models.resources.DatabricksUCConnection.__init__; mlflow.models.resources.DatabricksVectorSearchIndex.__init__; mlflow.models.signature.ModelSignature.__init__; mlflow.models.signature._TypeHints.__init__; mlflow.models.utils.MockDbutils.__init__; mlflow.models.utils._Example.__init__; mlflow.models.wheeled_model.WheeledModel.__init__; mlflow.onnx._OnnxModelWrapper.__init__; mlflow.openai._agent_tracer.MlflowOpenAgentTracingProcessor.__init__; mlflow.openai.model._ContentFormatter.__init__; mlflow.openai.model._OpenAIWrapper.__init__; mlflow.optuna.storage.MlflowStorage.__init__; mlflow.paddle._PaddleWrapper.__init__; mlflow.paddle._paddle_autolog.__MlflowPaddleCallback.__init__; mlflow.pmdarima._PmdarimaModelWrapper.__init__; mlflow.projects._project_spec.DatabricksSparkJobSpec.__init__; mlflow.projects._project_spec.EntryPoint.__init__; mlflow.projects._project_spec.Parameter.__init__; mlflow.projects._project_spec.Project.__init__; mlflow.projects.databricks.DatabricksJobRunner.__init__; mlflow.projects.databricks.DatabricksSubmittedRun.__init__; mlflow.projects.kubernetes.KubernetesSubmittedRun.__init__; mlflow.projects.submitted_run.LocalSubmittedRun.__init__; mlflow.prompt.promptlab_model._PromptlabModel.__init__; mlflow.prompt.registry_utils.PromptCache.__init__; mlflow.prophet._ProphetModelWrapper.__init__; mlflow.protos.unity_catalog_prompt_service_pb2_grpc.UnityCatalogPromptServiceStub.__init__; mlflow.pyfunc.EnvType.__init__; mlflow.pyfunc.PyFuncModel.__init__; mlflow.pyfunc._ServedPyFuncModel.__init__; mlflow.pyfunc.backend.PyFuncBackend.__init__; mlflow.pyfunc.context.Context.__init__; mlflow.pyfunc.dbconnect_artifact_cache.DBConnectArtifactCache.__init__; mlflow.pyfunc.loaders.chat_agent._ChatAgentPyfuncWrapper.__init__; mlflow.pyfunc.loaders.chat_model._ChatModelPyfuncWrapper.__init__; mlflow.pyfunc.loaders.responses_agent._ResponsesAgentPyfuncWrapper.__init__; mlflow.pyfunc.model.ModelFromDeploymentEndpoint.__init__; mlflow.pyfunc.model.PythonModelContext.__init__; mlflow.pyfunc.model._FunctionPythonModel.__init__; mlflow.pyfunc.model._PythonModelPyfuncWrapper.__init__; mlflow.pyfunc.scoring_server.client.ScoringServerClient.__init__; mlflow.pyfunc.scoring_server.client.StdinScoringServerClient.__init__; mlflow.pyfunc.spark_model_cache.SparkModelCache.__init__; mlflow.pyspark.ml._AutologgingMetricsManager.__init__; mlflow.pyspark.optuna.study.MlflowSparkStudy.__init__; mlflow.pytorch._PyTorchWrapper.__init__; mlflow.pytorch._lightning_autolog.MlflowModelCheckpointCallback.__init__; mlflow.pytorch._lightning_autolog.__MlflowPLCallback.__init__; mlflow.sagemaker.SageMakerDeploymentClient.__init__; mlflow.sagemaker._SageMakerOperation.__init__; mlflow.sagemaker._SageMakerOperationStatus.__init__; mlflow.semantic_kernel.autolog.SemanticKernelSpanProcessor.__init__; mlflow.sentence_transformers._SentenceTransformerModelWrapper.__init__; mlflow.server.auth.client.AuthServiceClient.__init__; mlflow.server.auth.entities.ExperimentPermission.__init__; mlflow.server.auth.entities.RegisteredModelPermission.__init__; mlflow.server.auth.entities.ScorerPermission.__init__; mlflow.server.auth.entities.User.__init__; mlflow.server.fastapi_security.CORSBlockingMiddleware.__init__; mlflow.server.fastapi_security.HostValidationMiddleware.__init__; mlflow.server.fastapi_security.SecurityHeadersMiddleware.__init__; mlflow.server.handlers.ModelRegistryStoreRegistryWrapper.__init__; mlflow.server.handlers.TrackingStoreRegistryWrapper.__init__; mlflow.server.jobs.TransientError.__init__; mlflow.shap._SHAPWrapper.__init__; mlflow.sklearn._AutologgingMetricsManager.__init__; mlflow.sklearn._SklearnCustomModelPicklingError.__init__; mlflow.sklearn._SklearnModelWrapper.__init__; mlflow.spacy._SpacyModelWrapper.__init__; mlflow.spark._HadoopFileSystem.__init__; mlflow.spark._PyFuncModelWrapper.__init__; mlflow.spark.autolog.<locals>.__init__; mlflow.spark.autologging.PythonSubscriber.__init__; mlflow.statsmodels._StatsmodelsModelWrapper.__init__; mlflow.store._unity_catalog.registry.prompt_info.PromptInfo.__init__; mlflow.store._unity_catalog.registry.rest_store.UcModelRegistryStore.__init__; mlflow.store._unity_catalog.registry.uc_oss_rest_store.UnityCatalogOssStore.__init__; mlflow.store.artifact.artifact_repo.ArtifactRepository.__init__; mlflow.store.artifact.artifact_repository_registry.ArtifactRepositoryRegistry.__init__; mlflow.store.artifact.azure_blob_artifact_repo.AzureBlobArtifactRepository.__init__; mlflow.store.artifact.azure_data_lake_artifact_repo.AzureDataLakeArtifactRepository.__init__; mlflow.store.artifact.cloud_artifact_repo.CloudArtifactRepository.__init__; mlflow.store.artifact.databricks_artifact_repo.DatabricksArtifactRepository.__init__; mlflow.store.artifact.databricks_artifact_repo_resources._Resource.__init__; mlflow.store.artifact.databricks_models_artifact_repo.DatabricksModelsArtifactRepository.__init__; mlflow.store.artifact.databricks_sdk_artifact_repo.DatabricksSdkArtifactRepository.__init__; mlflow.store.artifact.databricks_sdk_models_artifact_repo.DatabricksSDKModelsArtifactRepository.__init__; mlflow.store.artifact.databricks_tracking_artifact_repo.DatabricksTrackingArtifactRepository.__init__; mlflow.store.artifact.dbfs_artifact_repo.DbfsRestArtifactRepository.__init__; mlflow.store.artifact.ftp_artifact_repo.FTPArtifactRepository.__init__; mlflow.store.artifact.gcs_artifact_repo.GCSArtifactRepository.__init__; mlflow.store.artifact.hdfs_artifact_repo.HdfsArtifactRepository.__init__; mlflow.store.artifact.local_artifact_repo.LocalArtifactRepository.__init__; mlflow.store.artifact.mlflow_artifacts_repo.MlflowArtifactsRepository.__init__; mlflow.store.artifact.models_artifact_repo.ModelsArtifactRepository.__init__; mlflow.store.artifact.optimized_s3_artifact_repo.OptimizedS3ArtifactRepository.__init__; mlflow.store.artifact.presigned_url_artifact_repo.PresignedUrlArtifactRepository.__init__; mlflow.store.artifact.r2_artifact_repo.R2ArtifactRepository.__init__; mlflow.store.artifact.runs_artifact_repo.RunsArtifactRepository.__init__; mlflow.store.artifact.s3_artifact_repo.S3ArtifactRepository.__init__; mlflow.store.artifact.sftp_artifact_repo.SFTPArtifactRepository.__init__; mlflow.store.artifact.sftp_artifact_repo._SftpPool.__init__; mlflow.store.artifact.uc_volume_artifact_repo.UCVolumesArtifactRepository.__init__; mlflow.store.artifact.unity_catalog_models_artifact_repo.UnityCatalogModelsArtifactRepository.__init__; mlflow.store.artifact.unity_catalog_oss_models_artifact_repo.UnityCatalogOSSModelsArtifactRepository.__init__; mlflow.store.entities.paged_list.PagedList.__init__; mlflow.store.jobs.sqlalchemy_store.SqlAlchemyJobStore.__init__; mlflow.store.model_registry.abstract_store.AbstractStore.__init__; mlflow.store.model_registry.base_rest_store.BaseRestStore.__init__; mlflow.store.model_registry.databricks_workspace_model_registry_rest_store.DatabricksWorkspaceModelRegistryRestStore.__init__; mlflow.store.model_registry.dbmodels.models.EncryptedString.__init__; mlflow.store.model_registry.file_store.FileModelVersion.__init__; mlflow.store.model_registry.file_store.FileStore.__init__; mlflow.store.model_registry.sqlalchemy_store.SqlAlchemyStore.__init__; mlflow.store.tracking._secret_cache.EphemeralCacheEncryption.__init__; mlflow.store.tracking._secret_cache.SecretCache.__init__; mlflow.store.tracking.abstract_store.AbstractStore.__init__; mlflow.store.tracking.databricks_rest_store.DatabricksTracingRestStore.__init__; mlflow.store.tracking.dbmodels.models.SqlEntityAssociation.__init__; mlflow.store.tracking.dbmodels.models.SqlEvaluationDatasetRecord.__init__; mlflow.store.tracking.file_store.FileStore.__init__; mlflow.store.tracking.rest_store.RestStore.__init__; mlflow.store.tracking.sqlalchemy_store.SqlAlchemyStore.__init__; mlflow.strands.autolog.StrandsSpanProcessor.__init__; mlflow.system_metrics.metrics.base_metrics_monitor.BaseMetricsMonitor.__init__; mlflow.system_metrics.metrics.gpu_monitor.GPUMonitor.__init__; mlflow.system_metrics.metrics.network_monitor.NetworkMonitor.__init__; mlflow.system_metrics.metrics.rocm_monitor.ROCMMonitor.__init__; mlflow.system_metrics.system_metrics_monitor.SystemMetricsMonitor.__init__; mlflow.telemetry.client.TelemetryClient.__init__; mlflow.tensorflow._KerasModelWrapper.__init__; mlflow.tensorflow._TF2ModuleWrapper.__init__; mlflow.tensorflow._TF2Wrapper.__init__; mlflow.tensorflow.callback.MlflowCallback.__init__; mlflow.tensorflow.callback.MlflowModelCheckpointCallback.__init__; mlflow.tracing.client.TracingClient.__init__; mlflow.tracing.config.TracingConfigContext.__init__; mlflow.tracing.destination.UserTraceDestinationRegistry.__init__; mlflow.tracing.display.display_handler.IPythonTraceDisplayHandler.__init__; mlflow.tracing.export.async_export_queue.AsyncTraceExportQueue.__init__; mlflow.tracing.export.inference_table.InferenceTableSpanExporter.__init__; mlflow.tracing.export.mlflow_v3.MlflowV3SpanExporter.__init__; mlflow.tracing.export.span_batcher.SpanBatcher.__init__; mlflow.tracing.export.uc_table.DatabricksUCTableSpanExporter.__init__; mlflow.tracing.fluent._wrap_function.<locals>._WrappingContext.__init__; mlflow.tracing.processor.base_mlflow.BaseMlflowSpanProcessor.__init__; mlflow.tracing.processor.inference_table.InferenceTableSpanProcessor.__init__; mlflow.tracing.processor.mlflow_v3.MlflowV3SpanProcessor.__init__; mlflow.tracing.processor.otel.OtelSpanProcessor.__init__; mlflow.tracing.processor.otel_metrics_mixin.OtelMetricsMixin.__init__; mlflow.tracing.processor.uc_table.DatabricksUCTableSpanProcessor.__init__; mlflow.tracing.provider._TracerProviderWrapper.__init__; mlflow.tracing.trace_manager.InMemoryTraceManager.__init__; mlflow.tracing.utils.once.Once.__init__; mlflow.tracing.utils.search._FieldParser.__init__; mlflow.tracing.utils.search._PeekableIterator.__init__; mlflow.tracing.utils.timeout.MlflowTraceTimeoutCache.__init__; mlflow.tracing.utils.timeout._TimedCache._Timer.__init__; mlflow.tracing.utils.timeout._TimedCache.__init__; mlflow.tracing.utils.warning.LogDemotionFilter.__init__; mlflow.tracking._model_registry.client.ModelRegistryClient.__init__; mlflow.tracking._model_registry.registry.ModelRegistryStoreRegistry.__init__; mlflow.tracking._tracking_service.client.TrackingServiceClient.__init__; mlflow.tracking._tracking_service.registry.TrackingStoreRegistry.__init__; mlflow.tracking.client.MlflowClient.__init__; mlflow.tracking.context.git_context.GitRunContext.__init__; mlflow.tracking.context.registry.RunContextProviderRegistry.__init__; mlflow.tracking.default_experiment.registry.DefaultExperimentProviderRegistry.__init__; mlflow.tracking.fluent.ActiveModel.__init__; mlflow.tracking.fluent.ActiveModelContext.__init__; mlflow.tracking.fluent.ActiveRun.__init__; mlflow.tracking.multimedia.Image.__init__; mlflow.tracking.registry.StoreRegistry.__init__; mlflow.tracking.registry.UnsupportedModelRegistryStoreURIException.__init__; mlflow.tracking.request_auth.registry.RequestAuthProviderRegistry.__init__; mlflow.tracking.request_header.registry.RequestHeaderProviderRegistry.__init__; mlflow.transformers._TransformersWrapper.__init__; mlflow.transformers.llm_inference_utils._get_stopping_criteria.<locals>._StopSequenceMatchCriteria.__init__; mlflow.types.schema.AnyType.__init__; mlflow.types.schema.Array.__init__; mlflow.types.schema.ColSpec.__init__; mlflow.types.schema.Map.__init__; mlflow.types.schema.Object.__init__; mlflow.types.schema.ParamSchema.__init__; mlflow.types.schema.ParamSpec.__init__; mlflow.types.schema.Property.__init__; mlflow.types.schema.Schema.__init__; mlflow.types.schema.SparkMLVector.__init__; mlflow.types.schema.TensorInfo.__init__; mlflow.types.schema.TensorSpec.__init__; mlflow.types.type_hints.InvalidTypeHintException.__init__; mlflow.types.type_hints.UnsupportedTypeHintException.__init__; mlflow.types.utils.InvalidDataForSignatureInferenceError.__init__; mlflow.types.utils.TensorsNotSupportedException.__init__; mlflow.utils._capture_modules._CaptureImportedModules.__init__; mlflow.utils._capture_transformers_modules._CaptureImportedModulesForHF.__init__; mlflow.utils._spark_utils._SparkDirectoryDistributor.__init__; mlflow.utils.async_logging.async_artifacts_logging_queue.AsyncArtifactsLoggingQueue.__init__; mlflow.utils.async_logging.async_logging_queue.AsyncLoggingQueue.__init__; mlflow.utils.async_logging.run_artifact.RunArtifact.__init__; mlflow.utils.async_logging.run_batch.RunBatch.__init__; mlflow.utils.async_logging.run_operations.RunOperations.__init__; mlflow.utils.autologging_utils.BatchMetricsLogger.__init__; mlflow.utils.autologging_utils.InputExampleInfo.__init__; mlflow.utils.autologging_utils._get_new_training_session_class.<locals>._TrainingSession.__init__; mlflow.utils.autologging_utils.client.MlflowAutologgingQueueingClient.__init__; mlflow.utils.autologging_utils.client.RunOperations.__init__; mlflow.utils.autologging_utils.client._PendingRunOperations.__init__; mlflow.utils.autologging_utils.events.AutologgingEventLoggerWrapper.__init__; mlflow.utils.autologging_utils.logging_and_warnings.MlflowEventsAndWarningsBehaviorGlobally.__init__; mlflow.utils.autologging_utils.logging_and_warnings.NonMlflowWarningsBehaviorForCurrentThread.__init__; mlflow.utils.autologging_utils.logging_and_warnings._WarningsController.__init__; mlflow.utils.autologging_utils.safety.AutologgingSession.__init__; mlflow.utils.checkpoint_utils.MlflowModelCheckpointCallbackBase.__init__; mlflow.utils.crypto.KEKManager.__init__; mlflow.utils.databricks_utils.DatabricksWorkspaceInfo.__init__; mlflow.utils.databricks_utils.MlflowCredentialContext.__init__; mlflow.utils.databricks_utils.TrackingURIConfigProvider.__init__; mlflow.utils.environment.Environment.__init__; mlflow.utils.environment._PythonEnv.__init__; mlflow.utils.file_utils.ArtifactProgressBar.__init__; mlflow.utils.file_utils.ExclusiveFileLock.__init__; mlflow.utils.file_utils.TempDir.__init__; mlflow.utils.gorilla.DecoratorData.__init__; mlflow.utils.gorilla.Patch.__init__; mlflow.utils.gorilla.Settings.__init__; mlflow.utils.import_hooks.ImportHookFinder.__init__; mlflow.utils.import_hooks._ImportHookChainedLoader.__init__; mlflow.utils.lazy_load.LazyLoader.__init__; mlflow.utils.logging_utils.LoggerMessageFilter.__init__; mlflow.utils.logging_utils.MlflowLoggingStream.__init__; mlflow.utils.openai_utils._OAITokenHolder.__init__; mlflow.utils.proto_json_utils.MlflowFailedTypeConversion.__init__; mlflow.utils.proto_json_utils.MlflowInvalidInputException.__init__; mlflow.utils.request_utils.JitteredRetry.__init__; mlflow.utils.rest_utils.MlflowHostCreds.__init__; mlflow.utils.search_utils.SearchExperimentsUtils._get_sort_key.<locals>._Sorter.__init__; mlflow.utils.search_utils._LoggedModelMetricComp.__init__; mlflow.utils.search_utils._Reversor.__init__; mlflow.utils.thread_utils.ThreadLocalVariable.__init__; mlflow.utils.time.Timer.__init__; mlflow.utils.yaml_utils.safe_edit_yaml.__init__; mlflow.xgboost._XGBModelWrapper.__init__; mlflow.xgboost._autolog.AutologCallback.__init__; mlflow.xgboost.autolog.<locals>.__init__
+GHSA-xch3-2f9x-wh9f,os.system,backtick; dotted; call,unresolved,,
+GHSA-5pwr-322w-8jr4,set_cookie_generate_callback,backtick,unique_suffix,set_cookie_generate_callback,OpenSSL.SSL.Context.set_cookie_generate_callback
+GHSA-2wxc-x7rj-hg8f,_parse_cd_args,backtick; call,unique_suffix,_parse_cd_args,asyncssh.scp._parse_cd_args
+GHSA-2wxc-x7rj-hg8f,name,backtick,unique_suffix,name,asyncssh.misc._Hash.name
+GHSA-2wxc-x7rj-hg8f,basename,backtick; call,ambiguous,basename,asyncssh.scp._SCPFSProtocol.basename; asyncssh.sftp.LocalFS.basename; asyncssh.sftp.SFTPClient.basename; asyncssh.sftp.SFTPServerFS.basename; asyncssh.sftp._SFTPFSProtocol.basename
+GHSA-2wxc-x7rj-hg8f,_recv_files,backtick,unique_suffix,_recv_files,asyncssh.scp._SCPSink._recv_files
+GHSA-2wxc-x7rj-hg8f,_recv_file,backtick,unique_suffix,_recv_file,asyncssh.scp._SCPSink._recv_file
+GHSA-2wxc-x7rj-hg8f,self._fs.open,backtick; dotted; call,ambiguous,open,asyncssh.channel.SSHAgentChannel.open; asyncssh.channel.SSHTunTapChannel.open; asyncssh.channel.SSHX11Channel.open; asyncssh.pkcs11.SSHPKCS11Session.open; asyncssh.scp._SCPFSProtocol.open; asyncssh.sftp.LocalFS.open; asyncssh.sftp.SFTPClient.open; asyncssh.sftp.SFTPClientHandler.open; asyncssh.sftp.SFTPServer.open; asyncssh.sftp.SFTPServerFS.open; asyncssh.sftp._SFTPFSProtocol.open
+GHSA-2wxc-x7rj-hg8f,poc_scp_traversal,backtick; path; dotted,unresolved,,
+GHSA-2wxc-x7rj-hg8f,asyncssh.scp,backtick; dotted; call,exact,asyncssh.scp,asyncssh.scp.<module>
+GHSA-2wxc-x7rj-hg8f,scp,path; dotted,unique_suffix,scp,asyncssh.scp.scp
+GHSA-2wxc-x7rj-hg8f,args.split,dotted; call,unresolved,,
+GHSA-2wxc-x7rj-hg8f,posixpath.join,dotted; call,unresolved,,
+GHSA-2wxc-x7rj-hg8f,path_traversal_poc.zip,dotted,unresolved,,
+GHSA-2wxc-x7rj-hg8f,int,call,unresolved,,
+GHSA-2wxc-x7rj-hg8f,vulnerability,phrase,unresolved,,
+GHSA-2wxc-x7rj-hg8f,documented,phrase,unresolved,,
+GHSA-2wxc-x7rj-hg8f,own,phrase,unresolved,,
+GHSA-7545-fcxq-7j24,main,backtick,unresolved,,
+GHSA-7545-fcxq-7j24,SymbolicReference._check_ref_name_valid,backtick; dotted; call,unique_suffix,SymbolicReference._check_ref_name_valid,git.refs.symbolic.SymbolicReference._check_ref_name_valid
+GHSA-7545-fcxq-7j24,SymbolicReference.create,backtick; dotted,unique_suffix,SymbolicReference.create,git.refs.symbolic.SymbolicReference.create
+GHSA-7545-fcxq-7j24,Reference.create,backtick; dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,SymbolicReference.set_reference,backtick; dotted,unique_suffix,SymbolicReference.set_reference,git.refs.symbolic.SymbolicReference.set_reference
+GHSA-7545-fcxq-7j24,SymbolicReference.rename,backtick; dotted,unique_suffix,SymbolicReference.rename,git.refs.symbolic.SymbolicReference.rename
+GHSA-7545-fcxq-7j24,SymbolicReference.delete,backtick; dotted; call,unique_suffix,SymbolicReference.delete,git.refs.symbolic.SymbolicReference.delete
+GHSA-7545-fcxq-7j24,poc,path; dotted,unresolved,,
+GHSA-7545-fcxq-7j24,self.abspath,dotted,ambiguous,abspath,git.objects.base.IndexObject.abspath; git.refs.symbolic.SymbolicReference.abspath
+GHSA-7545-fcxq-7j24,lfd.open,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,cls.to_full_path,dotted; call,unique_suffix,to_full_path,git.refs.symbolic.SymbolicReference.to_full_path
+GHSA-7545-fcxq-7j24,os.path.join,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,repo.common_dir,dotted,unresolved,,
+GHSA-7545-fcxq-7j24,os.path.exists,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,os.remove,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,self.to_full_path,dotted; call,unique_suffix,to_full_path,git.refs.symbolic.SymbolicReference.to_full_path
+GHSA-7545-fcxq-7j24,self.repo,dotted,unresolved,,
+GHSA-7545-fcxq-7j24,self.path,dotted,ambiguous,path,git.index.base.IndexFile.path; git.refs.log.RefLog.path
+GHSA-7545-fcxq-7j24,os.rename,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,git.refs.reference,dotted,exact,git.refs.reference,git.refs.reference.<module>
+GHSA-7545-fcxq-7j24,git.refs.symbolic,dotted,exact,git.refs.symbolic,git.refs.symbolic.<module>
+GHSA-7545-fcxq-7j24,base.exists,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,shutil.rmtree,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,Repo.init,dotted; call,unique_suffix,Repo.init,git.repo.base.Repo.init
+GHSA-7545-fcxq-7j24,repo.index.add,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,repo.index.commit,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,outside_delete.write_text,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,outside_write.exists,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,outside_write.read_text,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,outside_delete.exists,dotted; call,unresolved,,
+GHSA-7545-fcxq-7j24,repo.git_dir,dotted,unresolved,,
+GHSA-7545-fcxq-7j24,target.parents,dotted,unresolved,,
+GHSA-7545-fcxq-7j24,set_reference,call,unique_suffix,set_reference,git.refs.symbolic.SymbolicReference.set_reference
+GHSA-7545-fcxq-7j24,assure_directory_exists,call,unique_suffix,assure_directory_exists,git.util.assure_directory_exists
+GHSA-7545-fcxq-7j24,LockedFD,call,unresolved,,
+GHSA-7545-fcxq-7j24,delete,call,ambiguous,delete,git.refs.head.Head.delete; git.refs.remote.RemoteReference.delete; git.refs.symbolic.SymbolicReference.delete; git.refs.tag.TagReference.delete
+GHSA-7545-fcxq-7j24,rename,call,ambiguous,rename,git.objects.submodule.base.Submodule.rename; git.refs.head.Head.rename; git.refs.symbolic.SymbolicReference.rename; git.remote.Remote.rename
+GHSA-7545-fcxq-7j24,_git_dir,call,unique_suffix,_git_dir,git.refs.symbolic._git_dir
+GHSA-7545-fcxq-7j24,Path,call,unresolved,,
+GHSA-7545-fcxq-7j24,print,call,unresolved,,
+GHSA-7545-fcxq-7j24,_validate_ref_write_path,call,unresolved,,
+GHSA-7545-fcxq-7j24,ValueError,call,unresolved,,
+GHSA-7545-fcxq-7j24,str,call,unresolved,,
+GHSA-f54q-57x4-jg88,lib2to3.pgen2.grammar.Grammar.loads,dotted; phrase,unresolved,,
+GHSA-f54q-57x4-jg88,pickle.load,dotted; call,unresolved,,
+GHSA-f54q-57x4-jg88,os.system,dotted,unresolved,,
+GHSA-f54q-57x4-jg88,lib2to3.pgen2.grammar,dotted,unresolved,,
+GHSA-f54q-57x4-jg88,pickle.dumps,dotted,unresolved,,
+GHSA-f54q-57x4-jg88,__reduce__,call,unresolved,,
+GHSA-f54q-57x4-jg88,Evil,call; phrase,unresolved,,
+GHSA-f54q-57x4-jg88,Grammar,call,unresolved,,
+GHSA-f54q-57x4-jg88,library,phrase,unresolved,,
+GHSA-f54q-57x4-jg88,reduce,phrase,unresolved,,
+GHSA-f54q-57x4-jg88,Then,phrase,unresolved,,
+GHSA-f54q-57x4-jg88,EvilLib2to3Pgen2GrammarLoads,phrase,unresolved,,

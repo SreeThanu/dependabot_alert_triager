@@ -1,0 +1,11 @@
+{
+  "script": "scripts/text_baseline.py",
+  "repo_commit": "bba376c9e300898dd58851c0b3da92577f229811",
+  "run_started_utc": "2026-10-19T18:18:21+00:00",
+  "snapshot": "b16e369438ef2ab329b4c224cae8224f144bf5d5",
+  "advisories": 50,
+  "with_symbol_table": 43,
+  "with_any_extracted_string": 39,
+  "with_at_least_one_resolved_symbol": 24,
+  "with_only_ambiguous_matches": 2
+}

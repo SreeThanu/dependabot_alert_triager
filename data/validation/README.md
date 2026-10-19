@@ -16,6 +16,10 @@ Phase 2 validation data (`docs/VALIDATION_AND_PLAN.md` §2). Advisory content is
 | `diff_baseline_v1.csv` | `scripts/diff_baseline.py` (T4) | Diff-baseline candidate symbols, one row per advisory with a verified fix (22). Not scored. |
 | `diff_baseline_symbols_v1.csv` | `scripts/diff_baseline.py` (T4) | One row per (advisory, symbol, commit, file) with the pre-fix line numbers that mapped to it. |
 | `diff_baseline_v1.meta.json` | `scripts/diff_baseline.py` (T4) | Provenance and the distribution of function counts. |
+| `symbol_tables/<ghsa_id>.json.gz` | `scripts/build_symbol_tables.py` (T5) | AST symbol table of the affected package at its vulnerable ref (gzipped JSON: repo, `ref_kind`, `ref`, `commit`, import roots, unparsed files, symbols with kind/file/lines). |
+| `symbol_tables_v1.csv`, `symbol_tables_v1.meta.json` | `scripts/build_symbol_tables.py` (T5) | One row per sampled advisory: ref used and symbol counts, or why no table was built. |
+| `text_baseline_v1.csv` | `scripts/text_baseline.py` (T5) | Text-baseline predictions per advisory (exact + unique-suffix matches only). Not scored. |
+| `text_baseline_matches_v1.csv`, `text_baseline_v1.meta.json` | `scripts/text_baseline.py` (T5) | Every extracted string with its pattern(s), match type and candidate symbols; hit counts. |
 | `fix_commits_v1.meta.json` | `scripts/resolve_fix_commits.py` (T3) | Provenance (snapshot, repo commit, run time, API auth) and counts. |
 
 Snapshot: github/advisory-database `b16e369438ef2ab329b4c224cae8224f144bf5d5` (2026-10-19), as
@@ -101,3 +105,17 @@ functions as `pkg.mod.outer.<locals>.inner`; module-level code as `pkg.mod.<modu
 | `new_files` | In-scope Python files added by the fix (no pre-fix version, so no symbols). |
 | `n_functions`, `functions` | Function/method candidates. |
 | `n_classes`, `n_module`, `classes_and_modules` | Class-body and module-level changes, kept separate from function candidates. |
+
+## Symbol tables and text baseline (T5)
+
+Vulnerable ref (`ref_kind`): `fix_parent` = first parent of the verified fix commit;
+`last_affected_tag` = highest last-affected release tag over the advisory's ranges (from a
+fixed version, or a GHSA `<=` bound); `latest_tag_unfixed` = no fix listed, newest stable tag
+at or above `introduced`. Symbol names follow the T4 conventions (`pkg.mod.Class.method`,
+`pkg.mod.outer.<locals>.inner`, `pkg.mod.<module>`); files are the package's Python files
+under its import root(s), excluding tests, docs, examples and packaging files.
+
+Text baseline match types: `exact` (full qualname or module path), `unique_suffix` (one symbol
+ends with the string, `<locals>` ignored; leading `self.`/`cls.` or the package's own
+top-level name may be dropped), `ambiguous` (several candidates, listed, not predicted),
+`unresolved`. `scripts/check_gold.py` validates hand-filled gold symbols against these tables.
