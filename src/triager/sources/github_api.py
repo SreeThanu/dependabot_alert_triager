@@ -24,6 +24,8 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
+from triager.fsutil import atomic_write_text
+
 API_ROOT = "https://api.github.com"
 API_VERSION = "2022-11-28"
 PER_PAGE = 100
@@ -148,7 +150,7 @@ def fetch_all(
                 "link": resp.headers.get("link"),
                 "body": json.loads(resp.body),
             }
-            path.write_text(json.dumps(page))
+            atomic_write_text(path, json.dumps(page))
             result.pages_fetched += 1
         result.page_urls.append(url)
         result.fetched_at.append(page["fetched_at"])

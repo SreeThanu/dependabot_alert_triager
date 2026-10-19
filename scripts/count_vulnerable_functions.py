@@ -17,6 +17,7 @@ import subprocess
 from datetime import UTC, datetime
 from pathlib import Path
 
+from triager.fsutil import atomic_write_text
 from triager.sources.github_api import API_VERSION, advisories_url, fetch_all, summarise
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -95,7 +96,7 @@ def main() -> None:
         "windows": windows,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(out, indent=2) + "\n")
+    atomic_write_text(OUT, json.dumps(out, indent=2) + "\n")
     print(f"wrote {OUT.relative_to(ROOT)}")
 
 

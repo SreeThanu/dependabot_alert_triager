@@ -1,0 +1,22 @@
+# Confirmed package families (plan §2.1). Advisories on packages in the same family
+# count toward one family for the per-family sampling cap and the dev/test split.
+# Names are PEP 503-normalised on load. Only families listed here are merged;
+# auto-detected candidates are listed in data/validation/family_candidates.yaml
+# and must be confirmed by a human before being added here.
+
+families:
+  tensorflow:
+    - tensorflow
+    - tensorflow-cpu
+    - tensorflow-gpu
+    - tensorflow-intel
+    - tensorflow-macos
+    - tensorflow-aarch64
+    - tensorflow-cpu-aws
+    - tf-nightly
+    - tf-nightly-cpu
+    - tf-nightly-gpu
+  praisonai:
+    - praisonai
+    - praisonaiagents
+    - praisonai-platform
