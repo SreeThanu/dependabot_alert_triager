@@ -121,3 +121,13 @@ def build_pool(snapshot_dir: Path, start: str = POOL_START) -> list[Advisory]:
     return sorted(
         (a for a in iter_pypi(snapshot_dir) if in_pool(a, start)), key=lambda a: a.ghsa_id
     )
+
+
+def load_ids(snapshot_dir: Path, ids: list[str]) -> dict[str, Advisory]:
+    """PyPI advisories for ``ids`` from the snapshot; raises KeyError if any is missing."""
+    wanted = set(ids)
+    out = {a.ghsa_id: a for a in iter_pypi(snapshot_dir) if a.ghsa_id in wanted}
+    missing = sorted(wanted - set(out))
+    if missing:
+        raise KeyError(f"advisories missing from snapshot: {missing}")
+    return out
