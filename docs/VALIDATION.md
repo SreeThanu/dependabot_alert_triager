@@ -38,3 +38,21 @@ Definition: an advisory counts if any entry in its `vulnerabilities` list has
   2025-onward pool, where coverage is 0, so G1 on L is 0% regardless of how L turns out.
 
 **G1: Proceed (0% < 30%).**
+
+---
+
+## G4 definition (recorded before computing)
+
+Recorded 2026-10-19, after T3 (fix-commit resolution, `data/validation/fix_commits_v1.csv`) and
+before any usable labels exist. G4 has not been computed.
+
+**G4 = verified fixes / usable library advisories that list a fixed version.**
+
+- Numerator: advisories in that denominator with `fix_verified = yes` in
+  `fix_commits_v1.csv` (all four checks pass).
+- Denominator: advisories in the 50-sample with `usable = yes` and `package_type = library`
+  (hand labels in `labels_v1.csv`) whose OSV record lists a fixed version in the pinned snapshot.
+- Advisories with no fixed version at snapshot time are reported separately as **unfixed**. They
+  are labelled from advisory text and code reading only; the diff baseline does not apply to
+  them. They are not counted in G4's numerator or denominator.
+- Thresholds are unchanged from the plan (§2.6): Proceed ≥ 70%, Modify 50–70%, Abandon < 50%.
