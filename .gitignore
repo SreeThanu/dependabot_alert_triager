@@ -1,0 +1,24 @@
+# Python / tooling
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Data (large or re-fetchable)
+data/raw/
+data/cache/
+
+# Run outputs: ignore everything except reports
+runs/**
+!runs/*/
+!runs/**/report.md
+!runs/**/reports/
+!runs/**/reports/**
+
+# macOS
+.DS_Store
+._*

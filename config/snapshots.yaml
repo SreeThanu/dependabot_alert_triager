@@ -1,0 +1,31 @@
+# Pinned data snapshots. Source: docs/VALIDATION_AND_PLAN.md, Phase 1.1.
+# Every run must record these SHAs. Change a pin only deliberately, with a commit
+# that explains why; never re-pin silently.
+#
+# All three databases are licensed CC BY 4.0 (data). Attribution is required in
+# README and in any published dataset.
+
+snapshots:
+  github_advisory_database:
+    repo_url: https://github.com/github/advisory-database
+    commit: b16e369438ef2ab329b4c224cae8224f144bf5d5
+    date: 2026-10-19
+    licence: CC-BY-4.0
+    licence_file: LICENSE.md
+    role: primary  # GHSA OSV JSON for reviewed PyPI advisories
+
+  pypa_advisory_database:
+    repo_url: https://github.com/pypa/advisory-database
+    commit: a8810dcf9b0d3ce4f0d2db53fd30198f7afce289
+    date: 2026-10-18
+    licence: CC-BY-4.0
+    licence_file: LICENSE
+    role: secondary  # cross-reference for PyPI advisories
+
+  golang_vulndb:
+    repo_url: https://github.com/golang/vulndb
+    commit: d5e0cfac5d260523df858cd4c0f849e248468fb6
+    date: 2026-10-10
+    licence: CC-BY-4.0  # data only; code in the repo is BSD-3-Clause
+    licence_file: data/LICENSE
+    role: auxiliary  # method sanity check only; never evidence about Python
