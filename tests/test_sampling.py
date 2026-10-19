@@ -79,3 +79,11 @@ def test_sample_v1_reproduces_from_pinned_snapshot():
     counts = Counter(f for u in chosen for f in u.families(mapping))
     assert max(counts.values()) <= 2
     assert all(family_of(p, mapping) for u in chosen for a in u.advisories for p in a.packages)
+
+
+@pytest.mark.skipif(not SAMPLE.exists(), reason="sample_v1.txt not present")
+def test_sample_v1_has_50_unique_ghsa_ids():
+    ids = [ln.split()[0] for ln in SAMPLE.read_text().splitlines() if ln and ln[0] != "#"]
+    assert len(ids) == 50
+    assert len(set(ids)) == 50, [i for i in ids if ids.count(i) > 1]
+    assert all(i.startswith("GHSA-") for i in ids)
