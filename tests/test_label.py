@@ -2,6 +2,7 @@ import csv
 import importlib.util
 import json
 import sys
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -95,7 +96,8 @@ def env(tmp_path, monkeypatch):
     for attr, name in [("LABELS", "labels_v1.csv"), ("FIX_COMMITS", "fix_commits_v1.csv"),
                        ("REF_TABLE", "symbol_tables_v1.csv"), ("TABLES", "symbol_tables"),
                        ("RELABEL", "relabel_v1.csv"), ("RELABEL_META", "relabel_v1.meta.json"),
-                       ("MANUAL", "manual_fix_candidates.csv")]:  # fmt: skip
+                       ("MANUAL", "manual_fix_candidates.csv"),
+                       ("LABELS_META", "labels_v1.meta.json")]:  # fmt: skip
         monkeypatch.setattr(label, attr, val / name)
     return val
 
@@ -204,10 +206,20 @@ def usable(val, *ids):
 def test_gold_validates_symbols_without_suggestions(env):
     usable(env, "GHSA-0000")
     clock = iter([0.0, 400.0])
-    t = Term(["pkg.mod.Reader.raed", "pkg.mod.Reader.read", "pkg.api.open_fil; pkg.api.open_file",
-              "pkg.api.open_file", "high", "both", "", "a note"])  # fmt: skip
+    t = Term(["named", "explicit", "", "Reader.read()", "pkg.mod.Reader.raed",
+              "pkg.mod.Reader.read", "pkg.api.open_fil; pkg.api.open_file", "pkg.api.open_file",
+              "high", "both", "", "a note"])  # fmt: skip
     assert label.cmd_gold(t.ask, t.out, None, clock=lambda: next(clock)) == 1
     row = read(env / "labels_v1.csv")[0]
+    assert (row["text_names_function"], row["named_symbols_text"]) == ("explicit", "Reader.read()")
+    assert row["labeler"] == "TB"
+    # Text questions come first, after the "text only" instruction, before any symbol prompt.
+    assert t.prompts[0].startswith("text_names_function")
+    assert t.prompts[2].startswith("named_symbols_text")  # empty answer re-asked
+    assert t.prompts[4].startswith("gold_vulnerable_symbols")
+    assert t.lines.index(
+        "  Judge from the advisory text only (not the fix diff or the code)."
+    ) < t.lines.index(f"  {label.SYMBOL_FORMAT}")
     assert row["gold_vulnerable_symbols"] == "pkg.mod.Reader.read"
     assert row["gold_entry_points"] == "pkg.api.open_file"
     assert (row["label_confidence"], row["label_basis"], row["notes"]) == ("high", "both", "a note")
@@ -223,7 +235,7 @@ def test_gold_validates_symbols_without_suggestions(env):
 def test_gold_only_usable_rows_and_minutes_editable(env):
     usable(env, "GHSA-0003")
     set_rows(env, **{"GHSA-0004": {"usable": "no", "unusable_reason": "APP"}})
-    t = Term(["x.y", "", "low", "text", "12", ""])
+    t = Term(["absent", "x.y", "", "low", "text", "12", ""])
     label.cmd_gold(t.ask, t.out, None, clock=lambda: 0.0)
     rows = {r["ghsa_id"]: r for r in read(env / "labels_v1.csv")}
     assert rows["GHSA-0003"]["minutes_spent"] == "12"
@@ -231,6 +243,18 @@ def test_gold_only_usable_rows_and_minutes_editable(env):
     assert "No symbol table" in t.text
     assert not rows["GHSA-0004"]["gold_vulnerable_symbols"]
     assert "1/1 to do, 1 in phase" in t.text
+    assert rows["GHSA-0003"]["text_names_function"] == "absent"
+    assert rows["GHSA-0003"]["named_symbols_text"] == ""
+    assert not any(p.startswith("named_symbols_text") for p in t.prompts)
+
+
+def test_gold_save_records_timestamp(env):
+    usable(env, "GHSA-0003", "GHSA-0005")
+    times = iter([datetime(2026, 10, 1, 9, tzinfo=UTC), datetime(2026, 10, 1, 10, tzinfo=UTC)])
+    t = Term(["absent", "x.y", "", "low", "text", "", ""] * 2)
+    label.cmd_gold(t.ask, t.out, None, clock=lambda: 0.0, now=lambda: next(times))
+    meta = json.loads((env / "labels_v1.meta.json").read_text())
+    assert meta == {"last_gold_save": "2026-10-01T10:00:00+00:00"}
 
 
 # --- source-only guarantee -----------------------------------------------------------------
@@ -241,12 +265,13 @@ def test_helper_never_reads_baseline_outputs(env):
     usable(env, *[f"GHSA-{i:04d}" for i in range(20)])
     OPENED = []
     try:
-        terms = [Term(["", ""]), Term(["pkg.mod.Reader.read", "", "high", "diff", "", ""]
-                                      + ["a.b", "", "low", "text", "", ""] * 19)]  # fmt: skip
+        gold = ["absent", "pkg.mod.Reader.read", "", "high", "diff", "", ""]
+        gold += ["absent", "a.b", "", "low", "text", "", ""] * 19
+        terms = [Term(["", ""]), Term(gold)]
         label.cmd_classify(terms[0].ask, terms[0].out, "GHSA-0000")
         label.cmd_gold(terms[1].ask, terms[1].out, None, clock=lambda: 0.0)
         terms.append(Term([":q"]))
-        label.cmd_relabel(terms[2].ask, terms[2].out, None)
+        label.cmd_relabel(terms[2].ask, terms[2].out, None, force=True)
         terms.append(Term(["GHSA-0000", "https://github.com/o/r/commit/abc1234", "advisory", ""]))
         label.cmd_manual_fix(terms[3].ask, terms[3].out)
         opened = list(OPENED)
@@ -267,7 +292,7 @@ def test_helper_never_reads_baseline_outputs(env):
 def test_relabel_refuses_until_gold_is_complete(env):
     usable(env, "GHSA-0000")
     with pytest.raises(SystemExit):
-        label.cmd_relabel(Term([]).ask, Term([]).out, None)
+        label.cmd_relabel(Term([]).ask, Term([]).out, None, force=True)
     assert not (env / "relabel_v1.csv").exists()
 
 
@@ -275,30 +300,54 @@ def test_relabel_draws_fixed_15_and_hides_first_answers(env):
     ids = [f"GHSA-{i:04d}" for i in range(18)]
     usable(env, *ids)
     set_rows(env, **{g: {"gold_vulnerable_symbols": f"first.answer{i}", "label_confidence": "high",
-                         "label_basis": "diff", "minutes_spent": "3", "notes": f"firstnote{i}"}
+                         "label_basis": "diff", "minutes_spent": "3", "notes": f"firstnote{i}",
+                         "text_names_function": "partial", "named_symbols_text": f"firstname{i}"}
                      for i, g in enumerate(ids)})  # fmt: skip
     for g in ("GHSA-0018", "GHSA-0019"):
         set_rows(env, **{g: {"package_type": "application", "usable": "no",
                              "unusable_reason": "APP"}})  # fmt: skip
     labels_before = (env / "labels_v1.csv").read_bytes()
     t = Term([":q"])
-    label.cmd_relabel(t.ask, t.out, None)
+    label.cmd_relabel(t.ask, t.out, None, force=True)
     drawn = [r["ghsa_id"] for r in read(env / "relabel_v1.csv")]
     assert len(drawn) == 15 and set(drawn) <= set(ids)
     meta = json.loads((env / "relabel_v1.meta.json").read_text())
     assert (meta["seed"], meta["n"], meta["usable_pool"]) == (label.RELABEL_SEED, 15, 18)
     assert "first.answer" not in t.text and "firstnote" not in t.text
+    assert "firstname" not in t.text
     assert "Proposed package_type" not in t.text
 
     # Answers go to relabel_v1.csv; labels_v1.csv is untouched; the draw is frozen.
     first = drawn[0]
-    t = Term(["new.sym", "", "medium", "code-reading", "", ""])
-    label.cmd_relabel(t.ask, t.out, first, clock=lambda: 0.0)
+    t = Term(["partial", "", "new name", "new.sym", "", "medium", "code-reading", "", ""])
+    label.cmd_relabel(t.ask, t.out, first, clock=lambda: 0.0, force=True)
     rel = {r["ghsa_id"]: r for r in read(env / "relabel_v1.csv")}
     assert rel[first]["gold_vulnerable_symbols"] == "new.sym"
+    assert (rel[first]["named_symbols_text"], rel[first]["labeler"]) == ("new name", "TB")
+    assert "firstname" not in t.text
     assert [r["ghsa_id"] for r in read(env / "relabel_v1.csv")] == drawn
     assert (env / "labels_v1.csv").read_bytes() == labels_before
     assert "first.answer" not in t.text and "firstnote" not in t.text
+
+
+def test_relabel_waits_48h_after_last_gold_save(env, capsys):
+    usable(env, "GHSA-0000")
+    with pytest.raises(SystemExit, match="No gold-phase save recorded"):
+        label.cmd_relabel(Term([]).ask, Term([]).out, None)
+    last = datetime(2026, 10, 1, 12, tzinfo=UTC)
+    label.record_gold_save(last)
+    with pytest.raises(SystemExit, match=r"30h 15m to go\. Use --force"):
+        label.cmd_relabel(Term([]).ask, Term([]).out, None,
+                          now=lambda: last + timedelta(hours=17, minutes=45))  # fmt: skip
+    assert not (env / "relabel_v1.csv").exists()
+    # --force passes the gate (then stops here because gold is incomplete).
+    t = Term([])
+    with pytest.raises(SystemExit, match="Finish classify and gold first"):
+        label.cmd_relabel(t.ask, t.out, None, now=lambda: last, force=True)
+    assert "Starting anyway (--force)" in t.text
+    # After 48 hours the gate is open without --force.
+    with pytest.raises(SystemExit, match="Finish classify and gold first"):
+        label.cmd_relabel(Term([]).ask, Term([]).out, None, now=lambda: last + timedelta(hours=48))
 
 
 # --- manual fix candidates -----------------------------------------------------------------

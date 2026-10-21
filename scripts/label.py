@@ -3,7 +3,7 @@
 Usage:
     uv run python scripts/label.py classify [--id GHSA-...]   # phase 1: all 50 rows
     uv run python scripts/label.py gold [--id GHSA-...]       # phase 2: usable rows only
-    uv run python scripts/label.py relabel [--id GHSA-...]    # consistency re-label (15 rows)
+    uv run python scripts/label.py relabel [--id GHSA-...] [--force]  # re-label 15 rows (§2.4)
     uv run python scripts/label.py manual-fix                 # append manual fix candidates
 
 Shows source material only: advisory text and references from the pinned snapshot, the
@@ -16,6 +16,9 @@ in phase 1 only.
 Rows already filled are skipped; --id revisits one row. Each finished row is saved at once
 (atomic temp file + os.replace), and only that row's labelling columns are changed.
 At any prompt, `:s` skips the row (nothing saved) and `:q` quits.
+
+Each gold-phase save records its time in labels_v1.meta.json (`last_gold_save`); relabel
+refuses to start until 48 hours after it unless --force is given.
 """
 
 from __future__ import annotations
@@ -31,7 +34,7 @@ import re
 import sys
 import time
 from collections.abc import Callable
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
 from triager import advisories, snapshots, symbols
@@ -47,15 +50,18 @@ REF_TABLE = VAL / "symbol_tables_v1.csv"  # repo + vulnerable commit per advisor
 TABLES = VAL / "symbol_tables"
 RELABEL = VAL / "relabel_v1.csv"
 RELABEL_META = VAL / "relabel_v1.meta.json"
+LABELS_META = VAL / "labels_v1.meta.json"
 MANUAL = VAL / "manual_fix_candidates.csv"
 MANUAL_COLUMNS = ["ghsa_id", "commit_url", "how_found"]  # as read by resolve_fix_commits.py
 
 CLASSIFY_COLUMNS = ("package_type", "usable", "unusable_reason")
 GOLD_COLUMNS = (
-    "gold_vulnerable_symbols", "gold_entry_points", "label_confidence", "label_basis",
-    "minutes_spent", "notes",
+    "text_names_function", "named_symbols_text", "gold_vulnerable_symbols", "gold_entry_points",
+    "label_confidence", "label_basis", "minutes_spent", "notes", "labeler",
 )  # fmt: skip
 RELABEL_COLUMNS = ["ghsa_id", *GOLD_COLUMNS]
+LABELER = "TB"
+RELABEL_WAIT = timedelta(hours=48)
 RELABEL_N = 15
 RELABEL_SEED = 20261021
 
@@ -243,8 +249,10 @@ def classify_done(row: dict[str, str]) -> bool:
 
 
 def gold_done(row: dict[str, str]) -> bool:
-    return all(row[c] for c in ("gold_vulnerable_symbols", "label_confidence", "label_basis",
-                                "minutes_spent"))  # fmt: skip
+    if row["text_names_function"] in ("explicit", "partial") and not row["named_symbols_text"]:
+        return False
+    return all(row[c] for c in ("text_names_function", "gold_vulnerable_symbols",
+                                "label_confidence", "label_basis", "minutes_spent"))  # fmt: skip
 
 
 def prompt_classify(ask: Ask, out: Out, row: dict[str, str]) -> dict[str, str]:
@@ -263,6 +271,13 @@ def prompt_gold(
     clock: Callable[[], float],
 ) -> dict[str, str]:  # fmt: skip
     """Gold columns for one row; ``prev`` holds this file's own earlier answers (or blanks)."""
+    out("  Judge from the advisory text only (not the fix diff or the code).")
+    names = ask_choice(ask, out, "text_names_function", ALLOWED["text_names_function"],
+                       prev["text_names_function"])  # fmt: skip
+    named = ""
+    while names != "absent" and not named:
+        named = ask_text(ask, "named_symbols_text (as written in the advisory; '; '-separated)",
+                         prev["named_symbols_text"])  # fmt: skip
     if table is None:
         out(
             "  No symbol table for this advisory: symbols cannot be checked and are saved as typed."
@@ -280,8 +295,9 @@ def prompt_gold(
     minutes = ask_minutes(ask, out, timed)
     notes = ask_text(ask, "notes (optional)", prev["notes"])
     return {
+        "text_names_function": names, "named_symbols_text": named,
         "gold_vulnerable_symbols": gold, "gold_entry_points": entry, "label_confidence": conf,
-        "label_basis": basis, "minutes_spent": minutes, "notes": notes,
+        "label_basis": basis, "minutes_spent": minutes, "notes": notes, "labeler": LABELER,
     }  # fmt: skip
 
 
@@ -331,9 +347,36 @@ def cmd_classify(ask: Ask, out: Out, gid: str | None) -> int:
                     lambda g, v: save_row(LABELS, g, v))  # fmt: skip
 
 
+def now_utc() -> datetime:
+    return datetime.now(UTC)
+
+
+def record_gold_save(when: datetime) -> None:
+    """Keep the time of the latest gold-phase save (relabel waits 48 hours after it)."""
+    meta = json.loads(LABELS_META.read_text()) if LABELS_META.exists() else {}
+    meta["last_gold_save"] = when.isoformat(timespec="seconds")
+    atomic_write_text(LABELS_META, json.dumps(meta, indent=2) + "\n")
+
+
+def save_gold(gid: str, values: dict[str, str], now: Callable[[], datetime]) -> None:
+    save_row(LABELS, gid, values)
+    record_gold_save(now())
+
+
+def relabel_wait(now: datetime) -> timedelta | None:
+    """Time left before relabel may start, or None if no gold save is recorded."""
+    if not LABELS_META.exists():
+        return None
+    last = json.loads(LABELS_META.read_text()).get("last_gold_save")
+    if not last:
+        return None
+    return max(timedelta(0), datetime.fromisoformat(last) + RELABEL_WAIT - now)
+
+
 def cmd_gold(
-    ask: Ask, out: Out, gid: str | None, clock: Callable[[], float] = time.monotonic
-) -> int:
+    ask: Ask, out: Out, gid: str | None, clock: Callable[[], float] = time.monotonic,
+    now: Callable[[], datetime] = now_utc,
+) -> int:  # fmt: skip
     _, rows = read_csv(LABELS)
     usable = [r for r in rows if r["usable"] == "yes"]
 
@@ -342,7 +385,7 @@ def cmd_gold(
         return prompt_gold(ask, out, row, load_table(row["ghsa_id"]), started, clock)
 
     return run_rows(out, select(usable, gid, gold_done), len(usable), False, one,
-                    lambda g, v: save_row(LABELS, g, v))  # fmt: skip
+                    lambda g, v: save_gold(g, v, now))  # fmt: skip
 
 
 def create_relabel(out: Out) -> None:
@@ -361,17 +404,27 @@ def create_relabel(out: Out) -> None:
     meta = {
         "seed": RELABEL_SEED, "n": RELABEL_N, "usable_pool": len(usable),
         "labels_sha256": hashlib.sha256(LABELS.read_bytes()).hexdigest(),
-        "created_at": datetime.now(UTC).isoformat(timespec="seconds"),
+        "created_at": now_utc().isoformat(timespec="seconds"),
         "note": "Plan §2.4: re-label at least 48 hours after the first labels, without them.",
     }  # fmt: skip
     atomic_write_text(RELABEL_META, json.dumps(meta, indent=2) + "\n")
     out(f"Drew {RELABEL_N} of {len(usable)} usable rows (seed {RELABEL_SEED}) into {RELABEL.name}.")
-    out("Plan §2.4: re-label at least 48 hours after your first labels.")
 
 
 def cmd_relabel(
-    ask: Ask, out: Out, gid: str | None, clock: Callable[[], float] = time.monotonic
-) -> int:
+    ask: Ask, out: Out, gid: str | None, clock: Callable[[], float] = time.monotonic,
+    now: Callable[[], datetime] = now_utc, force: bool = False,
+) -> int:  # fmt: skip
+    left = relabel_wait(now())
+    if left is None or left > timedelta(0):
+        if left is None:
+            msg = f"No gold-phase save recorded in {LABELS_META.name}."
+        else:
+            hours, rest = divmod(int(left.total_seconds()), 3600)
+            msg = f"Relabel opens 48h after the last gold save: {hours}h {rest // 60}m to go."
+        if not force:
+            sys.exit(f"{msg} Use --force to start anyway.")
+        out(f"{msg} Starting anyway (--force).")
     if not RELABEL.exists():
         create_relabel(out)
     _, rows = read_csv(RELABEL)
@@ -428,6 +481,8 @@ def main(argv: list[str] | None = None) -> int:
     sub = p.add_subparsers(dest="cmd", required=True)
     for name in ("classify", "gold", "relabel"):
         sub.add_parser(name).add_argument("--id", help="revisit one row by GHSA id")
+    sub.choices["relabel"].add_argument("--force", action="store_true",
+                                        help="start before the 48-hour wait is over")  # fmt: skip
     sub.add_parser("manual-fix")
     args = p.parse_args(argv)
     snapshots.verify_head(SNAPSHOT_DIR, snapshots.load("github_advisory_database"))
@@ -436,7 +491,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "gold":
         cmd_gold(input, print, args.id)
     elif args.cmd == "relabel":
-        cmd_relabel(input, print, args.id)
+        cmd_relabel(input, print, args.id, force=args.force)
     else:
         cmd_manual_fix(input, print)
     return 0
