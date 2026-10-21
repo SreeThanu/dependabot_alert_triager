@@ -1,0 +1,51 @@
+ghsa_id,package_type,usable,unusable_reason,rationale
+GHSA-mmwr-2jhp-mc7j,library,yes,,ModelAdmin.list_editable is Django admin code that runs inside the user's own Django project (framework = library).
+GHSA-f2h6-7xfr-xm8w,library,yes,,"_safe_extractall() is reached via LocalRegistry.pull()/HttpRegistry.pull(), registry API of an importable agents framework."
+GHSA-rrgf-hcr9-jq6h,application,no,APP,review_paper is a route in the project's own backend/app.py server (POST /api/review).
+GHSA-m2jr-x4gq-5rmj,application,no,APP,Component named as SGLang's inference HTTP endpoint (lora_path in a server request); borderline: LoRAManager also runs in the in-process Engine.
+GHSA-jfj5-wrj9-63x4,application,no,APP,langgraph-api is the LangGraph Server runtime; flaw is in its run-creation authorization path.
+GHSA-xph7-9rjv-w5fr,application,no,APP,SimpleRBACAuthorizationProvider is the Chroma server's auth provider; cross-tenant access is a server-side check.
+GHSA-x249-cx55-2h87,application,no,APP,UserDeactivateView is a view in the wger Django web application.
+GHSA-ghq2-5c67-fprm,cli,no,OTHER,"pdm is a package-manager CLI; the symlink-following writes happen in pdm commands (pdm config -l, pdm use)."
+GHSA-227r-w5j2-6243,application,no,APP,Flaw is the InvokeAI web API POST /api/v1/images/delete.
+GHSA-954p-556p-r752,library,yes,,"Sink _get_ref_body is in the JSON-Schema parser module, usable programmatically as well as via the datamodel-codegen CLI."
+GHSA-vrq3-r879-7m65,application,no,APP,Crash is triggered through vLLM's /v1/chat/completions OpenAI server endpoint (tool schema validation); error surfaces from C++ grammar code.
+GHSA-x783-xp3g-mqhp,library,yes,,"SQLiteConversationStore is a persistence class of the importable PraisonAI framework, configured from_yaml/from_dict."
+GHSA-5247-m8w9-2v4m,application,no,APP,Flaw is the Airflow REST API endpoint POST /api/v2/assets/{asset_id}/materialize and its authorization.
+GHSA-9cfw-f3f9-7mm7,library,yes,,JSONSerializer/CBORSerializer.unmarshal_object are APScheduler library classes used inside the user's application.
+GHSA-3hh9-752g-5g22,library,yes,,hex_hash_to_int16 in lmcache/integration/vllm/utils.py runs inside the vLLM process as an imported extension.
+GHSA-2rrx-pphc-qfv9,application,no,APP,XSS in pgAdmin 4's web UI query result rendering.
+GHSA-wrpj-755p-x363,library,yes,,Databricks provider hook code is imported into users' DAGs; flaw is missing certificate validation in its token exchange (may be CONFIG_DEFAULT-like).
+GHSA-5cgr-j3jf-jw3v,application,no,APP,git_init is a tool exposed by the mcp-server-git MCP server.
+GHSA-45m8-cpm2-3v65,application,no,APP,Open WebUI backend Socket.IO handlers (backend/open_webui/socket/main.py) of a deployed web app.
+GHSA-5rvq-cxj2-64vf,library,yes,,QuerystringParser/FormParser/parse_form are public python-multipart parser APIs used by Starlette/FastAPI apps.
+GHSA-fqq6-7vqf-w3fg,library,yes,,picklescan's scanning API misses doctest.debug_script; note: the fix may be a blocklist data entry rather than a function change.
+GHSA-ffq5-qpvf-xq7x,application,no,APP,"eval() is in the Command Sender Vue UI (CommandSender.vue), browser code of the COSMOS web tool, not Python."
+GHSA-6rfw-mq36-jm8h,library,yes,,install_packages() is a method of the Code Interpreter client in the bedrock-agentcore SDK called from user code.
+GHSA-gh4c-6fx4-qh6g,library,yes,,HTTPResponse.stream()/read_chunked() decoding loop in the urllib3 HTTP client library.
+GHSA-4qqf-9m5c-w2c5,application,no,APP,Audit-log e-mail notifications of the Weblate web application.
+GHSA-95pq-hr8p-f5g7,application,no,APP,ComfyUI-Manager config stored in a directory exposed by ComfyUI's web API; a deployed UI extension.
+GHSA-f833-7jw8-xwrv,library,yes,,FramenetCorpusReader.frame_by_name/_lu_file/doc are NLTK corpus-reader APIs called from user code.
+GHSA-xw8c-rrvx-f7xq,cli,no,OTHER,ciguard is a CI/CD auditing CLI; unbounded read is in its SCA HTTP clients used by the tool's scans.
+GHSA-4qcx-jx49-6qrh,application,no,APP,Exploited through the aim tracking server instruction API (Repo._close_run -> LockManager.release_locks); borderline: code lives in aim's importable storage layer.
+GHSA-5gjj-6r7v-ph3x,native_ext,yes,,"Root cause in C (_pillow_heif.c, _CtxWriteImage_add_plane*); advisory names the encode path, so a Python encode/save entry point is identifiable."
+GHSA-2cm6-r77w-6g96,application,no,APP,Missing authorization validators for the MLflow tracking server's trace API endpoints (_before_request).
+GHSA-4f84-67cv-qrv3,other,no,OTHER,Malicious release (1.1.5.post1) from a compromised account; not a flaw in package code.
+GHSA-wvwj-cvrp-7pv5,library,yes,,"JsonWebSignature._prepare_algorithm_key in authlib's JWS implementation, called by deserialize_* from user code."
+GHSA-xpjq-3w4w-w5wr,application,no,APP,"Stored XSS in the LightRAG WebUI React renderer (ChatMessage.tsx), browser code of the server UI."
+GHSA-r54c-2xmf-2cf3,model_format,no,OTHER,"RCE from pickle deserialization of adapter model files (adapter_model.bin) with torch < 2.6, triggered via swift web-ui."
+GHSA-jqfc-9q34-prhg,application,no,APP,Traceback disclosure by the Tryton server (trytond) to remote clients.
+GHSA-x2rj-828p-hx9m,application,no,APP,eval() in the Llama3 tool parser reached through Xinference's /v1/chat/completions serving API.
+GHSA-59qh-fmm7-3g9q,application,no,APP,"CORS middleware misconfiguration of the rembg HTTP server, not the background-removal library API."
+GHSA-j5qj-rg5j-j7c2,application,no,APP,DoS in the aim tracking server's websocket message size handling.
+GHSA-mwh4-6h8g-pg8w,library,yes,,aiohttp web.Response reason parameter; Response is constructed in the user's own aiohttp handlers.
+GHSA-xch3-2f9x-wh9f,library,yes,,"os.system injection in mlflow/sagemaker/__init__.py, an importable module (also reached via the --container CLI flag)."
+GHSA-5pwr-322w-8jr4,library,yes,,Context.set_cookie_generate_callback wrapper in pyOpenSSL (Python/cffi) copies an over-long cookie into the OpenSSL buffer.
+GHSA-2wxc-x7rj-hg8f,library,yes,,asyncssh.scp() client receive path (_parse_cd_args/_recv_files) called from user code.
+GHSA-rpqr-j937-6qr9,library,yes,,Path traversal in .ovpack import handling of the OpenViking package; low confidence: text does not say whether import runs via SDK or server.
+GHSA-7545-fcxq-7j24,library,yes,,SymbolicReference/Reference create/rename/delete are GitPython APIs called by the user's application.
+GHSA-v4gp-hf5j-4566,application,no,APP,Authorization flaw in the Rdiffweb web interface API.
+GHSA-f54q-57x4-jg88,library,yes,,picklescan's scanning API misses lib2to3 Grammar.loads; note: the fix may be a blocklist data entry rather than a function change.
+GHSA-vv9c-xxg7-wmv7,application,no,APP,Path traversal in the InvokeAI bulk downloads web API.
+GHSA-99f9-j8r3-p853,application,no,APP,"World-readable state files (response_store.db, webhook_subscriptions.json) created by the Hermes Agent program."
+GHSA-5rff-8f7c-8jmw,native_ext,yes,,Out-of-bounds write in Open Babel's C++ ORCA reader; advisory names the OBConversion API and the Python bindings as entry points.

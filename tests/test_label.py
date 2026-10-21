@@ -20,6 +20,7 @@ spec.loader.exec_module(label)
 LABEL_FIELDS = REAL_LABELS.open().readline().strip().split(",")
 FORBIDDEN = ("diff_baseline", "text_baseline")
 SENTINEL = "SENTINEL_BASELINE_OUTPUT"
+RATIONALE = "RATIONALE_SENTINEL"
 TABLE_SYMBOLS = [
     "pkg.secret.<module>",
     "pkg.hidden.Secret",
@@ -92,12 +93,19 @@ def env(tmp_path, monkeypatch):
     for name in ("diff_baseline_v1.csv", "diff_baseline_symbols_v1.csv", "text_baseline_v1.csv",
                  "text_baseline_matches_v1.csv"):  # fmt: skip
         (val / name).write_text(f"ghsa_id,functions\nGHSA-0000,{SENTINEL}\n")
+    write(val / "classify_proposals_v1.csv",
+          ["ghsa_id", "package_type", "usable", "unusable_reason", "rationale"],
+          [{"ghsa_id": "GHSA-0000", "package_type": "library", "usable": "yes",
+            "unusable_reason": "", "rationale": f"{RATIONALE} imported API"},
+           {"ghsa_id": "GHSA-0001", "package_type": "application", "usable": "no",
+            "unusable_reason": "APP", "rationale": f"{RATIONALE} web server"}])  # fmt: skip
     monkeypatch.setattr(label, "SNAPSHOT_DIR", snap)
     for attr, name in [("LABELS", "labels_v1.csv"), ("FIX_COMMITS", "fix_commits_v1.csv"),
                        ("REF_TABLE", "symbol_tables_v1.csv"), ("TABLES", "symbol_tables"),
                        ("RELABEL", "relabel_v1.csv"), ("RELABEL_META", "relabel_v1.meta.json"),
                        ("MANUAL", "manual_fix_candidates.csv"),
-                       ("LABELS_META", "labels_v1.meta.json")]:  # fmt: skip
+                       ("LABELS_META", "labels_v1.meta.json"),
+                       ("PROPOSALS", "classify_proposals_v1.csv")]:  # fmt: skip
         monkeypatch.setattr(label, attr, val / name)
     return val
 
@@ -162,9 +170,10 @@ def test_classify_validates_and_changes_only_its_columns(env):
         "library", "yes", "")  # fmt: skip
     assert (after[1]["package_type"], after[1]["usable"], after[1]["unusable_reason"]) == (
         "application", "no", "APP")  # fmt: skip
+    mine = (*label.CLASSIFY_COLUMNS, "classify_source")
     for b, a in zip(before, after, strict=True):
-        assert {k: v for k, v in a.items() if k not in label.CLASSIFY_COLUMNS} == {
-            k: v for k, v in b.items() if k not in label.CLASSIFY_COLUMNS
+        assert {k: v for k, v in a.items() if k not in mine} == {
+            k: v for k, v in b.items() if k not in mine
         }
     assert "must be one of" in t.text
     assert "Proposed package_type" in t.text
@@ -194,6 +203,37 @@ def test_skip_and_quit_leave_row_unchanged(env):
     t = Term(["library", ":s", ":q"])
     assert label.cmd_classify(t.ask, t.out, None) == 0
     assert (env / "labels_v1.csv").read_bytes() == before
+
+
+def test_classify_prefills_proposal_and_records_source(env):
+    before = (env / "labels_v1.csv").read_text().splitlines()
+    # Row 0: Enter x2 accepts library/yes. Row 1: override APP -> OTHER. Row 2: no proposal.
+    t = Term(["", "", "", "", "OTHER", "cli", "no", "OTHER", ":q"])
+    assert label.cmd_classify(t.ask, t.out, None) == 3
+    rows = read(env / "labels_v1.csv")
+    got = [(r["package_type"], r["usable"], r["unusable_reason"], r["classify_source"])
+           for r in rows[:4]]  # fmt: skip
+    assert got == [("library", "yes", "", "accepted"), ("application", "no", "OTHER", "overridden"),
+                   ("cli", "no", "OTHER", "no_proposal"), ("", "", "", "")]  # fmt: skip
+    after = (env / "labels_v1.csv").read_text().splitlines()
+    assert after[0] == before[0] + ",classify_source"  # appended as the last column
+    assert after[4:] == [line + "," for line in before[4:]]  # untouched rows: only the new cell
+    assert f"{RATIONALE} imported API" in t.text and f"{RATIONALE} web server" in t.text
+    assert "package_type=library  usable=yes  unusable_reason=-" in t.text
+    assert (
+        t.prompts[0] == "package_type (application / cli / library / model_format / native_ext / "
+        "other) [library]: "
+    )
+    assert "No proposal for this advisory." in t.text
+
+
+def test_classify_revisit_defaults_to_existing_label(env):
+    set_rows(env, **{"GHSA-0000": {"package_type": "native_ext", "usable": "yes"}})
+    t = Term(["", ""])
+    label.cmd_classify(t.ask, t.out, "GHSA-0000")
+    row = read(env / "labels_v1.csv")[0]
+    assert (row["package_type"], row["classify_source"]) == ("native_ext", "overridden")
+    assert t.prompts[0].endswith("[native_ext]: ")
 
 
 # --- phase 2 -------------------------------------------------------------------------------
@@ -269,6 +309,7 @@ def test_helper_never_reads_baseline_outputs(env):
         gold += ["absent", "a.b", "", "low", "text", "", ""] * 19
         terms = [Term(["", ""]), Term(gold)]
         label.cmd_classify(terms[0].ask, terms[0].out, "GHSA-0000")
+        n_classify = len(OPENED)
         label.cmd_gold(terms[1].ask, terms[1].out, None, clock=lambda: 0.0)
         terms.append(Term([":q"]))
         label.cmd_relabel(terms[2].ask, terms[2].out, None, force=True)
@@ -277,6 +318,11 @@ def test_helper_never_reads_baseline_outputs(env):
         opened = list(OPENED)
     finally:
         OPENED = None
+    proposals = "classify_proposals_v1.csv"
+    assert any(proposals in p for p in opened[:n_classify])
+    assert not [p for p in opened[n_classify:] if proposals in p]  # gold, relabel, manual-fix
+    assert RATIONALE in terms[0].text
+    assert all(RATIONALE not in t.text for t in terms[1:])
     assert any("labels_v1.csv" in p for p in opened)  # the hook does see the helper's reads
     assert not [p for p in opened if any(f in Path(p).name for f in FORBIDDEN)]
     assert all(SENTINEL not in t.text for t in terms)
@@ -370,3 +416,18 @@ def test_manual_fix_creates_header_and_appends(env):
 def test_manual_columns_match_resolver():
     src = (REPO / "scripts" / "resolve_fix_commits.py").read_text()
     assert f"MANUAL_COLUMNS = {label.MANUAL_COLUMNS!r}".replace("'", '"') in src
+
+
+def test_real_classify_proposals_cover_sample_with_valid_values():
+    from triager.eval.gold import ALLOWED
+
+    props = read(REPO / "data" / "validation" / "classify_proposals_v1.csv")
+    assert [p["ghsa_id"] for p in props] == [r["ghsa_id"] for r in read(REAL_LABELS)]
+    for p in props:
+        assert p["package_type"] in ALLOWED["package_type"]
+        assert p["rationale"].strip()
+        if p["usable"] == "yes":
+            assert p["package_type"] in ("library", "native_ext") and not p["unusable_reason"]
+        else:
+            assert p["usable"] == "no" and p["unusable_reason"] in ALLOWED["unusable_reason"]
+            assert p["package_type"] != "library"

@@ -10,8 +10,10 @@ Shows source material only: advisory text and references from the pinned snapsho
 verified fix commit link (fix_commits_v1.csv) and a link to browse the repo at the vulnerable
 ref (symbol_tables_v1.csv: repo and commit only). It never reads baseline outputs
 (diff_baseline_*, text_baseline_*) and never prints symbol-table contents: typed gold symbols
-are accepted or rejected with "not found", with no suggestions. package_type_proposed is shown
-in phase 1 only.
+are accepted or rejected with "not found", with no suggestions. package_type_proposed and the
+classification proposals (classify_proposals_v1.csv) are read and shown in phase 1 only; the
+proposal is the default answer, and classify_source records whether it was accepted or
+overridden.
 
 Rows already filled are skipped; --id revisits one row. Each finished row is saved at once
 (atomic temp file + os.replace), and only that row's labelling columns are changed.
@@ -51,6 +53,7 @@ TABLES = VAL / "symbol_tables"
 RELABEL = VAL / "relabel_v1.csv"
 RELABEL_META = VAL / "relabel_v1.meta.json"
 LABELS_META = VAL / "labels_v1.meta.json"
+PROPOSALS = VAL / "classify_proposals_v1.csv"  # phase 1 only
 MANUAL = VAL / "manual_fix_candidates.csv"
 MANUAL_COLUMNS = ["ghsa_id", "commit_url", "how_found"]  # as read by resolve_fix_commits.py
 
@@ -100,9 +103,19 @@ def write_csv(path: Path, fields: list[str], rows: list[dict[str, str]]) -> None
     atomic_write_text(path, buf.getvalue())
 
 
-def save_row(path: Path, gid: str, values: dict[str, str]) -> None:
-    """Re-read ``path`` and set ``values`` on row ``gid`` only; every other cell is kept."""
+def save_row(
+    path: Path, gid: str, values: dict[str, str], new_columns: tuple[str, ...] = ()
+) -> None:
+    """Re-read ``path`` and set ``values`` on row ``gid`` only; every other cell is kept.
+
+    ``new_columns`` missing from the file are appended (empty in every other row).
+    """
     fields, rows = read_csv(path)
+    for col in new_columns:
+        if col not in fields:
+            fields.append(col)
+            for r in rows:
+                r[col] = ""
     unknown = set(values) - set(fields)
     if unknown:
         raise KeyError(f"{path.name}: no columns {sorted(unknown)}")
@@ -255,15 +268,44 @@ def gold_done(row: dict[str, str]) -> bool:
                                 "label_confidence", "label_basis", "minutes_spent"))  # fmt: skip
 
 
-def prompt_classify(ask: Ask, out: Out, row: dict[str, str]) -> dict[str, str]:
-    ptype = ask_choice(ask, out, "package_type", ALLOWED["package_type"], row["package_type"])
-    usable = ask_choice(ask, out, "usable", ALLOWED["usable"], row["usable"])
+def load_proposals() -> dict[str, dict[str, str]]:
+    if not PROPOSALS.exists():
+        return {}
+    _, rows = read_csv(PROPOSALS)
+    return {r["ghsa_id"]: r for r in rows}
+
+
+def prompt_classify(
+    ask: Ask, out: Out, row: dict[str, str], prop: dict[str, str] | None
+) -> dict[str, str]:
+    """Defaults: the row's own values if already labelled, else the proposal."""
+    if prop:
+        reason = prop["unusable_reason"] or "-"
+        out(f"Proposal (Claude, from advisory text): package_type={prop['package_type']}  "
+            f"usable={prop['usable']}  unusable_reason={reason}")  # fmt: skip
+        out(f"  Rationale: {prop['rationale']}")
+        out("  Enter accepts each default; typing overrides it.")
+    else:
+        out("No proposal for this advisory.")
+    prop = prop or {}
+
+    def default(col: str) -> str:
+        return row[col] or prop.get(col, "")
+
+    ptype = ask_choice(ask, out, "package_type", ALLOWED["package_type"], default("package_type"))
+    usable = ask_choice(ask, out, "usable", ALLOWED["usable"], default("usable"))
     reason = ""
     if usable == "no":
-        reason = ask_choice(
-            ask, out, "unusable_reason", ALLOWED["unusable_reason"], row["unusable_reason"]
-        )
-    return {"package_type": ptype, "usable": usable, "unusable_reason": reason}
+        reason = ask_choice(ask, out, "unusable_reason", ALLOWED["unusable_reason"],
+                            default("unusable_reason"))  # fmt: skip
+    values = {"package_type": ptype, "usable": usable, "unusable_reason": reason}
+    if not prop:
+        source = "no_proposal"
+    elif all(values[c] == prop[c] for c in CLASSIFY_COLUMNS):
+        source = "accepted"
+    else:
+        source = "overridden"
+    return {**values, "classify_source": source}
 
 
 def prompt_gold(
@@ -342,9 +384,14 @@ def run_rows(
 
 def cmd_classify(ask: Ask, out: Out, gid: str | None) -> int:
     _, rows = read_csv(LABELS)
+    props = load_proposals()
+
+    def save(gid: str, values: dict[str, str]) -> None:
+        save_row(LABELS, gid, values, new_columns=("classify_source",))
+
     return run_rows(out, select(rows, gid, classify_done), len(rows), True,
-                    lambda row: prompt_classify(ask, out, row),
-                    lambda g, v: save_row(LABELS, g, v))  # fmt: skip
+                    lambda row: prompt_classify(ask, out, row, props.get(row["ghsa_id"])),
+                    save)  # fmt: skip
 
 
 def now_utc() -> datetime:

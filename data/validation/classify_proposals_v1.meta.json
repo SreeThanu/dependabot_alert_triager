@@ -1,0 +1,9 @@
+{
+  "proposer": "Claude Code, model claude-opus-5-5 (LLM judgement, not a script)",
+  "created": "2026-10-21",
+  "phase": "classify (phase 1) only; never shown in the gold phase",
+  "inputs": "Pinned snapshot b16e369438ef2ab329b4c224cae8224f144bf5d5: summary, details (first 1,800 characters read), package names; cached PyPI summary and classifiers (data/cache/pypi). Reference URLs were not opened.",
+  "rule": "Classify the vulnerable code, not the package: library if it runs inside a package the user imports into their own code (frameworks such as Django count); application if it is in someone else's deployed server/UI; cli, native_ext (root cause in C/C++/Rust), model_format, other otherwise. usable = yes for library, and for native_ext only if a Python entry point is clear.",
+  "labels_sha256": "3e9dfa5000747463cbd145f27a698daba579393220416a4f804fb2de1aaabd3d",
+  "proposals_sha256": "93858c5e1c24cf6a49c3b134b5bfbf9821834e8c4929d16e58fedd2d9cc9870b"
+}

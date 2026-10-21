@@ -12,6 +12,7 @@ Phase 2 validation data (`docs/VALIDATION_AND_PLAN.md` §2). Advisory content is
 | `labels_v1.csv` | `scripts/sample.py` (T2), then hand-labelled | One row per sampled advisory. The script never overwrites it once it exists. |
 | `fix_commits_v1.csv` | `scripts/resolve_fix_commits.py` (T3) | One row per sampled advisory: fix-commit resolution and per-check verification. Kept separate from `labels_v1.csv` so hand labelling and scripts never write the same file. |
 | `fix_commit_candidates_v1.csv` | `scripts/resolve_fix_commits.py` (T3) | One row per candidate commit checked (several per advisory possible). |
+| `classify_proposals_v1.csv`, `classify_proposals_v1.meta.json` | Claude Code (model `claude-opus-5-5`), 2026-10-21 | **LLM proposals, not labels.** Per advisory: proposed `package_type`, `usable`, `unusable_reason` and a one-line `rationale`, from the snapshot summary/details (first 1,800 characters) and cached PyPI metadata; rule in the meta file. Shown and used as defaults by `scripts/label.py classify` only, never in the gold phase. |
 | `labels_v1.meta.json` | `scripts/label.py gold` | `last_gold_save`: UTC time of the latest gold-phase save. `relabel` refuses to start until 48 hours after it (plan §2.4) unless `--force`. |
 | `relabel_v1.csv`, `relabel_v1.meta.json` | `scripts/label.py relabel` | Consistency re-label (plan §2.4): 15 usable rows drawn once with a fixed seed after all gold labels are in; columns `ghsa_id` + the gold-phase columns (`text_names_function` ... `notes`, `labeler`). |
 | `manual_fix_candidates.csv` | Hand-maintained (optional; `scripts/label.py manual-fix` appends) | Columns `ghsa_id, commit_url, how_found`. Read by `scripts/resolve_fix_commits.py`; each row gets the same four checks with source `manual`. |
@@ -55,10 +56,13 @@ Multi-valued cells are separated by `; `.
 
 ### Filled by hand (left empty by the script)
 
-`package_type`, `usable`, `unusable_reason`, `text_names_function`, `named_symbols_text`,
+`package_type`, `usable`, `unusable_reason`, `classify_source`, `text_names_function`, `named_symbols_text`,
 `gold_vulnerable_symbols`, `gold_entry_points`, `label_confidence`, `label_basis`,
 `minutes_spent`, `labeler`, `notes`. Allowed values are in plan §2.2. `package_type` is the
 human label; `package_type_proposed` is only a hint and must not be copied without checking.
+`classify_source` is written by `scripts/label.py classify` (column appended on first save):
+`accepted` if the final `package_type`, `usable` and `unusable_reason` all equal the proposal in
+`classify_proposals_v1.csv`, `overridden` otherwise, `no_proposal` if there was none.
 
 ## `fix_commits_v1.csv` columns (T3, plan §2.3)
 
