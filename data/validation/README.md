@@ -12,7 +12,8 @@ Phase 2 validation data (`docs/VALIDATION_AND_PLAN.md` §2). Advisory content is
 | `labels_v1.csv` | `scripts/sample.py` (T2), then hand-labelled | One row per sampled advisory. The script never overwrites it once it exists. |
 | `fix_commits_v1.csv` | `scripts/resolve_fix_commits.py` (T3) | One row per sampled advisory: fix-commit resolution and per-check verification. Kept separate from `labels_v1.csv` so hand labelling and scripts never write the same file. |
 | `fix_commit_candidates_v1.csv` | `scripts/resolve_fix_commits.py` (T3) | One row per candidate commit checked (several per advisory possible). |
-| `manual_fix_candidates.csv` | Hand-maintained (optional) | Columns `ghsa_id, commit_url, how_found`. Read by `scripts/resolve_fix_commits.py`; each row gets the same four checks with source `manual`. |
+| `relabel_v1.csv`, `relabel_v1.meta.json` | `scripts/label.py relabel` | Consistency re-label (plan §2.4): 15 usable rows drawn once with a fixed seed after all gold labels are in; columns `ghsa_id` + the gold columns. |
+| `manual_fix_candidates.csv` | Hand-maintained (optional; `scripts/label.py manual-fix` appends) | Columns `ghsa_id, commit_url, how_found`. Read by `scripts/resolve_fix_commits.py`; each row gets the same four checks with source `manual`. |
 | `diff_baseline_v1.csv` | `scripts/diff_baseline.py` (T4) | Diff-baseline candidate symbols, one row per advisory with a verified fix (22). Not scored. |
 | `diff_baseline_symbols_v1.csv` | `scripts/diff_baseline.py` (T4) | One row per (advisory, symbol, commit, file) with the pre-fix line numbers that mapped to it. |
 | `diff_baseline_v1.meta.json` | `scripts/diff_baseline.py` (T4) | Provenance and the distribution of function counts. |
