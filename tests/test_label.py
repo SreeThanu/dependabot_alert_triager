@@ -401,14 +401,21 @@ def test_relabel_waits_48h_after_last_gold_save(env, capsys):
 
 def test_manual_fix_creates_header_and_appends(env):
     t = Term(["GHSA-9999", "GHSA-0001", "not a url", "https://github.com/o/r/commit/abc1234",
-              "found in changelog", "GHSA-0002", "https://github.com/o/r/commit/def5678", "PR",
-              ""])  # fmt: skip
+              "found in changelog", "", "GHSA-0002", "https://github.com/o/r/commit/def5678",
+              "PR", "pkg/2.0.0", "pkg/1.9.0", ""])  # fmt: skip
     assert label.cmd_manual_fix(t.ask, t.out) == 2
     path = env / "manual_fix_candidates.csv"
-    assert path.read_text().splitlines()[0] == "ghsa_id,commit_url,how_found"
-    assert [r["ghsa_id"] for r in read(path)] == ["GHSA-0001", "GHSA-0002"]
+    assert path.read_text().splitlines()[0] == (
+        "ghsa_id,commit_url,how_found,fixed_tag,last_affected_tag"
+    )
+    rows = read(path)
+    assert [r["ghsa_id"] for r in rows] == ["GHSA-0001", "GHSA-0002"]
+    assert [(r["fixed_tag"], r["last_affected_tag"]) for r in rows] == [
+        ("", ""),
+        ("pkg/2.0.0", "pkg/1.9.0"),
+    ]
     assert "is not in labels_v1.csv" in t.text and "must be https" in t.text
-    t = Term(["GHSA-0003", "https://github.com/o/r/commit/0123456", "manual", ":q"])
+    t = Term(["GHSA-0003", "https://github.com/o/r/commit/0123456", "manual", "", ":q"])
     label.cmd_manual_fix(t.ask, t.out)
     assert [r["ghsa_id"] for r in read(path)] == ["GHSA-0001", "GHSA-0002", "GHSA-0003"]
 

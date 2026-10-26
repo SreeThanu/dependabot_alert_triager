@@ -55,7 +55,8 @@ RELABEL_META = VAL / "relabel_v1.meta.json"
 LABELS_META = VAL / "labels_v1.meta.json"
 PROPOSALS = VAL / "classify_proposals_v1.csv"  # phase 1 only
 MANUAL = VAL / "manual_fix_candidates.csv"
-MANUAL_COLUMNS = ["ghsa_id", "commit_url", "how_found"]  # as read by resolve_fix_commits.py
+# As read by resolve_fix_commits.py.
+MANUAL_COLUMNS = ["ghsa_id", "commit_url", "how_found", "fixed_tag", "last_affected_tag"]
 
 CLASSIFY_COLUMNS = ("package_type", "usable", "unusable_reason")
 GOLD_COLUMNS = (
@@ -507,6 +508,9 @@ def cmd_manual_fix(ask: Ask, out: Out) -> int:
             how = ""
             while not how:
                 how = _read(ask, "how_found", "")
+            # Tags only when the advisory's range matches no release line.
+            fixed_tag = _read(ask, "fixed_tag (Enter = use advisory range)", "")
+            last_tag = _read(ask, "last_affected_tag (Enter = none)", "") if fixed_tag else ""
         except (Quit, Skip):
             break
         if MANUAL.exists():
@@ -515,7 +519,8 @@ def cmd_manual_fix(ask: Ask, out: Out) -> int:
                 sys.exit(f"{MANUAL.name}: columns must be {MANUAL_COLUMNS}, got {fields}")
         else:
             rows = []
-        rows.append({"ghsa_id": gid, "commit_url": url, "how_found": how})
+        rows.append({"ghsa_id": gid, "commit_url": url, "how_found": how,
+                     "fixed_tag": fixed_tag, "last_affected_tag": last_tag})  # fmt: skip
         write_csv(MANUAL, MANUAL_COLUMNS, rows)
         added += 1
         out(f"  appended to {MANUAL.name}")

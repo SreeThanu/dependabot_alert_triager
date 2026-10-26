@@ -305,3 +305,55 @@ def test_manual_candidate_is_checked_but_automated_source_wins(clones, repo):
     assert m.checks["in_fixed_tag"] == fc.FAIL  # 'after' is past the fixed tag
     assert any("already checked as reference" in e for e in res.errors)
     assert any("not a GitHub commit URL" in e for e in res.errors)
+
+
+BOGUS = VersionRange("pkg", "7.0.0", "7.2.0", None)  # matches no tag in the fixture repo
+
+
+def test_manual_tag_override_verifies_when_range_matches_no_tag(clones, repo):
+    _, shas = repo
+    a = adv("GHSA-zzzz-zzzz-zzzz", ["pkg"], ranges=(BOGUS,))
+    url = f"https://github.com/owner/pkg/commit/{shas['fix']}"
+    res = fc.resolve(a, PYPI, clones, _no_pr, manual=[(url, "PR", "v1.0.1", "v1.0.0")])
+    assert res.source == "manual"
+    [m] = res.candidates
+    assert m.checks == dict.fromkeys(fc.CHECKS, fc.PASS)
+    assert (m.fixed_tag, m.last_affected_tag) == ("v1.0.1", "v1.0.0")
+    assert any("tags from manual override" in d for d in m.details)
+
+
+def test_manual_tag_override_rechecks_commit_found_by_automated_stage(clones, repo):
+    _, shas = repo
+    a = adv(GHSA, ["pkg"], references=[f"https://github.com/owner/pkg/commit/{shas['fix']}"],
+            ranges=(BOGUS,))  # fmt: skip
+    url = f"https://github.com/owner/pkg/commit/{shas['fix'][:12]}"
+    res = fc.resolve(a, PYPI, clones, _no_pr, manual=[(url, "PR", "v1.0.1", "v1.0.0")])
+    ref, man = res.candidates
+    assert (ref.source, ref.checks["in_fixed_tag"]) == ("reference", fc.UNKNOWN)
+    assert man.source == "manual" and man.verified
+    assert res.source == "manual"
+    assert not any("already checked" in e for e in res.errors)
+
+
+@pytest.mark.parametrize(
+    ("sha_key", "fixed", "last", "in_fixed", "not_in_affected", "note"),
+    [
+        ("after", "v1.0.1", "v1.0.0", fc.FAIL, fc.UNKNOWN, "not contained in the fixed tag"),
+        ("base", "v1.0.1", "v1.0.0", fc.PASS, fc.FAIL, None),
+        ("fix", "v9.9.9", "v1.0.0", fc.UNKNOWN, fc.UNKNOWN, "tag not found: v9.9.9"),
+        ("fix", "v1.0.1", "v0.0.1", fc.PASS, fc.UNKNOWN, "tag not found: v0.0.1"),
+        ("fix", "v1.0.1", "", fc.PASS, fc.UNKNOWN, "no last affected tag"),
+    ],
+)
+def test_manual_tag_override_checks(repo, sha_key, fixed, last, in_fixed, not_in_affected, note):
+    work, shas = repo
+    a = adv(GHSA, ["pkg"], ranges=(BOGUS,))
+    cand = fc.Candidate(GHSA, "manual", SLUG, shas[sha_key], "link")
+    c = fc.verify(cand, work, a, PYPI, tags_override=(fixed, last))
+    assert (c.checks["in_fixed_tag"], c.checks["not_in_affected_tag"]) == (
+        in_fixed,
+        not_in_affected,
+    )
+    assert not c.verified
+    if note:
+        assert any(note in d for d in c.details)

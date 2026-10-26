@@ -15,7 +15,9 @@ Repos are cloned blobless into data/raw/repos/. PR lookups use GITHUB_TOKEN if s
 (never written anywhere) and are cached in data/cache/github_pulls/.
 
 Optional human input: data/validation/manual_fix_candidates.csv with columns
-ghsa_id, commit_url, how_found. Each row gets the same four checks with source = manual.
+ghsa_id, commit_url, how_found, fixed_tag, last_affected_tag. Each row gets the same four
+checks with source = manual. fixed_tag / last_affected_tag are optional; when fixed_tag is
+set, the two tag checks use these tags instead of the advisory's version range.
 """
 
 from __future__ import annotations
@@ -46,7 +48,7 @@ OUT = VAL / "fix_commits_v1.csv"
 OUT_CANDS = VAL / "fix_commit_candidates_v1.csv"
 OUT_META = VAL / "fix_commits_v1.meta.json"
 MANUAL = VAL / "manual_fix_candidates.csv"  # human-maintained; optional
-MANUAL_COLUMNS = ["ghsa_id", "commit_url", "how_found"]
+MANUAL_COLUMNS = ["ghsa_id", "commit_url", "how_found", "fixed_tag", "last_affected_tag"]
 
 ADV_COLUMNS = [
     "ghsa_id", "packages", "repo", "fix_links_commit", "fix_links_pr", "fix_commits_linked",
@@ -76,7 +78,7 @@ def load_advisories(ids: list[str]) -> dict[str, advisories.Advisory]:
     return out
 
 
-def load_manual(ids: list[str]) -> dict[str, list[tuple[str, str]]]:
+def load_manual(ids: list[str]) -> dict[str, list[tuple[str, str, str, str]]]:
     """Rows of manual_fix_candidates.csv grouped by ghsa_id (empty if the file is absent)."""
     if not MANUAL.exists():
         return {}
@@ -88,11 +90,13 @@ def load_manual(ids: list[str]) -> dict[str, list[tuple[str, str]]]:
     unknown = sorted({r["ghsa_id"] for r in rows} - set(ids))
     if unknown:
         sys.exit(f"{MANUAL.name}: ghsa_id not in sample_v1: {unknown}")
-    out: dict[str, list[tuple[str, str]]] = {}
+    out: dict[str, list[tuple[str, str, str, str]]] = {}
     for r in rows:
-        out.setdefault(r["ghsa_id"].strip(), []).append(
-            (r["commit_url"].strip(), (r["how_found"] or "").strip())
-        )
+        fields = ("commit_url", "how_found", "fixed_tag", "last_affected_tag")
+        vals = tuple((r[k] or "").strip() for k in fields)
+        if vals[3] and not vals[2]:
+            sys.exit(f"{MANUAL.name}: {r['ghsa_id']}: last_affected_tag set without fixed_tag")
+        out.setdefault(r["ghsa_id"].strip(), []).append(vals)
     return out
 
 

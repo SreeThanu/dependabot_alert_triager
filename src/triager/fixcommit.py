@@ -10,6 +10,9 @@ no verified commit:
   (d) ``manual``             commit URLs supplied by a human in
                              data/validation/manual_fix_candidates.csv. Always checked;
                              they set the source only if (a)-(c) verified nothing.
+                             A row may name its own fixed / last affected tags (for
+                             advisories whose range matches no release line); the two
+                             tag checks then use those tags instead of the range.
 
 Each candidate gets four checks, each ``pass`` / ``fail`` / ``unknown``:
 
@@ -337,7 +340,10 @@ def verify(
     adv: Advisory,
     pypi_infos: dict[str, dict | None],
     canonical: Canonical | None = None,
+    tags_override: tuple[str, str] | None = None,
 ) -> Candidate:
+    """Run the four checks. ``tags_override`` is (fixed_tag, last_affected_tag), the
+    latter possibly empty; when given, the advisory's ranges are not used for tags."""
     c = cand.checks
     listed = set().union(*(pypi_repos(pypi_infos.get(p)) for p in adv.packages))
     if not listed:
@@ -368,6 +374,50 @@ def verify(
         return cand
     cand.sha = full
 
+    if tags_override is not None:
+        check_override_tags(cand, repo_dir, *tags_override)
+    else:
+        check_range_tags(cand, repo_dir, adv)
+
+    try:
+        cand.files = changed_files(repo_dir, full)
+    except GitError as e:
+        c["changes_src"] = UNKNOWN
+        cand.details.append(str(e))
+        return cand
+    c["changes_src"] = PASS if cand.files_of("source") else FAIL
+    if c["changes_src"] == FAIL:
+        cand.details.append("no non-test, non-doc source file changed")
+    return cand
+
+
+def check_override_tags(cand: Candidate, repo_dir: Path, fixed_tag: str, last_tag: str) -> None:
+    """in_fixed_tag / not_in_affected_tag against tags named by a human."""
+    c = cand.checks
+    c["in_fixed_tag"] = UNKNOWN
+    c["not_in_affected_tag"] = UNKNOWN
+    cand.fixed_tag, cand.last_affected_tag = fixed_tag, last_tag
+    notes = [f"tags from manual override: fixed={fixed_tag}, last_affected={last_tag or '-'}"]
+    existing = set(list_tags(repo_dir))
+    if fixed_tag not in existing:
+        notes.append(f"tag not found: {fixed_tag}")
+    else:
+        c["in_fixed_tag"] = PASS if is_ancestor(repo_dir, cand.sha, fixed_tag) else FAIL
+    if not last_tag:
+        notes.append("no last affected tag")
+    elif last_tag not in existing:
+        notes.append(f"tag not found: {last_tag}")
+    elif c["in_fixed_tag"] == PASS:
+        c["not_in_affected_tag"] = FAIL if is_ancestor(repo_dir, cand.sha, last_tag) else PASS
+    if c["in_fixed_tag"] == FAIL:
+        notes.append("not contained in the fixed tag")
+    cand.details.append("; ".join(notes))
+
+
+def check_range_tags(cand: Candidate, repo_dir: Path, adv: Advisory) -> None:
+    """in_fixed_tag / not_in_affected_tag against tags matched to the advisory's ranges."""
+    c = cand.checks
+    full = cand.sha
     tags = index_tags(list_tags(repo_dir), adv.packages)
     c["in_fixed_tag"] = UNKNOWN
     c["not_in_affected_tag"] = UNKNOWN
@@ -405,17 +455,6 @@ def verify(
         notes.append("not contained in any fixed tag")
     if notes:
         cand.details.append("; ".join(dict.fromkeys(notes)))
-
-    try:
-        cand.files = changed_files(repo_dir, full)
-    except GitError as e:
-        c["changes_src"] = UNKNOWN
-        cand.details.append(str(e))
-        return cand
-    c["changes_src"] = PASS if cand.files_of("source") else FAIL
-    if c["changes_src"] == FAIL:
-        cand.details.append("no non-test, non-doc source file changed")
-    return cand
 
 
 # --- per-advisory resolution ------------------------------------------------------
@@ -465,9 +504,13 @@ def resolve(
     repos_root: Path,
     pr_lookup: PrLookup,
     canonical: Canonical | None = None,
-    manual: Iterable[tuple[str, str]] = (),
+    manual: Iterable[tuple[str, ...]] = (),
 ) -> Resolution:
-    """Resolve and verify fix commits; ``manual`` is [(commit_url, how_found), ...]."""
+    """Resolve and verify fix commits.
+
+    ``manual`` is [(commit_url, how_found[, fixed_tag, last_affected_tag]), ...]; an empty
+    fixed_tag means no override.
+    """
     commit_links = [u for u in adv.fix_links if parse_commit_url(u)]
     pr_links = [u for u in adv.fix_links if not parse_commit_url(u) and parse_pr_url(u)]
     res = Resolution(adv, commit_links, pr_links, [], [], [])
@@ -538,19 +581,25 @@ def resolve(
 
     # (d) manual candidates: always checked and recorded, own trust level. They only
     # determine the advisory's source when no automated candidate verified.
-    for url, how_found in manual:
+    # A row with its own tags is re-checked even if an automated stage found the commit,
+    # since the automated check used the advisory's (possibly wrong) range.
+    for url, how_found, *tags in manual:
+        fixed_tag, last_tag = (tags + ["", ""])[:2]
+        override = (fixed_tag, last_tag) if fixed_tag else None
         parsed = parse_commit_url(url)
         if parsed is None:
             res.errors.append(f"manual: not a GitHub commit URL: {url}")
             continue
         repo_slug, sha = parsed
         dup = next((c for c in res.candidates if c.repo == repo_slug and sha in c.sha), None)
-        if dup is not None:
+        if dup is not None and override is None:
             res.errors.append(f"manual: {url} already checked as {dup.source}")
             continue
         if "manual" not in res.stages_tried:
             res.stages_tried.append("manual")
         cand = Candidate(adv.ghsa_id, "manual", repo_slug, sha, url)
         cand.details.append(f"how_found: {how_found}")
-        res.candidates.append(verify(cand, repo_dir(repo_slug), adv, pypi_infos, canonical))
+        res.candidates.append(
+            verify(cand, repo_dir(repo_slug), adv, pypi_infos, canonical, tags_override=override)
+        )
     return res
