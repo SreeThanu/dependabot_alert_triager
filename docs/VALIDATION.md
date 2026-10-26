@@ -56,3 +56,85 @@ before any usable labels exist. G4 has not been computed.
   are labelled from advisory text and code reading only; the diff baseline does not apply to
   them. They are not counted in G4's numerator or denominator.
 - Thresholds are unchanged from the plan (§2.6): Proceed ≥ 70%, Modify 50–70%, Abandon < 50%.
+
+---
+
+## Classification of the 50-sample (`package_type`, `usable`)
+
+Source: `data/validation/labels_v1.csv` at `718b06f`; proposals in
+`data/validation/classify_proposals_v1.csv` (meta: `classify_proposals_v1.meta.json`).
+
+- **FACT:** Classification: 50 proposed by Claude (Claude Code, model `claude-opus-5-5`), reviewed
+  by a human, 0 overrides (`classify_source`: accepted 50, overridden 0).
+- **FACT:** `package_type` counts (n = 50): application 24, library 20, cli 2, native_ext 2,
+  other 1, model_format 1. Usable: 22 (library 20, native_ext 2); unusable 28 (APP 24, OTHER 4).
+
+Counts from `data/validation/g2_g4_v1.json` (`scripts/g2_g4.py`, run at `051d10f`).
+
+---
+
+## G2 — L as a share of the sample
+
+Source: `data/validation/g2_g4_v1.json`, produced by `scripts/g2_g4.py` at `051d10f`. Inputs:
+`labels_v1.csv` (sha256 `3086d363…`), pinned snapshot `b16e369` (2026-10-19). 95% intervals are
+Wilson score intervals.
+
+L uses the recorded definition: `usable = yes` and `package_type = library`.
+
+| View | L | n | G2 | 95% CI | Label |
+|---|---|---|---|---|---|
+| **L (library) — primary** | 20 | 50 | **40.0%** | 27.6–53.8% | FACT |
+| library + native_ext (secondary) | 22 | 50 | 44.0% | 31.2–57.7% | FACT |
+
+- **PRELIM:** n = 50; the interval is wide. Its lower bound (27.6%) is above the 25% Proceed line.
+
+**G2: Proceed (40% ≥ 25%).**
+
+---
+
+## G4 — verified fix commits for L
+
+Source: `data/validation/g2_g4_v1.json` (`scripts/g2_g4.py` at `051d10f`), from
+`data/validation/fix_commits_v1.csv` (sha256 `0e5b14a1…`) written by
+`scripts/resolve_fix_commits.py` at `04ee527` (run 2026-10-26 13:03 UTC; meta
+`fix_commits_v1.meta.json`). Definition as recorded above. Denominator: L advisories that list a
+fixed version in snapshot `b16e369`. 95% intervals are Wilson score intervals.
+
+G4 is reported twice: **automated-only** (sources `reference`, `pr_merge`, `tag_diff_inferred`)
+and **including manual** fix candidates (`data/validation/manual_fix_candidates.csv`, human
+picks, checked with the same four checks).
+
+| View | Denominator | Automated-only | 95% CI | Including manual | 95% CI | Label |
+|---|---|---|---|---|---|---|
+| **L (library) — primary** | 17 | **12/17 = 70.6%** | 46.9–86.7% | **16/17 = 94.1%** | 73.0–99.0% | FACT |
+| library + native_ext (secondary) | 19 | 14/19 = 73.7% | 51.2–88.2% | 18/19 = 94.7% | 75.4–99.1% | FACT |
+
+Verified by source, primary view (n = 17): reference 11, tag_diff_inferred 1, manual 4; not
+verified 1. Secondary view (n = 19): reference 13, tag_diff_inferred 1, manual 4; not verified 1.
+Unfixed (no fixed version at snapshot time, excluded from both): GHSA-3hh9-752g-5g22 (lmcache),
+GHSA-9cfw-f3f9-7mm7 (apscheduler), GHSA-rpqr-j937-6qr9 (openviking).
+
+Manual fixes (all four checks pass; `fix_commit_candidates_v1.csv`):
+
+| Advisory | Commit(s) | how_found |
+|---|---|---|
+| GHSA-wrpj-755p-x363 (apache-airflow) | `a8c12067fbe9` | PR #63704. Tags overridden to `providers-databricks/7.12.0` / `7.11.0`: GHSA package/range does not match any release line (data defect); see `docs/upstream_reports/GHSA-wrpj-755p-x363.md` |
+| GHSA-5rvq-cxj2-64vf (python-multipart) | `d69df35cd2ca` | commit title matches advisory (separator fix) |
+| GHSA-7545-fcxq-7j24 (gitpython) | `25ba54dd3fb3`, `4af8463cca31` | fix + review follow-up in same change |
+| GHSA-6rfw-mq36-jm8h (bedrock-agentcore) | `ed953b58a96b` | allowlist fix for install_packages() |
+
+Not verified: **GHSA-f2h6-7xfr-xm8w (praisonai)**: fix not found in the advisory's tag range
+(the only commit doesn't touch recipe/registry.py). The range `v4.5.127..v4.5.128` contains one
+commit, `b4e3a8a84ade` "Release v4.5.128".
+
+- **PRELIM:** Automated-only G4 on the primary view (70.6%) is just above the 70% Proceed line,
+  and its interval (46.9–86.7%) reaches into the Abandon band. With manual picks the point
+  estimate is 94.1% and the lower bound (73.0%) clears 70%.
+- **FACT:** The manual picks were made by a human from lists of commits (sha, date, title, files
+  changed) between the last affected and fixed tags; the lists did not include baseline outputs.
+  They are a human judgement, not an automated result; the automated-only figure is what the
+  pipeline achieves unaided.
+
+**G4: Proceed (70.6% automated-only ≥ 70%; 94.1% including manual).** The automated figure is
+borderline at n = 17; the plan's fallback for 50–70% (lean more on text and code-reading labels)
+stays available if a larger sample lowers it.

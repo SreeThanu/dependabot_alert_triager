@@ -1,0 +1,126 @@
+{
+  "script": "scripts/g2_g4.py",
+  "repo_commit": "051d10fa8e9c44e5a4b1c7c534f509d119222ed5",
+  "run_utc": "2026-10-26T13:06:02+00:00",
+  "snapshot": {
+    "repo": "https://github.com/github/advisory-database",
+    "commit": "b16e369438ef2ab329b4c224cae8224f144bf5d5"
+  },
+  "inputs_sha256": {
+    "labels_v1.csv": "3086d363a6d348864967435267e650fe768d33582419ca7d48f812b62e5cd648",
+    "fix_commits_v1.csv": "0e5b14a1ea9a1c445a0ff0dafc0fb1bf4befd057c3c5720521893818ee26d61a"
+  },
+  "n_sample": 50,
+  "package_type": {
+    "application": 24,
+    "library": 20,
+    "cli": 2,
+    "native_ext": 2,
+    "other": 1,
+    "model_format": 1
+  },
+  "usable": {
+    "no": 28,
+    "yes": 22
+  },
+  "unusable_reason": {
+    "APP": 24,
+    "OTHER": 4
+  },
+  "classify_source": {
+    "accepted": 50
+  },
+  "views": {
+    "library": {
+      "package_types": [
+        "library"
+      ],
+      "G2": {
+        "k": 20,
+        "n": 50,
+        "p": 0.4,
+        "ci95": [
+          0.2761,
+          0.5382
+        ]
+      },
+      "unfixed": [
+        "GHSA-3hh9-752g-5g22",
+        "GHSA-9cfw-f3f9-7mm7",
+        "GHSA-rpqr-j937-6qr9"
+      ],
+      "G4_automated": {
+        "k": 12,
+        "n": 17,
+        "p": 0.7059,
+        "ci95": [
+          0.4687,
+          0.8672
+        ]
+      },
+      "G4_including_manual": {
+        "k": 16,
+        "n": 17,
+        "p": 0.9412,
+        "ci95": [
+          0.7302,
+          0.9895
+        ]
+      },
+      "verified_by_source": {
+        "manual": 4,
+        "reference": 11,
+        "tag_diff_inferred": 1
+      },
+      "not_verified": [
+        "GHSA-f2h6-7xfr-xm8w"
+      ]
+    },
+    "library_native_ext": {
+      "package_types": [
+        "library",
+        "native_ext"
+      ],
+      "G2": {
+        "k": 22,
+        "n": 50,
+        "p": 0.44,
+        "ci95": [
+          0.3116,
+          0.5769
+        ]
+      },
+      "unfixed": [
+        "GHSA-3hh9-752g-5g22",
+        "GHSA-9cfw-f3f9-7mm7",
+        "GHSA-rpqr-j937-6qr9"
+      ],
+      "G4_automated": {
+        "k": 14,
+        "n": 19,
+        "p": 0.7368,
+        "ci95": [
+          0.5121,
+          0.8819
+        ]
+      },
+      "G4_including_manual": {
+        "k": 18,
+        "n": 19,
+        "p": 0.9474,
+        "ci95": [
+          0.7536,
+          0.9906
+        ]
+      },
+      "verified_by_source": {
+        "manual": 4,
+        "reference": 13,
+        "tag_diff_inferred": 1
+      },
+      "not_verified": [
+        "GHSA-f2h6-7xfr-xm8w"
+      ]
+    }
+  }
+}
