@@ -64,6 +64,21 @@ human label; `package_type_proposed` is only a hint and must not be copied witho
 `accepted` if the final `package_type`, `usable` and `unusable_reason` all equal the proposal in
 `classify_proposals_v1.csv`, `overridden` otherwise, `no_proposal` if there was none.
 
+### Gold labelling conventions
+
+1. `gold_vulnerable_symbols` = where the flaw lives: the function whose code is wrong. Fully
+   qualified in the T4 `__qualname__` format (`pkg.mod.Class.method`; nested functions as
+   `pkg.mod.outer.<locals>.inner`).
+2. If the flaw is in data (a blocklist, a constant, a default setting), use `pkg.mod.<module>`
+   and put the function that uses that data in `gold_entry_points`.
+3. `gold_entry_points` = the public function or class a developer's code calls (or configures)
+   to reach the flaw. Leave it empty if it is the same as the vulnerable symbol. For cases
+   reached through configuration, name the configured class and explain in `notes`.
+4. No fix diff, or root cause in C/C++: label from the advisory text and the Python code, fill
+   `gold_entry_points`, and set `label_confidence` to `medium` or `low`.
+5. While labelling, never open `diff_baseline*` or `text_baseline*` outputs, and never ask an
+   LLM which function is vulnerable.
+
 ## `fix_commits_v1.csv` columns (T3, plan §2.3)
 
 Resolution runs in order and falls through only if the earlier stage yields no verified commit:
