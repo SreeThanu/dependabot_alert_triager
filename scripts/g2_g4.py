@@ -99,6 +99,10 @@ def main() -> None:
         },
         "n_sample": len(labels),
         "package_type": dict(Counter(r["package_type"] for r in labels).most_common()),
+        "usable": dict(Counter(r["usable"] for r in labels).most_common()),
+        "unusable_reason": dict(
+            Counter(r["unusable_reason"] for r in labels if r["usable"] != "yes").most_common()
+        ),
         "classify_source": dict(Counter(r["classify_source"] for r in labels).most_common()),
         "views": {name: view(labels, fixes, types) for name, types in VIEWS.items()},
     }
