@@ -17,7 +17,16 @@ spec = importlib.util.spec_from_file_location("label", SCRIPT)
 label = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(label)
 
-LABEL_FIELDS = REAL_LABELS.open().readline().strip().split(",")
+# labels_v1.csv schema before classify writes ``classify_source`` (fixed here, not read from
+# the real file, so tests do not depend on how far real labelling has got).
+LABEL_FIELDS = [
+    "ghsa_id", "aliases", "published", "package_family", "packages", "package_type", "usable",
+    "unusable_reason", "github_vulnerable_functions", "text_names_function", "named_symbols_text",
+    "fix_commits", "fix_commit_source", "fix_verified", "diff_files_total", "diff_files_src",
+    "diff_funcs_changed_src", "gold_vulnerable_symbols", "gold_entry_points", "label_confidence",
+    "label_basis", "minutes_spent", "labeler", "notes", "package_type_proposed",
+    "package_type_reason",
+]  # fmt: skip
 FORBIDDEN = ("diff_baseline", "text_baseline")
 SENTINEL = "SENTINEL_BASELINE_OUTPUT"
 RATIONALE = "RATIONALE_SENTINEL"
@@ -137,7 +146,7 @@ def set_rows(val, **by_id):
     rows = read(path)
     for r in rows:
         r.update(by_id.get(r["ghsa_id"], {}))
-    write(path, LABEL_FIELDS, rows)
+    write(path, list(rows[0]), rows)
 
 
 # --- saving --------------------------------------------------------------------------------
@@ -205,7 +214,11 @@ def test_skip_and_quit_leave_row_unchanged(env):
     assert (env / "labels_v1.csv").read_bytes() == before
 
 
-def test_classify_prefills_proposal_and_records_source(env):
+@pytest.mark.parametrize("has_column", [False, True], ids=["new_column", "existing_column"])
+def test_classify_prefills_proposal_and_records_source(env, has_column):
+    if has_column:  # a file that classify has already written to
+        rows = [{**r, "classify_source": ""} for r in read(env / "labels_v1.csv")]
+        write(env / "labels_v1.csv", [*LABEL_FIELDS, "classify_source"], rows)
     before = (env / "labels_v1.csv").read_text().splitlines()
     # Row 0: Enter x2 accepts library/yes. Row 1: override APP -> OTHER. Row 2: no proposal.
     t = Term(["", "", "", "", "OTHER", "cli", "no", "OTHER", ":q"])
@@ -216,8 +229,12 @@ def test_classify_prefills_proposal_and_records_source(env):
     assert got == [("library", "yes", "", "accepted"), ("application", "no", "OTHER", "overridden"),
                    ("cli", "no", "OTHER", "no_proposal"), ("", "", "", "")]  # fmt: skip
     after = (env / "labels_v1.csv").read_text().splitlines()
-    assert after[0] == before[0] + ",classify_source"  # appended as the last column
-    assert after[4:] == [line + "," for line in before[4:]]  # untouched rows: only the new cell
+    if has_column:
+        assert after[0] == before[0]  # not added twice
+        assert after[4:] == before[4:]  # untouched rows unchanged
+    else:
+        assert after[0] == before[0] + ",classify_source"  # appended as the last column
+        assert after[4:] == [line + "," for line in before[4:]]  # untouched rows: new cell only
     assert f"{RATIONALE} imported API" in t.text and f"{RATIONALE} web server" in t.text
     assert "package_type=library  usable=yes  unusable_reason=-" in t.text
     assert (
