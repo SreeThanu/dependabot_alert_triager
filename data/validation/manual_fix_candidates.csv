@@ -1,0 +1,6 @@
+ghsa_id,commit_url,how_found,fixed_tag,last_affected_tag
+GHSA-wrpj-755p-x363,https://github.com/apache/airflow/commit/a8c12067fbe984cd2a99b35f0a6909a570e87a1c,"PR #63704; GHSA package/range defect, see docs/upstream_reports",providers-databricks/7.12.0,providers-databricks/7.11.0
+GHSA-5rvq-cxj2-64vf,https://github.com/kludex/python-multipart/commit/d69df35cd2cad9c72794c2c340db646afae957d8,commit title matches advisory (separator fix),,
+GHSA-7545-fcxq-7j24,https://github.com/gitpython-developers/gitpython/commit/25ba54dd3fb374b8fade7de4be1ac2ac84722190,fix + review follow-up in same change,,
+GHSA-7545-fcxq-7j24,https://github.com/gitpython-developers/gitpython/commit/4af8463cca31c2369312fcaa5309dfc30756c7b6,fix + review follow-up in same change,,
+GHSA-6rfw-mq36-jm8h,https://github.com/aws/bedrock-agentcore-sdk-python/commit/ed953b58a96bd6d5ed1ca67792f6888cf04edf26,allowlist fix for install_packages(),,
